@@ -56,6 +56,10 @@ export function LoginForm({ next, error }: { next: string; error?: string }) {
           type="email"
           inputMode="email"
           autoComplete="email"
+          autoCapitalize="none"
+          autoCorrect="off"
+          spellCheck={false}
+          enterKeyHint="send"
           required
           defaultValue={state.email}
           placeholder="you@example.com"

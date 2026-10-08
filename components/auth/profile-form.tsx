@@ -21,6 +21,7 @@ export function ProfileForm({ displayName }: { displayName: string }) {
         defaultValue={displayName}
         maxLength={60}
         autoComplete="name"
+        enterKeyHint="done"
         className="min-h-14 rounded-xl border border-border bg-background px-4 text-base outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
       />
       {state.status === "error" && (
@@ -33,7 +34,7 @@ export function ProfileForm({ displayName }: { displayName: string }) {
           Saved.
         </p>
       )}
-      <AppButton type="submit" disabled={pending}>
+      <AppButton type="submit" disabled={pending} className="w-full">
         {pending ? "Saving…" : "Save"}
       </AppButton>
     </form>
