@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Logo } from "@/components/brand/logo";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { NAV_ITEMS, isActive } from "@/lib/nav";
@@ -12,11 +13,8 @@ export function AppSidebar() {
   return (
     <aside className="fixed inset-y-0 left-0 hidden w-60 flex-col border-r border-sidebar-border bg-sidebar md:flex">
       <div className="px-6 pt-8 pb-6">
-        <Link href="/" className="font-display text-2xl font-medium tracking-tight">
-          <span className="text-gold" aria-hidden>
-            ✝{" "}
-          </span>
-          Ora
+        <Link href="/" aria-label="Ora home" className="text-2xl">
+          <Logo />
         </Link>
         <p className="mt-1 text-xs text-muted-foreground">A quiet place to pray</p>
       </div>
