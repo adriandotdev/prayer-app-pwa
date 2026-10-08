@@ -19,8 +19,8 @@ export function ThemeToggle() {
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
     >
       {/* Both icons are always rendered; CSS picks one, so there is no hydration mismatch. */}
-      <Sun className="size-5 dark:hidden" aria-hidden />
-      <Moon className="hidden size-5 dark:block" aria-hidden />
+      <Sun className="ora-fade size-5 dark:hidden" aria-hidden />
+      <Moon className="ora-fade hidden size-5 dark:block" aria-hidden />
     </AppButton>
   );
 }
