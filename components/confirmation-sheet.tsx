@@ -8,43 +8,16 @@ import {
   type PanInfo,
 } from "motion/react";
 import { Dialog } from "radix-ui";
-import {
-  useCallback,
-  useEffect,
-  useState,
-  useSyncExternalStore,
-  type ReactNode,
-} from "react";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { useFormStatus } from "react-dom";
 
 import { AppButton } from "@/components/app-button";
+import { RISE_SPRING as RISE } from "@/lib/motion";
+import { useIsDesktop } from "@/lib/use-is-desktop";
 import { cn } from "@/lib/utils";
 
 const DISMISS_DISTANCE = 80;
 const DISMISS_VELOCITY = 500;
-const DESKTOP_QUERY = "(min-width: 768px)";
-
-function subscribeDesktop(onChange: () => void) {
-  const mq = window.matchMedia(DESKTOP_QUERY);
-  mq.addEventListener("change", onChange);
-  return () => mq.removeEventListener("change", onChange);
-}
-
-/** Matches Tailwind's md breakpoint, where the sheet becomes a centered panel. */
-function useIsDesktop() {
-  return useSyncExternalStore(
-    subscribeDesktop,
-    () => window.matchMedia(DESKTOP_QUERY).matches,
-    () => false,
-  );
-}
-
-const RISE = {
-  type: "spring",
-  damping: 34,
-  stiffness: 380,
-  mass: 0.9,
-} as const;
 
 type ConfirmationSheetProps = {
   open: boolean;

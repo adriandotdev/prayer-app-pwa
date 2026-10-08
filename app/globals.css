@@ -48,9 +48,16 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* Motion language: things arrive like light, by fading in and rising a few pixels. */
+@theme {
+  --ease-ora: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 /* Ivory, deep blue and gold. */
 :root {
   --radius: 0.75rem;
+  --ora-rise: 8px;
+  --ora-step: 30ms;
   --bottom-nav-height: calc(5rem + env(safe-area-inset-bottom));
   --background: oklch(0.973 0.014 88);
   --foreground: oklch(0.26 0.05 258);
@@ -187,5 +194,47 @@
   }
   .ora-loader-glow:first-child {
     opacity: 1;
+  }
+}
+
+/* Enter animations. Opacity and transform only. Desktop travels less and staggers faster. */
+@keyframes ora-rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--ora-rise));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes ora-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (min-width: 48rem) {
+  :root {
+    --ora-rise: 4px;
+    --ora-step: 24ms;
+  }
+}
+.ora-enter {
+  animation: ora-rise 240ms var(--ease-ora) both;
+}
+.ora-fade {
+  animation: ora-fade 200ms var(--ease-ora) both;
+}
+/* Set --i on each item; only the first eight get a delay so long lists don't crawl. */
+.ora-stagger {
+  animation: ora-rise 240ms var(--ease-ora) both;
+  animation-delay: calc(min(var(--i, 0), 8) * var(--ora-step));
+}
+@media (prefers-reduced-motion: reduce) {
+  .ora-stagger {
+    animation-delay: 0s;
   }
 }
