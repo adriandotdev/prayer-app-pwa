@@ -157,3 +157,34 @@
     max-width: 38rem;
   }
 }
+
+/* Loader (from public/brand/ora-loading.svg): a gold highlight passes over each bead. */
+.ora-loader-beads {
+  fill: currentColor;
+  opacity: 0.3;
+}
+.ora-loader-glow {
+  opacity: 0;
+  animation: ora-loader-glow 1.8s ease-in-out infinite;
+}
+@keyframes ora-loader-glow {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  6%,
+  12% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ora-loader-glow {
+    animation: none;
+  }
+  .ora-loader-glow:first-child {
+    opacity: 1;
+  }
+}
