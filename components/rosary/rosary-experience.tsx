@@ -76,7 +76,7 @@ export function RosaryExperience() {
             {MYSTERY_SETS[resumeSet].name}, step {saved.index + 1} of 80.
           </p>
           <div className="mt-4 flex gap-3">
-            <AppButton onClick={() => setView({ kind: "play", setId: resumeSet, index: saved.index, mode: saved.mode })}>
+            <AppButton className="flex-1 sm:flex-none" onClick={() => setView({ kind: "play", setId: resumeSet, index: saved.index, mode: saved.mode })}>
               Resume
             </AppButton>
             <AppButton variant="outline" onClick={() => clearProgress()}>
@@ -106,7 +106,7 @@ export function RosaryExperience() {
               aria-checked={selected === id}
               onClick={() => setPicked(id)}
               className={cn(
-                "rounded-xl border p-4 text-left transition-colors",
+                "min-h-14 rounded-xl border p-4 text-left transition-colors active:bg-secondary",
                 selected === id ? "border-gold bg-gold/10" : "border-border hover:bg-secondary/50",
               )}
             >
@@ -122,12 +122,14 @@ export function RosaryExperience() {
         </ol>
       </section>
 
-      <div className="flex flex-col gap-2 sm:flex-row">
+      <div className="sticky bottom-(--bottom-nav-height) z-20 -mx-4 grid grid-cols-2 gap-2 border-t border-border bg-background/95 px-4 py-3 backdrop-blur md:static md:mx-0 md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none">
         <AppButton size="lg" className="flex-1" onClick={() => setView({ kind: "play", setId: selected, index: 0, mode: "learn" })}>
-          Begin in Learn mode
+          <span className="sm:hidden">Learn</span>
+          <span className="hidden sm:inline">Begin in Learn mode</span>
         </AppButton>
         <AppButton size="lg" variant="outline" className="flex-1" onClick={() => setView({ kind: "play", setId: selected, index: 0, mode: "pray" })}>
-          Begin in Pray mode
+          <span className="sm:hidden">Pray</span>
+          <span className="hidden sm:inline">Begin in Pray mode</span>
         </AppButton>
       </div>
     </div>

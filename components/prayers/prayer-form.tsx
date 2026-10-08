@@ -26,7 +26,7 @@ export function PrayerForm({ action, cancelHref, submitLabel, prayer }: Props) {
       <label htmlFor="title" className="text-sm font-medium">
         Title
       </label>
-      <input id="title" name="title" defaultValue={prayer?.title} maxLength={200} required className={`${FIELD} min-h-14`} />
+      <input id="title" name="title" defaultValue={prayer?.title} maxLength={200} required enterKeyHint="next" autoComplete="off" className={`${FIELD} min-h-14`} />
 
       <label htmlFor="body" className="mt-2 text-sm font-medium">
         Prayer
@@ -37,7 +37,7 @@ export function PrayerForm({ action, cancelHref, submitLabel, prayer }: Props) {
       <label htmlFor="source" className="mt-2 text-sm font-medium">
         Source <span className="font-normal text-muted-foreground">(optional)</span>
       </label>
-      <input id="source" name="source" defaultValue={prayer?.source ?? ""} maxLength={200} className={`${FIELD} min-h-14`} />
+      <input id="source" name="source" defaultValue={prayer?.source ?? ""} maxLength={200} enterKeyHint="done" autoComplete="off" className={`${FIELD} min-h-14`} />
 
       {state.status === "error" && (
         <p role="alert" className="text-sm text-destructive">

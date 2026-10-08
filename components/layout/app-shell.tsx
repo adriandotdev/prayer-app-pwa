@@ -18,7 +18,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         <MobileHeader />
         <main
           id="main"
-          className="mx-auto w-full max-w-3xl px-4 pt-6 pb-32 md:px-10 md:pt-14 md:pb-16"
+          className="mx-auto w-full max-w-3xl px-4 pt-6 pb-[calc(var(--bottom-nav-height)+1.5rem)] md:px-10 md:pt-14 md:pb-16"
         >
           <InstallPrompt />
           {children}

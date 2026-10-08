@@ -10,15 +10,15 @@ export function DeleteButton({ id }: { id: string }) {
 
   if (!confirming) {
     return (
-      <AppButton variant="outline" onClick={() => setConfirming(true)}>
+      <AppButton variant="outline" className="flex-1 sm:flex-none" onClick={() => setConfirming(true)}>
         Delete
       </AppButton>
     );
   }
   return (
-    <form action={deletePrayer} className="flex items-center gap-2">
+    <form action={deletePrayer} className="flex w-full items-center gap-2 sm:w-auto">
       <input type="hidden" name="id" value={id} />
-      <AppButton type="submit" className="bg-destructive text-white hover:bg-destructive/90">
+      <AppButton type="submit" className="flex-1 bg-destructive text-white hover:bg-destructive/90">
         Confirm delete
       </AppButton>
       <AppButton variant="ghost" onClick={() => setConfirming(false)}>
