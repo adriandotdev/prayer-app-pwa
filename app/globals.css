@@ -280,3 +280,10 @@
 .ora-chrome {
   animation: ora-fade 500ms var(--ease-ora) backwards;
 }
+
+/* Light/dark switch: a slow, soft cross-fade of the whole page, like a room dimming. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 400ms;
+  animation-timing-function: var(--ease-ora);
+}
