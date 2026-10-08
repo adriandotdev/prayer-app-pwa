@@ -12,7 +12,8 @@ import { useIsDesktop } from "@/lib/use-is-desktop";
 import { cn } from "@/lib/utils";
 
 const LIFETIME = { success: 4000, error: 6000 } as const;
-const SWIPE_DISMISS = -40;
+const SWIPE_DISTANCE = 80;
+const SWIPE_VELOCITY = 500;
 
 function ToastCard({ item, isDesktop }: { item: ToastItem; isDesktop: boolean }) {
   const reduceMotion = useReducedMotion();
@@ -26,7 +27,7 @@ function ToastCard({ item, isDesktop }: { item: ToastItem; isDesktop: boolean })
   }, [paused, item.id, item.kind]);
 
   function onDragEnd(_: PointerEvent | MouseEvent | TouchEvent, info: PanInfo) {
-    if (info.offset.y < SWIPE_DISMISS) toast.dismiss(item.id);
+    if (Math.abs(info.offset.x) > SWIPE_DISTANCE || Math.abs(info.velocity.x) > SWIPE_VELOCITY) toast.dismiss(item.id);
   }
 
   const Icon = item.kind === "error" ? AlertCircle : Check;
@@ -38,16 +39,16 @@ function ToastCard({ item, isDesktop }: { item: ToastItem; isDesktop: boolean })
       initial={{ opacity: 0, y: offset }}
       animate={{ opacity: 1, y: 0, transition: { duration: DURATION.base + 0.06, ease: EASE_ORA } }}
       exit={{ opacity: 0, y: offset / 2, transition: { duration: DURATION.quick + 0.03, ease: EASE_ORA } }}
-      drag={isDesktop || reduceMotion ? false : "y"}
-      dragConstraints={{ top: 0, bottom: 0 }}
-      dragElastic={{ top: 0.4, bottom: 0 }}
+      drag="x"
+      dragConstraints={{ left: 0, right: 0 }}
+      dragElastic={0.6}
       onDragEnd={onDragEnd}
       onPointerEnter={() => setPaused(true)}
       onPointerLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
       className={cn(
-        "pointer-events-auto flex touch-pan-x items-center gap-3 rounded-2xl border border-border border-l-[3px] bg-card py-1 pr-1 pl-4 text-card-foreground shadow-lg",
+        "pointer-events-auto flex touch-pan-y items-center gap-3 rounded-2xl border border-border border-l-[3px] bg-card py-1 pr-1 pl-4 text-card-foreground shadow-lg",
         item.kind === "error" ? "border-l-destructive" : "border-l-gold",
       )}
     >
