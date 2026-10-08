@@ -17,12 +17,12 @@ const RADIUS = 120;
 function buildBeads(): Bead[] {
   const medal = { x: CENTER.x, y: CENTER.y + RADIUS };
   const beads: Bead[] = [
-    { id: "crucifix", x: CENTER.x, y: 430, kind: "anchor" },
-    { id: "tail-0", x: CENTER.x, y: 392, kind: "large" },
-    { id: "tail-1", x: CENTER.x, y: 360, kind: "small" },
-    { id: "tail-2", x: CENTER.x, y: 334, kind: "small" },
-    { id: "tail-3", x: CENTER.x, y: 308, kind: "small" },
-    { id: "medal", ...medal, kind: "anchor" },
+    { id: "crucifix", label: "Crucifix", x: CENTER.x, y: 430, kind: "anchor" },
+    { id: "tail-0", label: "Our Father bead", x: CENTER.x, y: 392, kind: "large" },
+    { id: "tail-1", label: "Hail Mary bead 1 of 3", x: CENTER.x, y: 360, kind: "small" },
+    { id: "tail-2", label: "Hail Mary bead 2 of 3", x: CENTER.x, y: 334, kind: "small" },
+    { id: "tail-3", label: "Hail Mary bead 3 of 3", x: CENTER.x, y: 308, kind: "small" },
+    { id: "medal", label: "Centre medal", ...medal, kind: "anchor" },
   ];
   const slots = 55 + 1; // loop beads + the medal's slot
   for (let d = 0; d < 5; d++) {
@@ -31,6 +31,7 @@ function buildBeads(): Bead[] {
       const angle = Math.PI / 2 - (slot * 2 * Math.PI) / slots;
       beads.push({
         id: `d${d}-${b}`,
+        label: b === 0 ? `Decade ${d + 1}, Our Father bead` : `Decade ${d + 1}, Hail Mary bead ${b} of 10`,
         x: CENTER.x + RADIUS * Math.cos(angle),
         y: CENTER.y + RADIUS * Math.sin(angle),
         kind: b === 0 ? "large" : "small",

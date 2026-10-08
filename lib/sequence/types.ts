@@ -22,6 +22,8 @@ export type Reflection = {
 
 export type Bead = {
   id: string;
+  /** Accessible name, e.g. "Decade 2, Hail Mary bead 4 of 10". */
+  label: string;
   x: number;
   y: number;
   /** Visual weight: "large" beads mark Our Fathers, "anchor" the crucifix/medal. */

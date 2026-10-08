@@ -28,7 +28,7 @@ export function BeadTracker({ sequence, index, onSelectBead, className }: Props)
       {sequence.beads.map((bead) => {
         const state = states.get(bead.id) ?? "upcoming";
         const r = RADIUS[bead.kind];
-        const label = `${beadName(bead)}, ${state === "current" ? "current" : state}`;
+        const label = `${bead.label}, ${state === "current" ? "current" : state}`;
         return (
           <g
             key={bead.id}
@@ -90,13 +90,4 @@ function Anchor({ bead, state }: { bead: Bead; state: "completed" | "current" | 
     );
   }
   return <circle cx={bead.x} cy={bead.y} r={11} strokeWidth={1.25} className={cls} />;
-}
-
-function beadName(bead: Bead) {
-  if (bead.id === "crucifix") return "Crucifix";
-  if (bead.id === "medal") return "Centre medal";
-  if (bead.id === "tail-0") return "Our Father bead";
-  if (bead.id.startsWith("tail-")) return `Hail Mary bead ${bead.id.slice(5)} of 3`;
-  const [d, b] = bead.id.slice(1).split("-").map(Number);
-  return b === 0 ? `Decade ${d + 1}, Our Father bead` : `Decade ${d + 1}, Hail Mary bead ${b} of 10`;
 }
