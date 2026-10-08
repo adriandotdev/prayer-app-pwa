@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Hanken_Grotesk, Source_Serif_4 } from "next/font/google";
 import { AppShell } from "@/components/layout/app-shell";
+import { OfflineIndicator } from "@/components/pwa/offline-indicator";
+import { ServiceWorkerRegister } from "@/components/pwa/service-worker-register";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import "./globals.css";
 
@@ -17,6 +19,8 @@ export const metadata: Metadata = {
   title: { default: "Ora — Catholic prayer", template: "%s · Ora" },
   description: "A calm place to keep your prayers and pray the Rosary.",
   applicationName: "Ora",
+  appleWebApp: { capable: true, title: "Ora", statusBarStyle: "default" },
+  icons: { icon: "/icons/icon-192.png", apple: "/icons/apple-touch-icon.png" },
 };
 
 export const viewport: Viewport = {
@@ -38,6 +42,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-dvh">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <OfflineIndicator />
+          <ServiceWorkerRegister />
           <AppShell>{children}</AppShell>
         </ThemeProvider>
       </body>
