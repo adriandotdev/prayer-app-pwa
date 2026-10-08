@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Hanken_Grotesk, Source_Serif_4 } from "next/font/google";
 import { AppShell } from "@/components/layout/app-shell";
 import { OfflineIndicator } from "@/components/pwa/offline-indicator";
+import { RosarySync } from "@/components/pwa/rosary-sync";
 import { ServiceWorkerRegister } from "@/components/pwa/service-worker-register";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import "./globals.css";
@@ -50,6 +51,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <OfflineIndicator />
           <ServiceWorkerRegister />
+          <RosarySync />
           <AppShell>{children}</AppShell>
         </ThemeProvider>
       </body>
