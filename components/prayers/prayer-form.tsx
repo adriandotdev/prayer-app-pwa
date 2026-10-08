@@ -3,11 +3,10 @@
 import { useActionState } from "react";
 
 import { AppButton } from "@/components/app-button";
+import { FIELD } from "@/components/field";
 import type { PrayerFormState } from "@/lib/prayers/actions";
 
 const initial: PrayerFormState = { status: "idle" };
-const FIELD =
-  "rounded-xl border border-border bg-background px-4 text-base outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 
 type Props = {
   action: (prev: PrayerFormState, formData: FormData) => Promise<PrayerFormState>;

@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 
 import { AppButton } from "@/components/app-button";
 import { ProfileForm } from "@/components/auth/profile-form";
+import { RosaryHistory } from "@/components/rosary/history";
 import { PageHeader } from "@/components/layout/page-header";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "./actions";
@@ -23,6 +24,7 @@ export default async function ProfilePage() {
       <PageHeader title="Profile" description={user.email ?? undefined} />
       <div className="flex flex-col gap-8">
         <ProfileForm displayName={profile?.display_name ?? ""} />
+        <RosaryHistory />
         <form action={signOut}>
           <AppButton type="submit" variant="outline" className="w-full">
             Sign out

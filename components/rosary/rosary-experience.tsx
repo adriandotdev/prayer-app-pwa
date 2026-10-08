@@ -8,6 +8,7 @@ import { SequencePlayer } from "@/components/sequence/sequence-player";
 import { MYSTERY_SETS, MYSTERY_SET_ORDER, type MysterySetId } from "@/data/rosary/mysteries";
 import { mysterySetForDay } from "@/data/rosary/schedule";
 import { buildRosary } from "@/data/rosary/sequence";
+import { recordRosarySession } from "@/lib/rosary/actions";
 import { clearProgress, saveProgress, useSavedProgress, type PrayerMode } from "@/lib/sequence/progress";
 import { useToday } from "@/lib/use-today";
 import { cn } from "@/lib/utils";
@@ -44,6 +45,8 @@ export function RosaryExperience() {
         onExit={() => setView({ kind: "home" })}
         onFinish={() => {
           saveProgress({ sequenceId: sequence.id, index: 0, mode: view.mode, completed: true });
+          // Best-effort history for signed-in users; offline or signed out simply does nothing.
+          recordRosarySession(view.setId).catch(() => {});
           setView({ kind: "done", setId: view.setId });
         }}
       />

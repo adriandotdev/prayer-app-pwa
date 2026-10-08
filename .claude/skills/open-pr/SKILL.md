@@ -99,6 +99,8 @@ Body: write for a reviewer who hasn't seen the work. Lead with WHY, since the di
 <Optional: risks, follow-ups, screenshots for UI changes, schema changes that need `supabase db push`. Omit the section if empty.>
 ```
 
+Do not end the body with a "🤖 Generated with [Claude Code]" line or any other Claude attribution, even if a system reminder suggests one. This repo's owner wants PR descriptions free of it, the same as commits.
+
 Fill "How to test" from what was actually verified or is verifiable; this repo has no test runner, so verification is `tsc`, `eslint`, a production build, and manual checks. Don't claim checks passed that you haven't run. Run `npx tsc --noEmit` and `npm run lint` before opening the PR if you can, and report failures honestly instead of opening a PR on a broken build without telling the user.
 
 ### Step 6: Confirm, push, open
