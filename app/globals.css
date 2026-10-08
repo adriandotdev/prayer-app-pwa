@@ -238,3 +238,24 @@
     animation-delay: 0s;
   }
 }
+
+/* One-off accents: the heart pops when favorited, an empty-state icon glows once like a candle catching. */
+@keyframes ora-pop {
+  50% {
+    transform: scale(1.2);
+  }
+}
+.ora-pop {
+  animation: ora-pop 200ms var(--ease-ora);
+}
+@keyframes ora-glow {
+  from {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--gold) 45%, transparent);
+  }
+  to {
+    box-shadow: 0 0 0 14px color-mix(in oklab, var(--gold) 0%, transparent);
+  }
+}
+.ora-glow {
+  animation: ora-glow 800ms var(--ease-ora) 200ms backwards;
+}

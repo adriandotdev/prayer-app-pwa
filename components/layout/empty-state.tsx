@@ -10,8 +10,8 @@ type EmptyStateProps = {
 
 export function EmptyState({ icon: Icon, title, description, action }: EmptyStateProps) {
   return (
-    <div className="flex flex-col items-center rounded-2xl border border-dashed border-border px-6 py-14 text-center">
-      <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-accent text-gold-foreground dark:text-gold">
+    <div className="ora-enter flex flex-col items-center rounded-2xl border border-dashed border-border px-6 py-14 text-center">
+      <div className="ora-glow mb-4 flex size-12 items-center justify-center rounded-full bg-accent text-gold-foreground dark:text-gold">
         <Icon className="size-6" aria-hidden />
       </div>
       <h2 className="font-display text-2xl">{title}</h2>
