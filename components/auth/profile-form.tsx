@@ -1,14 +1,19 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 
 import { AppButton } from "@/components/app-button";
+import { toast } from "@/lib/toast";
 import { updateProfile, type ProfileState } from "@/app/profile/actions";
 
 const initial: ProfileState = { status: "idle" };
 
 export function ProfileForm({ displayName }: { displayName: string }) {
   const [state, action, pending] = useActionState(updateProfile, initial);
+
+  useEffect(() => {
+    if (state.status === "saved") toast.success("Profile saved");
+  }, [state]);
 
   return (
     <form action={action} className="flex flex-col gap-3">
@@ -29,13 +34,8 @@ export function ProfileForm({ displayName }: { displayName: string }) {
           {state.message}
         </p>
       )}
-      {state.status === "saved" && (
-        <p role="status" className="text-sm text-muted-foreground">
-          Saved.
-        </p>
-      )}
-      <AppButton type="submit" disabled={pending} className="w-full">
-        {pending ? "Saving…" : "Save"}
+      <AppButton type="submit" pending={pending} pendingLabel="Saving…" className="w-full">
+        Save
       </AppButton>
     </form>
   );

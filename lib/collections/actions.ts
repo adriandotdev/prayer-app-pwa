@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { requireUser } from "@/lib/auth/require-user";
+import { flash } from "@/lib/toast-flash";
 import { collectionSchema } from "./schema";
 
 export type CollectionFormState = { status: "idle" | "error"; message?: string };
@@ -27,6 +28,7 @@ export async function createCollection(_prev: CollectionFormState, formData: For
   if (error || !data) return { status: "error", message: SAVE_ERROR };
 
   revalidatePath("/collections", "layout");
+  await flash("Collection created");
   redirect(`/collections/${data.id}`);
 }
 
@@ -45,6 +47,7 @@ export async function updateCollection(_prev: CollectionFormState, formData: For
   if (error || !data?.length) return { status: "error", message: SAVE_ERROR };
 
   revalidatePath("/collections", "layout");
+  await flash("Collection saved");
   redirect(`/collections/${id}`);
 }
 
@@ -54,6 +57,7 @@ export async function deleteCollection(formData: FormData) {
   await supabase.from("collections").delete().eq("id", id).eq("user_id", user.id);
 
   revalidatePath("/collections", "layout");
+  await flash("Collection deleted");
   redirect("/collections");
 }
 

@@ -43,8 +43,8 @@ export function CollectionForm({ action, cancelHref, submitLabel, collection }: 
         </p>
       )}
       <div className="mt-2 flex gap-3">
-        <AppButton type="submit" disabled={pending} className="flex-1">
-          {pending ? "Saving…" : submitLabel}
+        <AppButton type="submit" pending={pending} pendingLabel="Saving…" className="flex-1">
+          {submitLabel}
         </AppButton>
         <AppButton href={cancelHref} variant="outline">
           Cancel

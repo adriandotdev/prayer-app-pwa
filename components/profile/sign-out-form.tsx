@@ -1,6 +1,6 @@
 "use client";
 
-import { AppButton } from "@/components/app-button";
+import { SubmitButton } from "@/components/submit-button";
 import { clearPendingRosaries } from "@/lib/rosary/pending";
 
 /**
@@ -16,9 +16,9 @@ export function SignOutForm({ action }: { action: () => Promise<void> }) {
         navigator.serviceWorker?.controller?.postMessage({ type: "clear-private-pages" });
       }}
     >
-      <AppButton type="submit" variant="outline" className="w-full">
+      <SubmitButton variant="outline" className="w-full" pendingLabel="Signing out…">
         Sign out
-      </AppButton>
+      </SubmitButton>
     </form>
   );
 }

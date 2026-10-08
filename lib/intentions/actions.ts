@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { requireUser } from "@/lib/auth/require-user";
+import { flash } from "@/lib/toast-flash";
 import { intentionSchema } from "./schema";
 
 export type IntentionFormState = { status: "idle" | "error"; message?: string };
@@ -23,6 +24,7 @@ export async function createIntention(_prev: IntentionFormState, formData: FormD
   if (error) return { status: "error", message: SAVE_ERROR };
 
   revalidatePath("/intentions");
+  await flash("Intention added");
   redirect("/intentions");
 }
 
@@ -41,6 +43,7 @@ export async function updateIntention(_prev: IntentionFormState, formData: FormD
   if (error || !data?.length) return { status: "error", message: SAVE_ERROR };
 
   revalidatePath("/intentions");
+  await flash("Intention saved");
   redirect("/intentions");
 }
 

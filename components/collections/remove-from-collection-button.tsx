@@ -1,17 +1,22 @@
+"use client";
+
 import { X } from "lucide-react";
 
-import { AppButton } from "@/components/app-button";
+import { SubmitButton } from "@/components/submit-button";
 import { setCollectionMembership } from "@/lib/collections/actions";
+import { withToast } from "@/lib/with-toast";
+
+const remove = withToast(setCollectionMembership, "Removed from collection");
 
 export function RemoveFromCollectionButton({ collectionId, prayerId }: { collectionId: string; prayerId: string }) {
   return (
-    <form action={setCollectionMembership}>
+    <form action={remove}>
       <input type="hidden" name="collectionId" value={collectionId} />
       <input type="hidden" name="prayerId" value={prayerId} />
       <input type="hidden" name="member" value="false" />
-      <AppButton type="submit" variant="ghost" size="icon" aria-label="Remove from collection">
+      <SubmitButton variant="ghost" size="icon" pendingLabel={null} aria-label="Remove from collection">
         <X aria-hidden />
-      </AppButton>
+      </SubmitButton>
     </form>
   );
 }

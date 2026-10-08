@@ -6,6 +6,7 @@ import { AppButton } from "@/components/app-button";
 import { DeleteButton } from "@/components/prayers/delete-button";
 import { FavoriteButton } from "@/components/prayers/favorite-button";
 import { PrayerBody } from "@/components/prayers/prayer-body";
+import { SubmitButton } from "@/components/submit-button";
 import { copyPrayer } from "@/lib/prayers/actions";
 import { getFavoriteIds, getPrayer } from "@/lib/prayers/queries";
 
@@ -50,9 +51,9 @@ export default async function PrayerPage({ params }: PageProps<"/prayers/[id]">)
         ) : (
           <form action={copyPrayer} className="w-full sm:w-auto">
             <input type="hidden" name="id" value={prayer.id} />
-            <AppButton type="submit" variant="outline" className="w-full sm:w-auto">
+            <SubmitButton variant="outline" className="w-full sm:w-auto" pendingLabel="Copying…">
               Copy to my prayers
-            </AppButton>
+            </SubmitButton>
           </form>
         )}
       </div>

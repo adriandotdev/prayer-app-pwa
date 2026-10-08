@@ -1,24 +1,12 @@
 "use client";
 
-import { useFormStatus } from "react-dom";
-
-import { AppButton } from "@/components/app-button";
+import { SubmitButton } from "@/components/submit-button";
 
 export function GoogleButton() {
-  const { pending } = useFormStatus();
   return (
-    <AppButton type="submit" variant="outline" size="lg" className="w-full" disabled={pending} aria-disabled={pending}>
-      {pending ? (
-        <>
-          <span aria-hidden className="size-2 animate-pulse rounded-full bg-current" />
-          <span role="status">Connecting to Google…</span>
-        </>
-      ) : (
-        <>
-          <GoogleMark /> Continue with Google
-        </>
-      )}
-    </AppButton>
+    <SubmitButton variant="outline" size="lg" className="w-full" pendingLabel="Connecting to Google…">
+      <GoogleMark /> Continue with Google
+    </SubmitButton>
   );
 }
 
