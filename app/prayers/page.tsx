@@ -6,8 +6,9 @@ import { EmptyState } from "@/components/layout/empty-state";
 import { PageHeader } from "@/components/layout/page-header";
 import { FilterTabs } from "@/components/prayers/filter-tabs";
 import { PrayerCard } from "@/components/prayers/prayer-card";
+import { SearchForm } from "@/components/prayers/search-form";
 import { getFavoriteIds, listPrayers } from "@/lib/prayers/queries";
-import { parseFilter } from "@/lib/prayers/schema";
+import { parseFilter, parseQuery } from "@/lib/prayers/schema";
 
 export const metadata: Metadata = { title: "Prayers" };
 
@@ -19,9 +20,11 @@ const EMPTY: Record<string, { title: string; description: string }> = {
 };
 
 export default async function PrayersPage({ searchParams }: PageProps<"/prayers">) {
-  const filter = parseFilter((await searchParams).filter);
+  const params = await searchParams;
+  const filter = parseFilter(params.filter);
+  const query = parseQuery(params.q);
   const favoriteIds = await getFavoriteIds();
-  const prayers = await listPrayers(filter, favoriteIds);
+  const prayers = await listPrayers(filter, favoriteIds, query);
 
   return (
     <>
@@ -34,9 +37,23 @@ export default async function PrayersPage({ searchParams }: PageProps<"/prayers"
           </AppButton>
         }
       />
-      <FilterTabs active={filter} />
+      <SearchForm filter={filter} query={query} />
+      <FilterTabs active={filter} query={query} />
       {prayers.length === 0 ? (
-        <EmptyState icon={BookOpen} {...EMPTY[filter]} />
+        <EmptyState
+          icon={BookOpen}
+          {...(query
+            ? {
+                title: "No matching prayers",
+                description: `Nothing found for “${query}”. Try a different word, or clear the search.`,
+                action: (
+                  <AppButton href={filter === "all" ? "/prayers" : `/prayers?filter=${filter}`} variant="outline">
+                    Clear search
+                  </AppButton>
+                ),
+              }
+            : EMPTY[filter])}
+        />
       ) : (
         <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {prayers.map((p) => (

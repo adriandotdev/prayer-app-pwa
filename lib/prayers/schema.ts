@@ -13,3 +13,8 @@ export function parseFilter(value: string | string[] | undefined): PrayerFilter 
   const v = Array.isArray(value) ? value[0] : value;
   return (FILTERS as readonly string[]).includes(v ?? "") ? (v as PrayerFilter) : "all";
 }
+
+export function parseQuery(value: string | string[] | undefined) {
+  const v = Array.isArray(value) ? value[0] : value;
+  return (v ?? "").trim().slice(0, 100);
+}
