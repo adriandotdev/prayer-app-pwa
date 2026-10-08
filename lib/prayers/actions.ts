@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { requireUser } from "@/lib/auth/require-user";
+import { flash } from "@/lib/toast-flash";
 import { prayerSchema } from "./schema";
 
 export type PrayerFormState = { status: "idle" | "error"; message?: string };
@@ -31,6 +32,7 @@ export async function createPrayer(_prev: PrayerFormState, formData: FormData): 
   if (error || !data) return { status: "error", message: SAVE_ERROR };
 
   revalidatePath("/prayers");
+  await flash("Prayer added");
   redirect(`/prayers/${data.id}`);
 }
 
@@ -50,6 +52,7 @@ export async function updatePrayer(_prev: PrayerFormState, formData: FormData): 
   if (error || !data?.length) return { status: "error", message: SAVE_ERROR };
 
   revalidatePath("/prayers");
+  await flash("Prayer saved");
   redirect(`/prayers/${id}`);
 }
 
@@ -59,6 +62,7 @@ export async function deletePrayer(formData: FormData) {
   await supabase.from("prayers").delete().eq("id", id).eq("user_id", user.id);
 
   revalidatePath("/prayers");
+  await flash("Prayer deleted");
   redirect("/prayers");
 }
 
@@ -77,6 +81,7 @@ export async function copyPrayer(formData: FormData) {
     .single();
 
   revalidatePath("/prayers");
+  if (copy) await flash("Copied to my prayers");
   redirect(copy ? `/prayers/${copy.id}` : "/prayers");
 }
 

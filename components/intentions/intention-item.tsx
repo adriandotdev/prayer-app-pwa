@@ -7,8 +7,13 @@ import { AppButton } from "@/components/app-button";
 import { ConfirmationSheet } from "@/components/confirmation-sheet";
 import { StaggerItem } from "@/components/motion/stagger-item";
 import { LocalDate } from "@/components/local-date";
+import { SubmitButton } from "@/components/submit-button";
 import { deleteIntention, setIntentionAnswered } from "@/lib/intentions/actions";
 import type { Intention } from "@/lib/intentions/queries";
+import { withToast } from "@/lib/with-toast";
+
+const setAnswered = withToast(setIntentionAnswered, (fd) => (fd.get("answered") === "true" ? "Marked as answered" : "Reopened"));
+const remove = withToast(deleteIntention, "Intention deleted");
 
 export function IntentionItem({ intention, index = 0 }: { intention: Intention; index?: number }) {
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -26,13 +31,13 @@ export function IntentionItem({ intention, index = 0 }: { intention: Intention; 
       </p>
 
       <div className="mt-4 flex items-center gap-2">
-        <form action={setIntentionAnswered} className="flex-1">
+        <form action={setAnswered} className="flex-1">
           <input type="hidden" name="id" value={intention.id} />
           <input type="hidden" name="answered" value={String(!answered)} />
-          <AppButton type="submit" variant="outline" className="w-full">
+          <SubmitButton variant="outline" className="w-full">
             {answered ? <RotateCcw aria-hidden /> : <Check aria-hidden />}
             {answered ? "Reopen" : "Mark answered"}
-          </AppButton>
+          </SubmitButton>
         </form>
         {answered ? null : (
           <AppButton href={`/intentions/${intention.id}/edit`} variant="outline">
@@ -53,7 +58,7 @@ export function IntentionItem({ intention, index = 0 }: { intention: Intention; 
         cancelLabel="Keep intention"
         confirmLabel="Delete intention"
         pendingLabel="Deleting…"
-        action={deleteIntention}
+        action={remove}
         fields={{ id: intention.id }}
       />
     </StaggerItem>
