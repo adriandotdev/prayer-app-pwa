@@ -18,7 +18,7 @@ export function OfflineIndicator() {
   return (
     <div
       role="status"
-      className="fixed inset-x-0 top-0 z-50 flex items-center justify-center gap-2 bg-primary px-4 py-1.5 pt-[calc(0.375rem+env(safe-area-inset-top))] text-xs text-primary-foreground"
+      className="flex items-center justify-center gap-2 bg-primary px-4 py-1.5 pt-[calc(0.375rem+env(safe-area-inset-top))] text-xs text-primary-foreground"
     >
       <WifiOff className="size-3.5" aria-hidden />
       You&apos;re offline. The Rosary and saved prayers still work.

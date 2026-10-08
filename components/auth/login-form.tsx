@@ -1,81 +1,27 @@
-"use client";
-
-import { useActionState } from "react";
-import { Mail } from "lucide-react";
-
 import { AppButton } from "@/components/app-button";
-import { signInWithEmail, signInWithGoogle, type LoginState } from "@/app/login/actions";
-
-const initial: LoginState = { status: "idle" };
+import { signInWithGoogle } from "@/app/login/actions";
 
 export function LoginForm({ next, error }: { next: string; error?: string }) {
-  const [state, action, pending] = useActionState(signInWithEmail, initial);
-
-  if (state.status === "sent") {
-    return (
-      <div role="status" className="rounded-2xl border border-gold/40 bg-card p-6 text-center">
-        <Mail className="mx-auto size-8 text-gold" aria-hidden />
-        <h2 className="mt-3 font-heading text-2xl">Check your email</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          We sent a sign-in link to <span className="text-foreground">{state.email}</span>. Open it on this device to continue.
-        </p>
-      </div>
-    );
-  }
-
   const message =
-    state.status === "error"
-      ? state.message
-      : error === "callback"
-        ? "That sign-in link is invalid or expired. Please request a new one."
-        : error === "oauth"
-          ? "Google sign-in isn't available right now."
-          : undefined;
+    error === "callback"
+      ? "Sign-in didn't complete. Please try again."
+      : error === "oauth"
+        ? "Google sign-in isn't available right now."
+        : undefined;
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-4">
       <form action={signInWithGoogle}>
         <input type="hidden" name="next" value={next} />
         <AppButton type="submit" variant="outline" size="lg" className="w-full">
           <GoogleMark /> Continue with Google
         </AppButton>
       </form>
-
-      <div className="flex items-center gap-3 text-xs text-muted-foreground">
-        <span className="h-px flex-1 bg-border" /> or <span className="h-px flex-1 bg-border" />
-      </div>
-
-      <form action={action} className="flex flex-col gap-3">
-        <input type="hidden" name="next" value={next} />
-        <label htmlFor="email" className="text-sm font-medium">
-          Email
-        </label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          inputMode="email"
-          autoComplete="email"
-          autoCapitalize="none"
-          autoCorrect="off"
-          spellCheck={false}
-          enterKeyHint="send"
-          required
-          defaultValue={state.email}
-          placeholder="you@example.com"
-          aria-invalid={state.status === "error"}
-          aria-describedby={message ? "login-error" : undefined}
-          className="min-h-14 rounded-xl border border-border bg-background px-4 text-base outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-        />
-        {message && (
-          <p id="login-error" role="alert" className="text-sm text-destructive">
-            {message}
-          </p>
-        )}
-        <AppButton type="submit" size="lg" disabled={pending}>
-          {pending ? "Sending…" : "Email me a sign-in link"}
-        </AppButton>
-      </form>
+      {message && (
+        <p role="alert" className="text-sm text-destructive">
+          {message}
+        </p>
+      )}
     </div>
   );
 }

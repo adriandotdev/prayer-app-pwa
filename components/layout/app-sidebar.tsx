@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Logo } from "@/components/brand/logo";
 import { usePathname } from "next/navigation";
+import { SidebarUser } from "./sidebar-user";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { NAV_ITEMS, isActive } from "@/lib/nav";
 import { cn } from "@/lib/utils";
@@ -44,8 +45,8 @@ export function AppSidebar() {
         </ul>
       </nav>
 
-      <div className="flex items-center justify-between border-t border-sidebar-border px-4 py-3">
-        <span className="text-xs text-muted-foreground">Appearance</span>
+      <div className="flex items-center gap-2 border-t border-sidebar-border px-3 py-3">
+        <SidebarUser pathname={pathname} />
         <ThemeToggle />
       </div>
     </aside>

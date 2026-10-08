@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { AppSidebar } from "./app-sidebar";
 import { BottomNav } from "./bottom-nav";
 import { MobileHeader } from "./mobile-header";
+import { OfflineIndicator } from "@/components/pwa/offline-indicator";
 import { InstallPrompt } from "@/components/pwa/install-prompt";
 
 export function AppShell({ children }: { children: ReactNode }) {
@@ -15,6 +16,8 @@ export function AppShell({ children }: { children: ReactNode }) {
       </a>
       <AppSidebar />
       <div className="md:pl-60">
+        {/* In flow, not fixed: it pushes the header and back buttons down instead of covering them. */}
+        <OfflineIndicator />
         <MobileHeader />
         <main
           id="main"
