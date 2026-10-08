@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import type { CSSProperties } from "react";
 import { ArrowLeft, ChevronRight, FolderHeart, Plus } from "lucide-react";
 
 import { AppButton } from "@/components/app-button";
@@ -35,11 +36,11 @@ export default async function CollectionsPage() {
         />
       ) : (
         <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
-          {collections.map((c) => (
-            <li key={c.id}>
+          {collections.map((c, i) => (
+            <li key={c.id} className="ora-stagger" style={{ "--i": i } as CSSProperties}>
               <Link
                 href={`/collections/${c.id}`}
-                className="flex min-h-16 items-center gap-3 rounded-2xl border border-border bg-card p-4 transition-colors hover:bg-secondary/50 active:bg-secondary/50 focus-visible:outline-2 focus-visible:outline-ring"
+                className="flex min-h-16 items-center gap-3 rounded-2xl border border-border bg-card p-4 transition-colors duration-150 hover:border-gold/40 hover:bg-secondary/50 active:bg-secondary/50 focus-visible:outline-2 focus-visible:outline-ring"
               >
                 <span className="min-w-0 flex-1">
                   <span className="block truncate font-display text-xl">{c.name}</span>

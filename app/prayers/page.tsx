@@ -61,8 +61,8 @@ export default async function PrayersPage({ searchParams }: PageProps<"/prayers"
         />
       ) : (
         <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
-          {prayers.map((p) => (
-            <PrayerCard key={p.id} prayer={p} isFavorite={favoriteIds.has(p.id)} />
+          {prayers.map((p, i) => (
+            <PrayerCard key={p.id} prayer={p} isFavorite={favoriteIds.has(p.id)} index={i} />
           ))}
         </ul>
       )}
