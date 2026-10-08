@@ -51,12 +51,12 @@ export function SequencePlayer({ sequence, initialIndex, initialMode, onFinish, 
   });
 
   return (
-    <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 md:flex-row md:items-start md:gap-10">
+    <div className="mx-auto flex w-full max-w-5xl flex-col gap-4 md:flex-row md:items-start md:gap-10">
       <div className="md:sticky md:top-6 md:w-72 md:shrink-0">
         <BeadTracker
           sequence={sequence}
           index={index}
-          className="h-52 w-auto md:h-[30rem]"
+          className="h-40 w-auto sm:h-48 md:h-[30rem]"
           onSelectBead={(beadId) => {
             const target = firstStepForBead(sequence, beadId);
             if (target >= 0) setIndex(target);
@@ -101,7 +101,7 @@ export function SequencePlayer({ sequence, initialIndex, initialMode, onFinish, 
               else back();
             }
           }}
-          className="flex min-h-72 flex-col gap-4 rounded-2xl border border-border bg-card p-6 shadow-sm"
+          className="flex min-h-60 flex-col gap-3 rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-6"
         >
           <p className="text-xs uppercase tracking-widest text-muted-foreground">
             {step.section} · {position} of {total}
@@ -152,7 +152,7 @@ export function SequencePlayer({ sequence, initialIndex, initialMode, onFinish, 
           )}
         </article>
 
-        <div className="flex items-center gap-3">
+        <div className="sticky bottom-[calc(3.5rem+env(safe-area-inset-bottom))] z-20 -mx-4 flex items-center gap-3 border-t border-border bg-background/95 px-4 py-3 backdrop-blur md:static md:mx-0 md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none">
           <Button variant="outline" size="lg" onClick={back} disabled={index === 0} aria-label="Previous">
             <ArrowLeft />
             Back
@@ -163,7 +163,7 @@ export function SequencePlayer({ sequence, initialIndex, initialMode, onFinish, 
           </Button>
         </div>
         <p className="text-center text-xs text-muted-foreground">
-          Step {index + 1} of {sequence.steps.length} · swipe, tap a bead, or use the arrow keys
+          Step {index + 1} of {sequence.steps.length} · swipe or tap a bead
         </p>
       </div>
     </div>

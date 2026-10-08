@@ -23,7 +23,7 @@ export function BeadTracker({ sequence, index, onSelectBead, className }: Props)
       viewBox={`0 0 ${width} ${height}`}
       role="group"
       aria-label={`Bead tracker. Currently on ${step.title}, step ${index + 1} of ${sequence.steps.length}.`}
-      className={cn("mx-auto h-auto w-full", className)}
+      className={cn("mx-auto h-auto w-full select-none touch-manipulation", className)}
     >
       {sequence.beads.map((bead) => {
         const state = states.get(bead.id) ?? "upcoming";

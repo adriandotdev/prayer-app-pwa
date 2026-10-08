@@ -122,10 +122,13 @@
   }
   html {
     @apply font-sans;
+    -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
   }
   body {
     @apply bg-background text-foreground antialiased;
+    overscroll-behavior-y: none;
+    touch-action: manipulation;
   }
   h1,
   h2,

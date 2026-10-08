@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { AppSidebar } from "./app-sidebar";
 import { BottomNav } from "./bottom-nav";
 import { MobileHeader } from "./mobile-header";
+import { InstallPrompt } from "@/components/pwa/install-prompt";
 
 export function AppShell({ children }: { children: ReactNode }) {
   return (
@@ -17,8 +18,9 @@ export function AppShell({ children }: { children: ReactNode }) {
         <MobileHeader />
         <main
           id="main"
-          className="mx-auto w-full max-w-3xl px-5 pt-8 pb-28 md:px-10 md:pt-14 md:pb-16"
+          className="mx-auto w-full max-w-3xl px-4 pt-6 pb-32 md:px-10 md:pt-14 md:pb-16"
         >
+          <InstallPrompt />
           {children}
         </main>
       </div>
