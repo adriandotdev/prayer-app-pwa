@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { AppButton } from "@/components/app-button";
 
 export default function ErrorPage({ reset }: { error: Error & { digest?: string }; reset: () => void }) {
   return (
@@ -9,9 +9,9 @@ export default function ErrorPage({ reset }: { error: Error & { digest?: string 
       <p className="mx-auto mt-3 max-w-sm text-muted-foreground">
         Please try again. If it keeps happening, come back in a little while.
       </p>
-      <Button className="mt-6" onClick={reset}>
+      <AppButton className="mt-6" onClick={reset}>
         Try again
-      </Button>
+      </AppButton>
     </div>
   );
 }

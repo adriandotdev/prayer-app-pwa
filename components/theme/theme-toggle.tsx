@@ -2,7 +2,7 @@
 
 import { Monitor, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { Button } from "@/components/ui/button";
+import { AppButton } from "@/components/app-button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,11 +17,11 @@ export function ThemeToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" aria-label="Change theme">
+        <AppButton variant="ghost" size="icon" aria-label="Change theme">
           {/* Both icons are always rendered; CSS picks one, so there is no hydration mismatch. */}
           <Sun className="size-5 dark:hidden" aria-hidden />
           <Moon className="hidden size-5 dark:block" aria-hidden />
-        </Button>
+        </AppButton>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuRadioGroup value={theme ?? "system"} onValueChange={setTheme}>

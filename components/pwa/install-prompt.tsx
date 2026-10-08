@@ -3,7 +3,7 @@
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { Download, Share, X } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { AppButton } from "@/components/app-button";
 
 type InstallEvent = Event & { prompt: () => Promise<void>; userChoice: Promise<{ outcome: string }> };
 
@@ -74,8 +74,7 @@ export function InstallPrompt() {
           </p>
         )}
         {deferred && (
-          <Button
-            size="sm"
+          <AppButton
             className="mt-3"
             onClick={async () => {
               await deferred.prompt();
@@ -84,10 +83,10 @@ export function InstallPrompt() {
             }}
           >
             <Download /> Install
-          </Button>
+          </AppButton>
         )}
       </div>
-      <button type="button" onClick={dismiss} aria-label="Dismiss" className="rounded p-1 text-muted-foreground hover:text-foreground">
+      <button type="button" onClick={dismiss} aria-label="Dismiss" className="-m-2 rounded p-2.5 text-muted-foreground hover:text-foreground">
         <X className="size-4" />
       </button>
     </section>

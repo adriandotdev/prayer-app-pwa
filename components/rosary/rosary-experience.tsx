@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { AppButton } from "@/components/app-button";
 import { SequencePlayer } from "@/components/sequence/sequence-player";
 import { MYSTERY_SETS, MYSTERY_SET_ORDER, type MysterySetId } from "@/data/rosary/mysteries";
 import { mysterySetForDay } from "@/data/rosary/schedule";
@@ -60,9 +60,9 @@ export function RosaryExperience() {
         <p className="prayer-text text-muted-foreground">
           You have finished the {MYSTERY_SETS[view.setId].name}. May the peace of Christ keep your heart.
         </p>
-        <Button size="lg" onClick={() => { clearProgress(); setView({ kind: "home" }); }}>
+        <AppButton size="lg" onClick={() => { clearProgress(); setView({ kind: "home" }); }}>
           Return
-        </Button>
+        </AppButton>
       </div>
     );
   }
@@ -76,12 +76,12 @@ export function RosaryExperience() {
             {MYSTERY_SETS[resumeSet].name}, step {saved.index + 1} of 80.
           </p>
           <div className="mt-4 flex gap-3">
-            <Button onClick={() => setView({ kind: "play", setId: resumeSet, index: saved.index, mode: saved.mode })}>
+            <AppButton onClick={() => setView({ kind: "play", setId: resumeSet, index: saved.index, mode: saved.mode })}>
               Resume
-            </Button>
-            <Button variant="outline" onClick={() => clearProgress()}>
+            </AppButton>
+            <AppButton variant="outline" onClick={() => clearProgress()}>
               Start over
-            </Button>
+            </AppButton>
           </div>
         </section>
       )}
@@ -123,12 +123,12 @@ export function RosaryExperience() {
       </section>
 
       <div className="flex flex-col gap-2 sm:flex-row">
-        <Button size="lg" className="flex-1" onClick={() => setView({ kind: "play", setId: selected, index: 0, mode: "learn" })}>
+        <AppButton size="lg" className="flex-1" onClick={() => setView({ kind: "play", setId: selected, index: 0, mode: "learn" })}>
           Begin in Learn mode
-        </Button>
-        <Button size="lg" variant="outline" className="flex-1" onClick={() => setView({ kind: "play", setId: selected, index: 0, mode: "pray" })}>
+        </AppButton>
+        <AppButton size="lg" variant="outline" className="flex-1" onClick={() => setView({ kind: "play", setId: selected, index: 0, mode: "pray" })}>
           Begin in Pray mode
-        </Button>
+        </AppButton>
       </div>
     </div>
   );

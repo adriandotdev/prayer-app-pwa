@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, BookOpen, HandHeart } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { AppButton } from "@/components/app-button";
 import { BeadTracker } from "@/components/sequence/bead-tracker";
 import { clampIndex, firstStepForBead, isLastStep, sectionProgress } from "@/lib/sequence/engine";
 import { saveProgress, type PrayerMode } from "@/lib/sequence/progress";
@@ -69,7 +69,7 @@ export function SequencePlayer({ sequence, initialIndex, initialMode, onFinish, 
           <button
             type="button"
             onClick={onExit}
-            className="text-sm text-muted-foreground underline-offset-4 hover:underline"
+            className="-ml-2 min-h-11 px-2 text-sm text-muted-foreground underline-offset-4 hover:underline"
           >
             Leave
           </button>
@@ -153,14 +153,14 @@ export function SequencePlayer({ sequence, initialIndex, initialMode, onFinish, 
         </article>
 
         <div className="sticky bottom-[calc(3.5rem+env(safe-area-inset-bottom))] z-20 -mx-4 flex items-center gap-3 border-t border-border bg-background/95 px-4 py-3 backdrop-blur md:static md:mx-0 md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none">
-          <Button variant="outline" size="lg" onClick={back} disabled={index === 0} aria-label="Previous">
+          <AppButton variant="outline" size="lg" onClick={back} disabled={index === 0} aria-label="Previous">
             <ArrowLeft />
             Back
-          </Button>
-          <Button size="lg" className="flex-1" onClick={next}>
+          </AppButton>
+          <AppButton size="lg" className="flex-1" onClick={next}>
             {last ? "Finish" : "Next"}
             <ArrowRight />
-          </Button>
+          </AppButton>
         </div>
         <p className="text-center text-xs text-muted-foreground">
           Step {index + 1} of {sequence.steps.length} · swipe or tap a bead
@@ -187,7 +187,7 @@ function ModeButton({
       aria-pressed={active}
       onClick={onClick}
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm transition-colors",
+        "inline-flex items-center min-h-10 gap-1.5 rounded-full px-4 text-sm transition-colors",
         active ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground",
       )}
     >
