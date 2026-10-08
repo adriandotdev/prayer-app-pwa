@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96" role="img" aria-labelledby="loading-title">
+  <title id="loading-title">Loading</title>
+  <style>
+    svg{--ora-gold:#c9a24b}
+    .beads{fill:currentColor;opacity:.3}
+    .h{fill:var(--ora-gold);opacity:0;animation:glow 1.8s ease-in-out infinite}
+    .h:first-child{opacity:1}
+    @keyframes glow{0%,100%{opacity:0}6%,12%{opacity:1}25%{opacity:0}}
+    .h:nth-child(1){animation-delay:-1.8s}.h:nth-child(2){animation-delay:-1.65s}
+    .h:nth-child(3){animation-delay:-1.5s}.h:nth-child(4){animation-delay:-1.35s}
+    .h:nth-child(5){animation-delay:-1.2s}.h:nth-child(6){animation-delay:-1.05s}
+    .h:nth-child(7){animation-delay:-.9s}.h:nth-child(8){animation-delay:-.75s}
+    .h:nth-child(9){animation-delay:-.6s}.h:nth-child(10){animation-delay:-.45s}
+    .h:nth-child(11){animation-delay:-.3s}.h:nth-child(12){animation-delay:-.15s}
+    @media (prefers-reduced-motion:reduce){.h{animation:none;opacity:0}.h:first-child{opacity:1}}
+  </style>
+  <g class="beads" transform="translate(4.8 -4.2) scale(.9)">
+    <circle cx="48" cy="17" r="3"/><circle cx="63.5" cy="21.2" r="3"/>
+    <circle cx="74.8" cy="32.5" r="3"/><circle cx="79" cy="48" r="3"/>
+    <circle cx="74.8" cy="63.5" r="3"/><circle cx="63.5" cy="74.8" r="3"/>
+    <circle cx="48" cy="79" r="4.5"/><circle cx="32.5" cy="74.8" r="3"/>
+    <circle cx="21.2" cy="63.5" r="3"/><circle cx="17" cy="48" r="3"/>
+    <circle cx="21.2" cy="32.5" r="3"/><circle cx="32.5" cy="21.2" r="3"/>
+  </g>
+  <g fill="#c9a24b" transform="translate(4.8 -4.2) scale(.9)">
+    <circle class="h" cx="48" cy="17" r="3"/><circle class="h" cx="63.5" cy="21.2" r="3"/>
+    <circle class="h" cx="74.8" cy="32.5" r="3"/><circle class="h" cx="79" cy="48" r="3"/>
+    <circle class="h" cx="74.8" cy="63.5" r="3"/><circle class="h" cx="63.5" cy="74.8" r="3"/>
+    <circle class="h" cx="48" cy="79" r="4.5"/><circle class="h" cx="32.5" cy="74.8" r="3"/>
+    <circle class="h" cx="21.2" cy="63.5" r="3"/><circle class="h" cx="17" cy="48" r="3"/>
+    <circle class="h" cx="21.2" cy="32.5" r="3"/><circle class="h" cx="32.5" cy="21.2" r="3"/>
+  </g>
+  <path d="M48 70v7" fill="none" stroke="currentColor" stroke-width="2" opacity=".5"/>
+  <path d="M46 75h4v5h5v4h-5v9h-4v-9h-5v-4h5z" fill="currentColor" opacity=".72"/>
+</svg>

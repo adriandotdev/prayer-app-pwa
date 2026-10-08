@@ -7,7 +7,7 @@
  *  - Page navigations: network-first, falling back to cache, then /offline.
  *  - Everything else (Supabase, /api, /auth, non-GET): left to the network.
  */
-const VERSION = "v1";
+const VERSION = "v2";
 const STATIC_CACHE = `ora-static-${VERSION}`;
 const PAGE_CACHE = `ora-pages-${VERSION}`;
 const PRECACHE_PAGES = ["/offline", "/rosary", "/"];
@@ -36,7 +36,7 @@ async function precache() {
   );
 
   await Promise.all(
-    [...assets, "/icons/icon-192.png", "/icons/icon-512.png"].map(async (url) => {
+    [...assets, "/brand/icon-192.png", "/brand/icon-512.png"].map(async (url) => {
       try {
         const res = await fetch(url);
         if (res.ok) await statics.put(url, res);
@@ -73,7 +73,7 @@ self.addEventListener("fetch", (event) => {
 
   if (
     url.pathname.startsWith("/_next/static/") ||
-    url.pathname.startsWith("/icons/") ||
+    url.pathname.startsWith("/brand/") ||
     /\.(?:woff2?|png|jpg|jpeg|svg|webp|ico)$/.test(url.pathname)
   ) {
     event.respondWith(cacheFirst(request));

@@ -20,7 +20,13 @@ export const metadata: Metadata = {
   description: "A calm place to keep your prayers and pray the Rosary.",
   applicationName: "Ora",
   appleWebApp: { capable: true, title: "Ora", statusBarStyle: "default" },
-  icons: { icon: "/icons/icon-192.png", apple: "/icons/apple-touch-icon.png" },
+  icons: {
+    icon: [
+      { url: "/brand/ora-app-icon.svg", type: "image/svg+xml" },
+      { url: "/brand/icon-192.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: "/brand/apple-touch-icon.png",
+  },
 };
 
 export const viewport: Viewport = {

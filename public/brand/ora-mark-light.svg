@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Ora light mark">
+  <title>Ora light mark</title>
+  <circle cx="256" cy="256" r="154" fill="none" stroke="#0f1626" stroke-width="32"/>
+  <path d="M236 161h40v57h49v36h-49v96h-40v-96h-49v-36h49z" fill="#c9a24b"/>
+</svg>
