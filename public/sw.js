@@ -5,12 +5,15 @@
  *    JS/CSS it references), so the Rosary works fully offline after one visit.
  *  - Static assets (/_next/static, icons, fonts): cache-first.
  *  - Page navigations: network-first, falling back to cache, then /offline.
+ *  - Sign-out: the page asks us to drop cached signed-in pages (see clearPrivatePages).
  *  - Everything else (Supabase, /api, /auth, non-GET): left to the network.
  */
-const VERSION = "v2";
+const VERSION = "v4";
 const STATIC_CACHE = `ora-static-${VERSION}`;
 const PAGE_CACHE = `ora-pages-${VERSION}`;
 const PRECACHE_PAGES = ["/offline", "/rosary", "/"];
+// Signed-in areas: cached as they are visited, and dropped again on sign-out.
+const PRIVATE_PREFIXES = ["/prayers", "/collections", "/intentions", "/profile"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(precache().then(() => self.skipWaiting()));
@@ -59,6 +62,34 @@ self.addEventListener("activate", (event) => {
   );
 });
 
+self.addEventListener("message", (event) => {
+  if (event.data?.type === "clear-private-pages") event.waitUntil(clearPrivatePages());
+  if (event.data?.type === "cache-page") event.waitUntil(cachePage(event.data.url));
+});
+
+// In-app link taps are client-side navigations the fetch handler never sees, so the page
+// reports where it is and we store a fresh copy, making visited pages work offline.
+async function cachePage(path) {
+  if (typeof path !== "string" || !path.startsWith("/") || path.startsWith("//")) return;
+  try {
+    const res = await fetch(path, { credentials: "same-origin" });
+    // A redirect (e.g. signed out -> /login) must never be stored under the original URL.
+    if (res.ok && !res.redirected && res.type === "basic") {
+      await (await caches.open(PAGE_CACHE)).put(path, res);
+    }
+  } catch {
+    /* offline: nothing to refresh */
+  }
+}
+
+async function clearPrivatePages() {
+  const cache = await caches.open(PAGE_CACHE);
+  for (const request of await cache.keys()) {
+    const path = new URL(request.url).pathname;
+    if (PRIVATE_PREFIXES.some((p) => path === p || path.startsWith(`${p}/`))) await cache.delete(request);
+  }
+}
+
 self.addEventListener("fetch", (event) => {
   const { request } = event;
   if (request.method !== "GET") return;
@@ -93,7 +124,7 @@ async function networkFirstPage(request) {
   const cache = await caches.open(PAGE_CACHE);
   try {
     const res = await fetch(request);
-    if (res.ok && res.type === "basic") cache.put(request, res.clone());
+    if (res.ok && !res.redirected && res.type === "basic") cache.put(request, res.clone());
     return res;
   } catch {
     return (
