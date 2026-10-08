@@ -5,7 +5,11 @@ description: Mobile-first UX conventions for the Ora prayer PWA (Next.js 16, Tai
 
 # Mobile-first UX for Ora
 
-Ora is a prayer app. People use it one-handed, on a phone, often in a dim room, sometimes with the screen lit for a long reading. A cramped layout, a missed tap, or a bright flash breaks the moment of prayer. So the phone layout is the real layout: write it first, then add `md:` enhancements for the sidebar and wider screens. The conventions below already exist in the code; follow them instead of inventing new ones.
+Ora is a prayer app, designed mobile-first but never mobile-only: desktop is a supported, first-class view that must look intentional too. People use it one-handed, on a phone, often in a dim room, sometimes with the screen lit for a long reading. A cramped layout, a missed tap, or a bright flash breaks the moment of prayer. So the phone layout is the real layout: write it first, then add `md:` enhancements for the sidebar and wider screens. The conventions below already exist in the code; follow them instead of inventing new ones.
+
+## Mobile-first, desktop-considered
+
+Design the phone layout first, then explicitly decide what each screen does at `md:` (768px) and above. Do not just stretch the phone layout: on desktop, bottom-anchored UI should become a centered or inline treatment, tap-sized controls can stay generous but layouts should use the width (sidebar, columns, `max-w-3xl` measure), and hover/keyboard states should be polished. Every UI change should be checked at ~390px and at a desktop width, in both themes.
 
 ## 1. Write the base classes for a 360–430px screen
 
@@ -54,6 +58,7 @@ The viewport uses `viewportFit: "cover"` (`app/layout.tsx`), so content can sit 
 - Show errors next to the field and keep the user's input. Disable the submit button while pending and show a loading state (`components/brand/loader.tsx`).
 - Keep flows short. The Rosary advance action should stay one tap, and nothing in the prayer flow should need a keyboard.
 - Prefer inline or bottom-aligned UI over centered modals on phones. If a menu is needed, use the Radix `dropdown-menu` already in `components/ui/`.
+- Confirmations (delete and other destructive or irreversible actions) use `components/confirmation-sheet.tsx` (`ConfirmationSheet`), never an inline swap or `window.confirm`. It is a bottom sheet on phones (drag handle, swipe to dismiss, stacked full-width actions, safe-area padding) and a restrained centered panel at `md:` with the same branding. Pass a server action via `action` + `fields` so form semantics are kept, and write specific copy ("Delete this prayer?", "Keep prayer"), not "Are you sure?". Animation uses `motion/react` and respects reduced motion.
 
 ## 8. Offline and PWA
 
