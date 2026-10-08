@@ -38,7 +38,7 @@ export default async function PrayersPage({ searchParams }: PageProps<"/prayers"
       {prayers.length === 0 ? (
         <EmptyState icon={BookOpen} {...EMPTY[filter]} />
       ) : (
-        <ul className="grid gap-3 md:grid-cols-2">
+        <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {prayers.map((p) => (
             <PrayerCard key={p.id} prayer={p} isFavorite={favoriteIds.has(p.id)} />
           ))}

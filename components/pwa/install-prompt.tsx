@@ -86,7 +86,7 @@ export function InstallPrompt() {
           </AppButton>
         )}
       </div>
-      <button type="button" onClick={dismiss} aria-label="Dismiss" className="-m-2 rounded p-2.5 text-muted-foreground hover:text-foreground">
+      <button type="button" onClick={dismiss} aria-label="Dismiss" className="-m-1 -mt-2 flex size-11 shrink-0 items-center justify-center rounded text-muted-foreground hover:text-foreground">
         <X className="size-4" />
       </button>
     </section>

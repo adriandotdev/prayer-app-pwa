@@ -27,12 +27,12 @@ export default function HomePage() {
   return (
     <>
       <PageHeader title="Peace be with you" description="Take a moment. What would you like to pray?" />
-      <ul className="grid gap-4">
+      <ul className="grid grid-cols-1 gap-4">
         {SECTIONS.map(({ href, title, body, icon: Icon }) => (
           <li key={href}>
             <Link
               href={href}
-              className="group flex items-center gap-5 rounded-2xl border border-border bg-card p-5 transition-colors hover:border-gold/60"
+              className="group flex items-center gap-5 rounded-2xl border border-border bg-card p-5 transition-colors hover:border-gold/60 active:bg-secondary/50"
             >
               <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-accent text-gold-foreground dark:text-gold">
                 <Icon className="size-6" aria-hidden />
