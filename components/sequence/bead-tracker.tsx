@@ -48,7 +48,7 @@ export function BeadTracker({ sequence, index, onSelectBead, className }: Props)
             {/* larger invisible hit area for touch */}
             <circle cx={bead.x} cy={bead.y} r={Math.max(r + 4, 11)} fill="transparent" strokeWidth={2} className="stroke-transparent" />
             {state === "current" && (
-              <circle cx={bead.x} cy={bead.y} r={r + 5} className="fill-gold/25 stroke-gold" strokeWidth={1.5} />
+              <circle cx={bead.x} cy={bead.y} r={r + 5} className="ora-halo fill-gold/25 stroke-gold" strokeWidth={1.5} />
             )}
             {bead.kind === "anchor" ? (
               <Anchor bead={bead} state={state} />

@@ -1,13 +1,16 @@
 "use client";
 
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, BookOpen, HandHeart } from "lucide-react";
 
 import { AppButton } from "@/components/app-button";
 import { BeadTracker } from "@/components/sequence/bead-tracker";
 import { clampIndex, firstStepForBead, isLastStep, sectionProgress } from "@/lib/sequence/engine";
+import { EASE_ORA } from "@/lib/motion";
 import { saveProgress, type PrayerMode } from "@/lib/sequence/progress";
 import type { SequenceDefinition } from "@/lib/sequence/types";
+import { useIsDesktop } from "@/lib/use-is-desktop";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -24,6 +27,16 @@ export function SequencePlayer({ sequence, initialIndex, initialMode, onFinish, 
   const [index, setIndex] = useState(() => clampIndex(sequence, initialIndex));
   const [mode, setMode] = useState<PrayerMode>(initialMode);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
+  const reduceMotion = useReducedMotion();
+  const isDesktop = useIsDesktop();
+  // Direction of travel, so on a phone the text slides the way the finger swiped. Desktop only cross-fades.
+  const [prevIndex, setPrevIndex] = useState(index);
+  const [direction, setDirection] = useState<1 | -1>(1);
+  if (prevIndex !== index) {
+    setPrevIndex(index);
+    setDirection(index > prevIndex ? 1 : -1);
+  }
+  const slide = reduceMotion || isDesktop ? 0 : 16;
 
   const step = sequence.steps[index];
   const prayer = step.prayerId ? sequence.prayers[step.prayerId] : undefined;
@@ -103,53 +116,69 @@ export function SequencePlayer({ sequence, initialIndex, initialMode, onFinish, 
           }}
           className="flex min-h-60 flex-col gap-3 rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-6"
         >
-          <p className="text-xs uppercase tracking-widest text-muted-foreground">
-            {step.section} · {position} of {total}
-          </p>
-          <div>
-            <h2 className="font-heading text-3xl">{step.title}</h2>
-            {step.subtitle && <p className="mt-1 text-sm text-muted-foreground">{step.subtitle}</p>}
-          </div>
+          <AnimatePresence mode="wait" initial={false} custom={direction}>
+            <motion.div
+              key={index}
+              custom={direction}
+              variants={{
+                enter: (d: number) => ({ opacity: 0, x: d * slide }),
+                center: { opacity: 1, x: 0, transition: { duration: reduceMotion ? 0 : 0.24, ease: EASE_ORA } },
+                exit: (d: number) => ({ opacity: 0, x: d * -slide, transition: { duration: reduceMotion ? 0 : 0.1 } }),
+              }}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="flex flex-1 flex-col gap-3"
+            >
+            <p className="text-xs uppercase tracking-widest text-muted-foreground">
+              {step.section} · {position} of {total}
+            </p>
+            <div>
+              <h2 className="font-heading text-3xl">{step.title}</h2>
+              {step.subtitle && <p className="mt-1 text-sm text-muted-foreground">{step.subtitle}</p>}
+            </div>
 
-          {mode === "learn" && step.reflection && (
-            <div className="rounded-lg bg-secondary/60 p-4 text-sm leading-relaxed">
-              <p className="font-medium">
-                {step.reflection.heading}
-                {step.reflection.reference && (
-                  <span className="font-normal text-muted-foreground"> · {step.reflection.reference}</span>
+            {mode === "learn" && step.reflection && (
+              <div className="rounded-lg bg-secondary/60 p-4 text-sm leading-relaxed">
+                <p className="font-medium">
+                  {step.reflection.heading}
+                  {step.reflection.reference && (
+                    <span className="font-normal text-muted-foreground"> · {step.reflection.reference}</span>
+                  )}
+                </p>
+                {step.reflection.meditation && <p className="mt-1">{step.reflection.meditation}</p>}
+                {step.reflection.fruit && (
+                  <p className="mt-2 text-muted-foreground">
+                    Fruit of the mystery: <span className="text-foreground">{step.reflection.fruit}</span>
+                  </p>
                 )}
-              </p>
-              {step.reflection.meditation && <p className="mt-1">{step.reflection.meditation}</p>}
-              {step.reflection.fruit && (
-                <p className="mt-2 text-muted-foreground">
-                  Fruit of the mystery: <span className="text-foreground">{step.reflection.fruit}</span>
-                </p>
-              )}
-            </div>
-          )}
-          {mode === "pray" && step.reflection && !prayer && (
-            <p className="text-sm text-muted-foreground">{step.reflection.reference}</p>
-          )}
+              </div>
+            )}
+            {mode === "pray" && step.reflection && !prayer && (
+              <p className="text-sm text-muted-foreground">{step.reflection.reference}</p>
+            )}
 
-          {prayer && (
-            <div className="space-y-3">
-              {prayer.text.map((line) => (
-                <p key={line} className="prayer-text">
-                  {line}
-                </p>
-              ))}
-            </div>
-          )}
-          {!prayer && mode === "pray" && step.reflection && (
-            <p className="prayer-text text-muted-foreground">{step.reflection.fruit}</p>
-          )}
-          {!prayer && mode === "learn" && (
-            <p className="text-sm text-muted-foreground">Take a moment, then say the Our Father on the next bead.</p>
-          )}
+            {prayer && (
+              <div className="space-y-3">
+                {prayer.text.map((line) => (
+                  <p key={line} className="prayer-text">
+                    {line}
+                  </p>
+                ))}
+              </div>
+            )}
+            {!prayer && mode === "pray" && step.reflection && (
+              <p className="prayer-text text-muted-foreground">{step.reflection.fruit}</p>
+            )}
+            {!prayer && mode === "learn" && (
+              <p className="text-sm text-muted-foreground">Take a moment, then say the Our Father on the next bead.</p>
+            )}
 
-          {mode === "learn" && prayer?.learn && (
-            <p className="mt-auto border-t border-border pt-3 text-sm text-muted-foreground">{prayer.learn}</p>
-          )}
+            {mode === "learn" && prayer?.learn && (
+              <p className="mt-auto border-t border-border pt-3 text-sm text-muted-foreground">{prayer.learn}</p>
+            )}
+            </motion.div>
+          </AnimatePresence>
         </article>
 
         <div className="sticky bottom-(--bottom-nav-height) z-20 -mx-4 flex items-center gap-3 border-t border-border bg-background/95 px-4 py-3 backdrop-blur md:static md:mx-0 md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none">

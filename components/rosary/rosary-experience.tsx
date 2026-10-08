@@ -56,11 +56,12 @@ export function RosaryExperience() {
   if (view.kind === "done") {
     return (
       <div className="mx-auto flex max-w-md flex-col items-center gap-5 py-10 text-center">
-        <span className="flex size-14 items-center justify-center rounded-full bg-gold/20 text-gold">
+        <span className="ora-enter ora-glow flex size-14 items-center justify-center rounded-full bg-gold/20 text-gold">
           <Check className="size-7" />
         </span>
-        <h2 className="font-heading text-4xl">Amen.</h2>
-        <p className="prayer-text text-muted-foreground">
+        <h2 className="ora-enter font-heading text-4xl [animation-delay:150ms] [animation-duration:400ms]">Amen.</h2>
+        <span aria-hidden className="ora-rule h-px w-24 bg-gold" />
+        <p className="prayer-text ora-enter text-muted-foreground [animation-delay:350ms] [animation-duration:400ms]">
           You have finished the {MYSTERY_SETS[view.setId].name}. May the peace of Christ keep your heart.
         </p>
         <AppButton size="lg" onClick={() => { clearProgress(); setView({ kind: "home" }); }}>

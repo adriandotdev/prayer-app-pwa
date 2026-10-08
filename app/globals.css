@@ -259,3 +259,31 @@
 .ora-glow {
   animation: ora-glow 800ms var(--ease-ora) 200ms backwards;
 }
+
+/* The current bead's halo fades in and breathes slowly: the one ambient motion in the app. */
+@keyframes ora-breathe {
+  50% {
+    transform: scale(1.08);
+  }
+}
+.ora-halo {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation:
+    ora-fade 300ms var(--ease-ora) backwards,
+    ora-breathe 3s ease-in-out 300ms infinite;
+}
+/* A gold rule draws outward from the centre. */
+@keyframes ora-draw {
+  from {
+    transform: scaleX(0);
+  }
+}
+.ora-rule {
+  animation: ora-draw 600ms var(--ease-ora) 300ms backwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ora-halo {
+    animation: none;
+  }
+}
