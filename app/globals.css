@@ -56,8 +56,7 @@
 /* Ivory, deep blue and gold. */
 :root {
   --radius: 0.75rem;
-  --ora-rise: 8px;
-  --ora-step: 30ms;
+  --ora-rise: 12px;
   --bottom-nav-height: calc(5rem + env(safe-area-inset-bottom));
   --background: oklch(0.973 0.014 88);
   --foreground: oklch(0.26 0.05 258);
@@ -218,8 +217,7 @@
 }
 @media (min-width: 48rem) {
   :root {
-    --ora-rise: 4px;
-    --ora-step: 24ms;
+    --ora-rise: 6px;
   }
 }
 .ora-enter {
@@ -227,16 +225,6 @@
 }
 .ora-fade {
   animation: ora-fade 200ms var(--ease-ora) backwards;
-}
-/* Set --i on each item; only the first eight get a delay so long lists don't crawl. */
-.ora-stagger {
-  animation: ora-rise 240ms var(--ease-ora) backwards;
-  animation-delay: calc(min(var(--i, 0), 8) * var(--ora-step));
-}
-@media (prefers-reduced-motion: reduce) {
-  .ora-stagger {
-    animation-delay: 0s;
-  }
 }
 
 /* One-off accents: the heart pops when favorited, an empty-state icon glows once like a candle catching. */
