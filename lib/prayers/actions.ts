@@ -3,21 +3,12 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-import { createClient } from "@/lib/supabase/server";
+import { requireUser } from "@/lib/auth/require-user";
 import { prayerSchema } from "./schema";
 
 export type PrayerFormState = { status: "idle" | "error"; message?: string };
 
 const SAVE_ERROR = "We couldn't save that. Please try again.";
-
-async function requireUser(next: string) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) redirect(`/login?next=${next}`);
-  return { supabase, user };
-}
 
 function parseForm(formData: FormData) {
   return prayerSchema.safeParse({
