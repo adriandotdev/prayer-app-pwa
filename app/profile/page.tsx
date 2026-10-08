@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 
+import { Reveal } from "@/components/motion/reveal";
 import { ProfileForm } from "@/components/auth/profile-form";
 import { SignOutForm } from "@/components/profile/sign-out-form";
 import { RosaryHistory } from "@/components/rosary/history";
@@ -23,9 +24,15 @@ export default async function ProfilePage() {
     <div className="mx-auto max-w-md">
       <PageHeader title="Profile" description={user.email ?? undefined} />
       <div className="flex flex-col gap-8">
-        <ProfileForm displayName={profile?.display_name ?? ""} />
-        <RosaryHistory />
-        <SignOutForm action={signOut} />
+        <Reveal index={0}>
+          <ProfileForm displayName={profile?.display_name ?? ""} />
+        </Reveal>
+        <Reveal index={1}>
+          <RosaryHistory />
+        </Reveal>
+        <Reveal index={2}>
+          <SignOutForm action={signOut} />
+        </Reveal>
       </div>
     </div>
   );
