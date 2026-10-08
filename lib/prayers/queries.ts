@@ -15,6 +15,15 @@ export async function getFavoriteIds(): Promise<Set<string>> {
   return new Set((data ?? []).map((r) => r.prayer_id));
 }
 
+/** Letters, digits, apostrophes and hyphens only, so a term can't carry LIKE or filter syntax. */
+function searchTerms(search: string): string[] {
+  return search
+    .split(/\s+/)
+    .map((word) => word.replace(/[^\p{L}\p{N}'’-]/gu, ""))
+    .filter(Boolean)
+    .slice(0, 6);
+}
+
 /** RLS already limits rows to the starter library plus the signed-in user's own prayers. */
 export async function listPrayers(filter: PrayerFilter, favoriteIds: Set<string>, search = ""): Promise<Prayer[]> {
   const supabase = await createClient();
@@ -27,8 +36,12 @@ export async function listPrayers(filter: PrayerFilter, favoriteIds: Set<string>
     query = query.in("id", [...favoriteIds]);
   }
 
-  // Full-text search over the generated tsvector (title weighted above body).
-  if (search) query = query.textSearch("search", search, { type: "websearch", config: "english" });
+  // Every typed word must appear (as part of a word) in the title or body. Not full-text
+  // search on purpose: English full-text drops stop words like "our", so "Our" would never
+  // find "Our Father", and it can't match a half-typed word while the visitor is typing.
+  for (const term of searchTerms(search)) {
+    query = query.or(`title.ilike.%${term}%,body.ilike.%${term}%`);
+  }
 
   const { data, error } = await query;
   if (error) throw new Error("Could not load prayers.");

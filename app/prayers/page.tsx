@@ -38,6 +38,11 @@ export default async function PrayersPage({ searchParams }: PageProps<"/prayers"
         }
       />
       <SearchForm filter={filter} query={query} />
+      {query ? (
+        <p role="status" className="sr-only">
+          {prayers.length === 0 ? "No matching prayers" : `${prayers.length} matching ${prayers.length === 1 ? "prayer" : "prayers"}`}
+        </p>
+      ) : null}
       <FilterTabs active={filter} query={query} />
       {prayers.length === 0 ? (
         <EmptyState
