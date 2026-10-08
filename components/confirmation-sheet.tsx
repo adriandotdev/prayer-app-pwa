@@ -68,21 +68,11 @@ function ConfirmButton({
       type={onClick ? "button" : "submit"}
       variant={variant}
       onClick={onClick}
-      disabled={busy}
-      aria-disabled={busy}
+      pending={busy}
+      pendingLabel={pendingLabel}
       className="w-full sm:flex-1"
     >
-      {busy ? (
-        <>
-          <span
-            aria-hidden
-            className="size-2 animate-pulse rounded-full bg-current"
-          />
-          {pendingLabel}
-        </>
-      ) : (
-        label
-      )}
+      {label}
     </AppButton>
   );
 }

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { ComponentProps } from "react";
+import type { ComponentProps, ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -27,8 +27,15 @@ const SIZES: Record<Size, string> = {
 
 type Common = { variant?: Variant; size?: Size };
 
+type Pending = {
+  /** Shows the pulsing dot and disables the button while an async action runs. */
+  pending?: boolean;
+  /** Replaces the children while pending. */
+  pendingLabel?: ReactNode;
+};
+
 type AppButtonProps =
-  | (Common & ComponentProps<"button"> & { href?: undefined })
+  | (Common & Pending & ComponentProps<"button"> & { href?: undefined })
   | (Common & Omit<ComponentProps<typeof Link>, "href"> & { href: string });
 
 export function AppButton({ variant = "primary", size = "md", className, ...props }: AppButtonProps) {
@@ -36,6 +43,17 @@ export function AppButton({ variant = "primary", size = "md", className, ...prop
   if ("href" in props && props.href !== undefined) {
     return <Link {...props} className={classes} />;
   }
-  const { type = "button", ...rest } = props as ComponentProps<"button">;
-  return <button type={type} {...rest} className={classes} />;
+  const { type = "button", pending, pendingLabel, children, disabled, ...rest } = props as ComponentProps<"button"> & Pending;
+  return (
+    <button type={type} {...rest} disabled={disabled || pending} aria-busy={pending || undefined} className={classes}>
+      {pending ? (
+        <>
+          <span aria-hidden className="size-2 animate-pulse rounded-full bg-current" />
+          {pendingLabel !== undefined ? pendingLabel : children}
+        </>
+      ) : (
+        children
+      )}
+    </button>
+  );
 }
