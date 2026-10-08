@@ -223,14 +223,14 @@
   }
 }
 .ora-enter {
-  animation: ora-rise 240ms var(--ease-ora) both;
+  animation: ora-rise 240ms var(--ease-ora) backwards;
 }
 .ora-fade {
-  animation: ora-fade 200ms var(--ease-ora) both;
+  animation: ora-fade 200ms var(--ease-ora) backwards;
 }
 /* Set --i on each item; only the first eight get a delay so long lists don't crawl. */
 .ora-stagger {
-  animation: ora-rise 240ms var(--ease-ora) both;
+  animation: ora-rise 240ms var(--ease-ora) backwards;
   animation-delay: calc(min(var(--i, 0), 8) * var(--ora-step));
 }
 @media (prefers-reduced-motion: reduce) {
