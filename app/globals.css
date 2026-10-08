@@ -48,9 +48,15 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* Motion language: things arrive like light, by fading in and rising a few pixels. */
+@theme {
+  --ease-ora: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 /* Ivory, deep blue and gold. */
 :root {
   --radius: 0.75rem;
+  --ora-rise: 12px;
   --bottom-nav-height: calc(5rem + env(safe-area-inset-bottom));
   --background: oklch(0.973 0.014 88);
   --foreground: oklch(0.26 0.05 258);
@@ -188,4 +194,96 @@
   .ora-loader-glow:first-child {
     opacity: 1;
   }
+}
+
+/* Enter animations. Opacity and transform only. Desktop travels less and staggers faster. */
+@keyframes ora-rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--ora-rise));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes ora-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (min-width: 48rem) {
+  :root {
+    --ora-rise: 6px;
+  }
+}
+.ora-enter {
+  animation: ora-rise 240ms var(--ease-ora) backwards;
+}
+.ora-fade {
+  animation: ora-fade 200ms var(--ease-ora) backwards;
+}
+
+/* One-off accents: the heart pops when favorited, an empty-state icon glows once like a candle catching. */
+@keyframes ora-pop {
+  50% {
+    transform: scale(1.2);
+  }
+}
+.ora-pop {
+  animation: ora-pop 200ms var(--ease-ora);
+}
+@keyframes ora-glow {
+  from {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--gold) 45%, transparent);
+  }
+  to {
+    box-shadow: 0 0 0 14px color-mix(in oklab, var(--gold) 0%, transparent);
+  }
+}
+.ora-glow {
+  animation: ora-glow 800ms var(--ease-ora) 200ms backwards;
+}
+
+/* The current bead's halo fades in and breathes slowly: the one ambient motion in the app. */
+@keyframes ora-breathe {
+  50% {
+    transform: scale(1.08);
+  }
+}
+.ora-halo {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation:
+    ora-fade 300ms var(--ease-ora) backwards,
+    ora-breathe 3s ease-in-out 300ms infinite;
+}
+/* A gold rule draws outward from the centre. */
+@keyframes ora-draw {
+  from {
+    transform: scaleX(0);
+  }
+}
+.ora-rule {
+  animation: ora-draw 600ms var(--ease-ora) 300ms backwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ora-halo {
+    animation: none;
+  }
+}
+
+/* First load: the app chrome fades in before the page, once per document load. */
+.ora-chrome {
+  animation: ora-fade 500ms var(--ease-ora) backwards;
+}
+
+/* Light/dark switch: a slow, soft cross-fade of the whole page, like a room dimming. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 400ms;
+  animation-timing-function: var(--ease-ora);
 }

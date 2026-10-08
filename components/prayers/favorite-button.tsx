@@ -1,8 +1,6 @@
-import { Heart } from "lucide-react";
-
 import { AppButton } from "@/components/app-button";
+import { FavoriteHeart } from "@/components/prayers/favorite-heart";
 import { toggleFavorite } from "@/lib/prayers/actions";
-import { cn } from "@/lib/utils";
 
 export function FavoriteButton({ id, isFavorite, className }: { id: string; isFavorite: boolean; className?: string }) {
   return (
@@ -16,7 +14,7 @@ export function FavoriteButton({ id, isFavorite, className }: { id: string; isFa
         aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
         aria-pressed={isFavorite}
       >
-        <Heart className={cn(isFavorite && "fill-current text-gold-foreground dark:text-gold")} aria-hidden />
+        <FavoriteHeart isFavorite={isFavorite} />
       </AppButton>
     </form>
   );

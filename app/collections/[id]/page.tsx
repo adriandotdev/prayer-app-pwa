@@ -46,9 +46,10 @@ export default async function CollectionPage({ params }: PageProps<"/collections
         />
       ) : (
         <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
-          {prayers.map((p) => (
+          {prayers.map((p, i) => (
             <PrayerCard
               key={p.id}
+              index={i}
               prayer={p}
               isFavorite={favoriteIds.has(p.id)}
               actions={<RemoveFromCollectionButton collectionId={id} prayerId={p.id} />}

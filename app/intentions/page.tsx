@@ -32,8 +32,8 @@ export default async function IntentionsPage() {
         <div className="flex flex-col gap-8">
           {active.length > 0 ? (
             <ul className="grid grid-cols-1 gap-3">
-              {active.map((i) => (
-                <IntentionItem key={i.id} intention={i} />
+              {active.map((i, n) => (
+                <IntentionItem key={i.id} intention={i} index={n} />
               ))}
             </ul>
           ) : (
@@ -51,8 +51,8 @@ export default async function IntentionsPage() {
                 </span>
               </summary>
               <ul className="mt-3 grid grid-cols-1 gap-3">
-                {answered.map((i) => (
-                  <IntentionItem key={i.id} intention={i} />
+                {answered.map((i, n) => (
+                  <IntentionItem key={i.id} intention={i} index={n} />
                 ))}
               </ul>
             </details>

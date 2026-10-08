@@ -11,7 +11,7 @@ export function BottomNav() {
 	return (
 		<nav
 			aria-label="Main"
-			className="fixed inset-x-0 bottom-0 z-40 h-(--bottom-nav-height) bg-card pb-[env(safe-area-inset-bottom)] md:hidden"
+			className="ora-chrome fixed inset-x-0 bottom-0 z-40 h-(--bottom-nav-height) bg-card pb-[env(safe-area-inset-bottom)] md:hidden"
 		>
 			<div
 				aria-hidden="true"
@@ -55,7 +55,8 @@ export function BottomNav() {
 								/>
 								<span
 									className={cn(
-										"flex size-9 items-center justify-center rounded-md",
+										"flex size-9 items-center justify-center rounded-md transition-transform duration-200 ease-out motion-reduce:transition-none",
+										active && "-translate-y-0.5",
 										rosary && "bg-gold/10",
 									)}
 								>

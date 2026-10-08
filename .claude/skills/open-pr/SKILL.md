@@ -14,6 +14,7 @@ These exist to protect the deploy flow: `staging` and `main` only change through
 - The PR base is always `staging`. Never open a PR against `main`, even if asked casually; confirm with the user first.
 - Never `git push` to `staging` or `main`, and never force-push. Only push a feature branch.
 - Never commit while on `staging` or `main`. Create a branch first.
+- Never commit automatically. Do not run `git commit` (or `git add` for a commit) just because work is finished or a skill step says so; only commit after the user has seen the commit plan and answered yes in this conversation. Finishing a feature, or the user saying "open a PR", is not approval to commit: present the plan first and wait.
 - Don't commit or push anything the user hasn't seen: show the commit plan and the PR title/body and get a yes before running them.
 - Never stage `.env*` files (except `.env.example`) or other secrets. If one shows up in `git status`, leave it out and tell the user.
 
@@ -68,7 +69,7 @@ Present the plan as a table before committing:
 
 ### Step 4: Commit
 
-After the user confirms, commit each group in order, staging only that group's files by name (never `git add -A`):
+Stop after presenting the plan and wait for an explicit yes. Do not commit before it, even if the plan looks obvious. After the user confirms, commit each group in order, staging only that group's files by name (never `git add -A`):
 
 ```bash
 git add <files for this commit>

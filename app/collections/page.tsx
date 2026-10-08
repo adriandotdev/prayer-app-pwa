@@ -4,6 +4,7 @@ import { ArrowLeft, ChevronRight, FolderHeart, Plus } from "lucide-react";
 
 import { AppButton } from "@/components/app-button";
 import { EmptyState } from "@/components/layout/empty-state";
+import { StaggerItem } from "@/components/motion/stagger-item";
 import { PageHeader } from "@/components/layout/page-header";
 import { listCollections } from "@/lib/collections/queries";
 
@@ -35,11 +36,11 @@ export default async function CollectionsPage() {
         />
       ) : (
         <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
-          {collections.map((c) => (
-            <li key={c.id}>
+          {collections.map((c, i) => (
+            <StaggerItem key={c.id} index={i}>
               <Link
                 href={`/collections/${c.id}`}
-                className="flex min-h-16 items-center gap-3 rounded-2xl border border-border bg-card p-4 transition-colors hover:bg-secondary/50 active:bg-secondary/50 focus-visible:outline-2 focus-visible:outline-ring"
+                className="flex min-h-16 items-center gap-3 rounded-2xl border border-border bg-card p-4 transition-colors duration-150 hover:border-gold/40 hover:bg-secondary/50 active:bg-secondary/50 focus-visible:outline-2 focus-visible:outline-ring"
               >
                 <span className="min-w-0 flex-1">
                   <span className="block truncate font-display text-xl">{c.name}</span>
@@ -49,7 +50,7 @@ export default async function CollectionsPage() {
                 </span>
                 <ChevronRight className="size-5 shrink-0 text-muted-foreground" aria-hidden />
               </Link>
-            </li>
+            </StaggerItem>
           ))}
         </ul>
       )}

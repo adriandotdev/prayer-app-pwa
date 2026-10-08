@@ -5,16 +5,17 @@ import { Check, RotateCcw, Trash2 } from "lucide-react";
 
 import { AppButton } from "@/components/app-button";
 import { ConfirmationSheet } from "@/components/confirmation-sheet";
+import { StaggerItem } from "@/components/motion/stagger-item";
 import { LocalDate } from "@/components/local-date";
 import { deleteIntention, setIntentionAnswered } from "@/lib/intentions/actions";
 import type { Intention } from "@/lib/intentions/queries";
 
-export function IntentionItem({ intention }: { intention: Intention }) {
+export function IntentionItem({ intention, index = 0 }: { intention: Intention; index?: number }) {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const answered = intention.is_answered;
 
   return (
-    <li className="rounded-2xl border border-border bg-card p-4">
+    <StaggerItem index={index} className="rounded-2xl border border-border bg-card p-4">
       <p className="prayer-text whitespace-pre-line break-words">{intention.text}</p>
       <p className="mt-2 text-xs text-muted-foreground">
         {answered && intention.answered_at ? (
@@ -55,6 +56,6 @@ export function IntentionItem({ intention }: { intention: Intention }) {
         action={deleteIntention}
         fields={{ id: intention.id }}
       />
-    </li>
+    </StaggerItem>
   );
 }

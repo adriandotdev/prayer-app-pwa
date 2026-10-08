@@ -1,5 +1,6 @@
 import { ArrowRight, BookOpen, Cross, HandHeart } from "lucide-react";
 import Link from "next/link";
+import { StaggerItem } from "@/components/motion/stagger-item";
 import { PageHeader } from "@/components/layout/page-header";
 
 const SECTIONS = [
@@ -28,8 +29,8 @@ export default function HomePage() {
     <>
       <PageHeader title="Peace be with you" description="Take a moment. What would you like to pray?" />
       <ul className="grid grid-cols-1 gap-4">
-        {SECTIONS.map(({ href, title, body, icon: Icon }) => (
-          <li key={href}>
+        {SECTIONS.map(({ href, title, body, icon: Icon }, i) => (
+          <StaggerItem key={href} index={i}>
             <Link
               href={href}
               className="group flex items-center gap-5 rounded-2xl border border-border bg-card p-5 transition-colors hover:border-gold/60 active:bg-secondary/50"
@@ -46,7 +47,7 @@ export default function HomePage() {
                 aria-hidden
               />
             </Link>
-          </li>
+          </StaggerItem>
         ))}
       </ul>
     </>
