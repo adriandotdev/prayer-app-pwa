@@ -1,18 +1,30 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import type { Database } from "@/lib/database.types";
+import { isProtectedPath } from "@/lib/auth/paths";
 import { getSupabaseEnv } from "@/lib/env";
 
 /**
  * Refreshes the Supabase auth session on every matched request and forwards the
- * refreshed cookies. Route protection is layered on top of this in the auth phase.
+ * refreshed cookies, and sends signed-out visitors away from protected routes.
  */
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({ request });
 
   const env = getSupabaseEnv();
-  if (!env) return { response, user: null };
+  const { pathname } = request.nextUrl;
 
-  const supabase = createServerClient(env.url, env.anonKey, {
+  const redirectToLogin = () => {
+    const url = request.nextUrl.clone();
+    url.pathname = "/login";
+    url.search = "";
+    url.searchParams.set("next", pathname + request.nextUrl.search);
+    return NextResponse.redirect(url);
+  };
+
+  if (!env) return { response: isProtectedPath(pathname) ? redirectToLogin() : response, user: null };
+
+  const supabase = createServerClient<Database>(env.url, env.anonKey, {
     cookies: {
       getAll() {
         return request.cookies.getAll();
@@ -31,6 +43,13 @@ export async function updateSession(request: NextRequest) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  if (!user && isProtectedPath(pathname)) {
+    // Carry over any refreshed auth cookies onto the redirect.
+    const redirect = redirectToLogin();
+    response.cookies.getAll().forEach((c) => redirect.cookies.set(c));
+    return { response: redirect, user };
+  }
 
   return { response, user };
 }
