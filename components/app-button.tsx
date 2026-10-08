@@ -3,7 +3,7 @@ import type { ComponentProps } from "react";
 
 import { cn } from "@/lib/utils";
 
-type Variant = "primary" | "outline" | "ghost";
+type Variant = "primary" | "outline" | "ghost" | "destructive";
 type Size = "md" | "lg" | "icon";
 
 const BASE =
@@ -15,6 +15,7 @@ const VARIANTS: Record<Variant, string> = {
   primary: "bg-primary text-primary-foreground hover:bg-primary/90",
   outline: "border border-border bg-background text-foreground hover:bg-secondary",
   ghost: "text-foreground hover:bg-secondary",
+  destructive: "bg-destructive text-background hover:bg-destructive/90",
 };
 
 // Touch targets: never below 44px, primary actions 52–56px.
