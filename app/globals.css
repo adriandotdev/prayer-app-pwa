@@ -275,3 +275,8 @@
     animation: none;
   }
 }
+
+/* First load: the app chrome fades in before the page, once per document load. */
+.ora-chrome {
+  animation: ora-fade 500ms var(--ease-ora) backwards;
+}

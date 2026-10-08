@@ -15,7 +15,7 @@ export function AppSidebar() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <aside className="fixed inset-y-0 left-0 hidden w-60 flex-col border-r border-sidebar-border bg-sidebar md:flex">
+    <aside className="ora-chrome fixed inset-y-0 left-0 hidden w-60 flex-col border-r border-sidebar-border bg-sidebar md:flex">
       <div className="px-6 pt-8 pb-6">
         <Link href="/" aria-label="Ora home" className="text-2xl">
           <Logo />
