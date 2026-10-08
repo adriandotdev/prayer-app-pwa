@@ -123,6 +123,32 @@ export type Database = {
         }
         Relationships: []
       }
+      prayer_favorites: {
+        Row: {
+          created_at: string
+          prayer_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          prayer_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          prayer_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "prayer_favorites_prayer_id_fkey"
+            columns: ["prayer_id"]
+            isOneToOne: false
+            referencedRelation: "prayers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       prayers: {
         Row: {
           body: string
