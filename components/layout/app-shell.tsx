@@ -3,6 +3,7 @@ import { AppSidebar } from "./app-sidebar";
 import { BottomNav } from "./bottom-nav";
 import { MobileHeader } from "./mobile-header";
 import { OfflineIndicator } from "@/components/pwa/offline-indicator";
+import { Toaster } from "@/components/toast/toaster";
 import { InstallPrompt } from "@/components/pwa/install-prompt";
 
 export function AppShell({ children }: { children: ReactNode }) {
@@ -28,6 +29,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         </main>
       </div>
       <BottomNav />
+      <Toaster />
     </div>
   );
 }
