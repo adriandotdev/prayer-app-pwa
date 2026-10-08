@@ -210,18 +210,29 @@ function ModeButton({
   icon: React.ReactNode;
   children: React.ReactNode;
 }) {
+  const reduceMotion = useReducedMotion();
   return (
     <button
       type="button"
       aria-pressed={active}
       onClick={onClick}
       className={cn(
-        "inline-flex min-h-11 items-center gap-1.5 rounded-full px-4 text-sm transition-colors",
-        active ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground",
+        "relative inline-flex min-h-11 items-center gap-1.5 rounded-full px-4 text-sm transition-colors duration-150",
+        active ? "text-primary-foreground" : "text-muted-foreground hover:text-foreground",
       )}
     >
-      {icon}
-      {children}
+      {active && (
+        <motion.span
+          layoutId="mode-pill"
+          aria-hidden
+          transition={{ duration: reduceMotion ? 0 : 0.24, ease: EASE_ORA }}
+          className="absolute inset-0 rounded-full bg-primary"
+        />
+      )}
+      <span className="relative inline-flex items-center gap-1.5">
+        {icon}
+        {children}
+      </span>
     </button>
   );
 }
