@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ArrowLeft, FolderPlus } from "lucide-react";
+import { ArrowLeft, Copy, FolderPlus } from "lucide-react";
 
 import { AppButton } from "@/components/app-button";
 import { DeleteButton } from "@/components/prayers/delete-button";
@@ -32,31 +32,44 @@ export default async function PrayerPage({ params }: PageProps<"/prayers/[id]">)
           <h1 className="text-3xl font-medium break-words md:text-5xl">{prayer.title}</h1>
           {prayer.source ? <p className="mt-2 text-sm text-muted-foreground">{prayer.source}</p> : null}
         </div>
-        <FavoriteButton id={prayer.id} isFavorite={favoriteIds.has(prayer.id)} />
+        <div className="-mr-2 flex shrink-0 items-center gap-1">
+          <AppButton
+            href={`/prayers/${prayer.id}/collections`}
+            variant="ghost"
+            size="icon"
+            aria-label="Add to collection"
+            title="Add to collection"
+          >
+            <FolderPlus aria-hidden />
+          </AppButton>
+          {isOwn ? null : (
+            <form action={copyPrayer}>
+              <input type="hidden" name="id" value={prayer.id} />
+              <SubmitButton
+                variant="ghost"
+                size="icon"
+                aria-label="Copy to my prayers"
+                title="Copy to my prayers"
+                pendingLabel={<span className="sr-only">Copying…</span>}
+              >
+                <Copy aria-hidden />
+              </SubmitButton>
+            </form>
+          )}
+          <FavoriteButton id={prayer.id} isFavorite={favoriteIds.has(prayer.id)} />
+        </div>
       </div>
 
       <PrayerBody body={prayer.body} />
 
-      <div className="mt-10 flex flex-wrap items-center gap-3 border-t border-border pt-6">
-        <AppButton href={`/prayers/${prayer.id}/collections`} variant="outline" className="w-full sm:w-auto">
-          <FolderPlus aria-hidden /> Add to collection
-        </AppButton>
-        {isOwn ? (
-          <>
-            <AppButton href={`/prayers/${prayer.id}/edit`} variant="outline" className="flex-1 sm:flex-none">
-              Edit
-            </AppButton>
-            <DeleteButton id={prayer.id} />
-          </>
-        ) : (
-          <form action={copyPrayer} className="w-full sm:w-auto">
-            <input type="hidden" name="id" value={prayer.id} />
-            <SubmitButton variant="outline" className="w-full sm:w-auto" pendingLabel="Copying…">
-              Copy to my prayers
-            </SubmitButton>
-          </form>
-        )}
-      </div>
+      {isOwn ? (
+        <div className="mt-10 flex flex-wrap items-center gap-3 border-t border-border pt-6">
+          <AppButton href={`/prayers/${prayer.id}/edit`} variant="outline" className="flex-1 sm:flex-none">
+            Edit
+          </AppButton>
+          <DeleteButton id={prayer.id} />
+        </div>
+      ) : null}
     </article>
   );
 }
