@@ -7,6 +7,7 @@ import { AppButton } from "@/components/app-button";
 import { ConfirmationSheet } from "@/components/confirmation-sheet";
 import { StaggerItem } from "@/components/motion/stagger-item";
 import { LocalDate } from "@/components/local-date";
+import { PrayerBody } from "@/components/prayers/prayer-body";
 import { SubmitButton } from "@/components/submit-button";
 import { deleteIntention, setIntentionAnswered } from "@/lib/intentions/actions";
 import type { Intention } from "@/lib/intentions/queries";
@@ -21,7 +22,9 @@ export function IntentionItem({ intention, index = 0 }: { intention: Intention; 
 
   return (
     <StaggerItem index={index} className="rounded-2xl border border-border bg-card p-4">
-      <p className="prayer-text whitespace-pre-line break-words">{intention.text}</p>
+      <div className="break-words">
+        <PrayerBody body={intention.text} />
+      </div>
       <p className="mt-2 text-xs text-muted-foreground">
         {answered && intention.answered_at ? (
           <LocalDate iso={intention.answered_at} prefix="Answered " />

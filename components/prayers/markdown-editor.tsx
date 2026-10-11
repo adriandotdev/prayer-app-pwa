@@ -60,15 +60,28 @@ const TOOLS: Tool[] = [
   { label: "Quotation marks", icon: MessageSquareQuote, run: toggleQuotes },
 ];
 
+type Props = {
+  defaultValue?: string;
+  /** Form field name of the hidden markdown input. */
+  name?: string;
+  /** Id of the editable surface, so a `<label htmlFor>` can point at it. */
+  id?: string;
+  label?: string;
+  /** Extra classes for the editable surface, e.g. its min height. */
+  className?: string;
+  autoFocus?: boolean;
+};
+
 /**
- * WYSIWYG prayer editor. Stored as markdown in a hidden `body` input, restricted to what
- * `PrayerBody` can render (bold, italic, ## headings, lists, quotes, rules, line breaks).
+ * WYSIWYG markdown editor for prayers and intentions. Stored as markdown in a hidden input,
+ * restricted to what `PrayerBody` can render (bold, italic, ## headings, lists, quotes, rules, line breaks).
  */
-export function MarkdownEditor({ defaultValue = "" }: { defaultValue?: string }) {
+export function MarkdownEditor({ defaultValue = "", name = "body", id = "body", label = "Prayer", className = "min-h-72", autoFocus = false }: Props) {
   const [markdown, setMarkdown] = useState(defaultValue);
 
   const editor = useEditor({
     immediatelyRender: false,
+    autofocus: autoFocus ? "end" : false,
     shouldRerenderOnTransaction: true,
     extensions: [
       StarterKit.configure({ code: false, codeBlock: false, strike: false, link: false, underline: false, heading: { levels: [1, 2] } }),
@@ -79,9 +92,9 @@ export function MarkdownEditor({ defaultValue = "" }: { defaultValue?: string })
     contentType: "markdown",
     editorProps: {
       attributes: {
-        id: "body",
-        "aria-label": "Prayer",
-        class: `${FIELD} prayer-text prayer-editor min-h-72 py-3`,
+        id,
+        "aria-label": label,
+        class: `${FIELD} prayer-text prayer-editor ${className} py-3`,
       },
     },
     onUpdate: ({ editor }) => setMarkdown(editor.getMarkdown()),
@@ -89,7 +102,7 @@ export function MarkdownEditor({ defaultValue = "" }: { defaultValue?: string })
 
   return (
     <div className="flex flex-col gap-2">
-      <input type="hidden" name="body" value={markdown} />
+      <input type="hidden" name={name} value={markdown} />
       <div role="toolbar" aria-label="Formatting" className="-ml-2 flex overflow-x-auto">
         {TOOLS.map(({ label, icon: Icon, active, run }) => {
           const on = editor && active ? (Array.isArray(active) ? editor.isActive(active[0], active[1]) : editor.isActive(active)) : false;
