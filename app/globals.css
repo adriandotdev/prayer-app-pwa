@@ -165,6 +165,60 @@
   }
 }
 
+/* Tiptap editor surface: Tailwind's preflight strips these, so restore them to match PrayerBody. */
+.prayer-editor > * + * {
+  margin-top: 1rem;
+}
+.prayer-editor h1,
+.prayer-editor h2 {
+  font-weight: 600;
+}
+.prayer-editor ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+}
+.prayer-editor ol {
+  list-style: decimal;
+  padding-left: 1.5rem;
+}
+/* Prominent “quoted” text, shared by the editor and PrayerBody. */
+.prayer-mark {
+  border-radius: 0.375rem;
+  background: color-mix(in oklab, var(--primary) 12%, transparent);
+  padding: 0.05em 0.3em;
+  color: var(--primary);
+  font-weight: 600;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* Prominent block quote, shared by the editor and PrayerBody. */
+.prayer-editor blockquote,
+.prayer-quote {
+  position: relative;
+  border-left: 4px solid var(--primary);
+  border-radius: 0 0.75rem 0.75rem 0;
+  background: color-mix(in oklab, var(--primary) 8%, transparent);
+  padding: 1rem 1rem 1rem 2.75rem;
+  font-size: 1.1em;
+  font-style: italic;
+}
+.prayer-editor blockquote::before,
+.prayer-quote::before {
+  content: "\201C";
+  position: absolute;
+  left: 0.6rem;
+  top: 0.1rem;
+  font-size: 3rem;
+  line-height: 1;
+  font-style: normal;
+  color: var(--primary);
+  opacity: 0.7;
+}
+.prayer-editor hr {
+  border-color: var(--border);
+}
+
 /* Loader (from public/brand/ora-loading.svg): a gold highlight passes over each bead. */
 .ora-loader-beads {
   fill: currentColor;
