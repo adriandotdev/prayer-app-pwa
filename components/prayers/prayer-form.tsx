@@ -1,10 +1,17 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useActionState } from "react";
 
 import { AppButton } from "@/components/app-button";
 import { FIELD } from "@/components/field";
 import type { PrayerFormState } from "@/lib/prayers/actions";
+
+// Tiptap is heavy and only needed on this form, so keep it out of the shared bundle.
+const MarkdownEditor = dynamic(() => import("@/components/prayers/markdown-editor").then((m) => m.MarkdownEditor), {
+  ssr: false,
+  loading: () => <div className="h-96 animate-pulse rounded-xl bg-muted" aria-hidden />,
+});
 
 const initial: PrayerFormState = { status: "idle" };
 
@@ -30,8 +37,8 @@ export function PrayerForm({ action, cancelHref, submitLabel, prayer }: Props) {
       <label htmlFor="body" className="mt-2 text-sm font-medium">
         Prayer
       </label>
-      <textarea id="body" name="body" defaultValue={prayer?.body} rows={12} required className={`${FIELD} prayer-text py-3`} />
-      <p className="text-xs text-muted-foreground">Line breaks are kept. Use *italic* and **bold** if you need them.</p>
+      <MarkdownEditor defaultValue={prayer?.body} />
+      <p className="text-xs text-muted-foreground">Line breaks are kept. Supports **bold**, *italic*, ## headings, - lists, 1. numbered lists and &gt; quotes.</p>
 
       <label htmlFor="source" className="mt-2 text-sm font-medium">
         Source <span className="font-normal text-muted-foreground">(optional)</span>
