@@ -4,7 +4,7 @@ import { beadStates } from "@/lib/sequence/engine";
 import type { Bead, SequenceDefinition } from "@/lib/sequence/types";
 import { cn } from "@/lib/utils";
 
-const RADIUS: Record<Bead["kind"], number> = { small: 5.5, large: 8.5, anchor: 11 };
+const RADIUS: Record<Bead["kind"], number> = { small: 6.5, large: 9.5, anchor: 11 };
 
 type Props = {
   sequence: SequenceDefinition;
@@ -48,7 +48,7 @@ export function BeadTracker({ sequence, index, onSelectBead, className }: Props)
             {/* larger invisible hit area for touch */}
             <circle cx={bead.x} cy={bead.y} r={Math.max(r + 4, 11)} fill="transparent" strokeWidth={2} className="stroke-transparent" />
             {state === "current" && (
-              <circle cx={bead.x} cy={bead.y} r={r + 5} className="ora-halo fill-gold/25 stroke-gold" strokeWidth={1.5} />
+              <circle cx={bead.x} cy={bead.y} r={r + 6} className="ora-halo fill-gold/25 stroke-gold" strokeWidth={2} />
             )}
             {bead.kind === "anchor" ? (
               <Anchor bead={bead} state={state} />
@@ -57,12 +57,12 @@ export function BeadTracker({ sequence, index, onSelectBead, className }: Props)
                 cx={bead.x}
                 cy={bead.y}
                 r={r}
-                strokeWidth={1.25}
+                strokeWidth={1.75}
                 className={cn(
                   "transition-colors duration-300",
                   state === "completed" && "fill-primary stroke-primary",
                   state === "current" && "fill-gold stroke-gold",
-                  state === "upcoming" && "fill-background stroke-muted-foreground/60",
+                  state === "upcoming" && "fill-muted stroke-muted-foreground",
                 )}
               />
             )}
@@ -78,16 +78,16 @@ function Anchor({ bead, state }: { bead: Bead; state: "completed" | "current" | 
     "transition-colors duration-300",
     state === "completed" && "fill-primary stroke-primary",
     state === "current" && "fill-gold stroke-gold",
-    state === "upcoming" && "fill-background stroke-muted-foreground/60",
+    state === "upcoming" && "fill-muted stroke-muted-foreground",
   );
   if (bead.id === "crucifix") {
     // A small cross: vertical and horizontal bars.
     return (
-      <g className={cls} strokeWidth={1.25}>
+      <g className={cls} strokeWidth={1.75}>
         <rect x={bead.x - 3} y={bead.y - 13} width={6} height={26} rx={1.5} />
         <rect x={bead.x - 9} y={bead.y - 7} width={18} height={6} rx={1.5} />
       </g>
     );
   }
-  return <circle cx={bead.x} cy={bead.y} r={11} strokeWidth={1.25} className={cls} />;
+  return <circle cx={bead.x} cy={bead.y} r={11} strokeWidth={1.75} className={cls} />;
 }

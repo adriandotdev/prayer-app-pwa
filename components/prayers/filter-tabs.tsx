@@ -39,33 +39,37 @@ export function FilterTabs({ active: confirmed, query }: { active: PrayerFilter;
   const active = tapped ?? confirmed;
 
   return (
-    <nav aria-label="Filter prayers" className="-mx-4 mb-5 flex gap-2 overflow-x-auto px-4 md:mx-0 md:px-0">
-      {FILTERS.map((f) => (
-        <Link
-          key={f}
-          href={hrefFor(f, query)}
-          aria-current={f === active ? "page" : undefined}
-          onClick={() => setTapped(f)}
-          className={cn(
-            PILL,
-            f === active ? "border-primary text-primary-foreground" : "border-border hover:bg-secondary",
-          )}
-        >
-          {/* The filled pill slides to the chosen tab instead of jumping. */}
-          {f === active && (
-            <motion.span
-              layoutId="filter-pill"
-              aria-hidden
-              transition={{ duration: reduceMotion ? 0 : 0.26, ease: EASE_ORA }}
-              className="absolute inset-0 rounded-full bg-primary"
-            />
-          )}
-          <span className="relative">{LABELS[f]}</span>
+    // The outer box clips the strip under the row where the scroll indicator draws: iOS Safari shows
+    // its overlay indicator while dragging even with scrollbar-width: none.
+    <div className="-mx-4 mb-5 overflow-hidden md:mx-0">
+      <nav aria-label="Filter prayers" className="-mb-4 flex gap-2 overflow-x-auto px-4 pt-0.5 pb-4.5 scrollbar-none md:px-0 [&::-webkit-scrollbar]:hidden">
+        {FILTERS.map((f) => (
+          <Link
+            key={f}
+            href={hrefFor(f, query)}
+            aria-current={f === active ? "page" : undefined}
+            onClick={() => setTapped(f)}
+            className={cn(
+              PILL,
+              f === active ? "border-primary text-primary-foreground" : "border-border hover:bg-secondary",
+            )}
+          >
+            {/* The filled pill slides to the chosen tab instead of jumping. */}
+            {f === active && (
+              <motion.span
+                layoutId="filter-pill"
+                aria-hidden
+                transition={{ duration: reduceMotion ? 0 : 0.26, ease: EASE_ORA }}
+                className="absolute inset-0 rounded-full bg-primary"
+              />
+            )}
+            <span className="relative">{LABELS[f]}</span>
+          </Link>
+        ))}
+        <Link href="/collections" className={cn(PILL, "border-gold/50 hover:bg-secondary")}>
+          Collections
         </Link>
-      ))}
-      <Link href="/collections" className={cn(PILL, "border-gold/50 hover:bg-secondary")}>
-        Collections
-      </Link>
-    </nav>
+      </nav>
+    </div>
   );
 }
