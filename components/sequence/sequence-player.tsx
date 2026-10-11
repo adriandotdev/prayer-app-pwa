@@ -64,12 +64,12 @@ export function SequencePlayer({ sequence, initialIndex, initialMode, onFinish, 
   });
 
   return (
-    <div className="mx-auto flex w-full max-w-5xl flex-col gap-4 md:flex-row md:items-start md:gap-10">
+    <div className="mx-auto flex w-full max-w-5xl flex-col gap-3 md:flex-row md:items-start md:gap-10">
       <div className="md:sticky md:top-6 md:w-72 md:shrink-0">
         <BeadTracker
           sequence={sequence}
           index={index}
-          className="h-40 w-auto max-md:pointer-events-none sm:h-48 md:h-[30rem]"
+          className="h-64 w-auto max-md:pointer-events-none sm:h-72 md:h-[30rem]"
           onSelectBead={(beadId) => {
             const target = firstStepForBead(sequence, beadId);
             if (target >= 0) setIndex(target);
