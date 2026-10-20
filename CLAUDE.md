@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-"Ora" is a Catholic prayer PWA: an offline-capable interactive Rosary (public, no account) plus a signed-in prayer library. Built in six phases with a stop for user review after each: 1 setup, 2 Rosary, 3 auth/profile, 4 prayer library (prayers, collections, favorites, search, intentions, Rosary history), 5 PWA, 6 polish. Phases 1–4 and a hand-written PWA are done; Phase 5 (PWA hardening) is built and awaiting review; Phase 6 (polish) is next. Out of scope: push/reminders, social, liturgical calendar, readings, audio, i18n, other chaplets (architecture only).
+"Ora" is a Catholic prayer PWA: an offline-capable interactive Rosary (public, no account) plus a signed-in prayer library. Built in six phases with a stop for user review after each: 1 setup, 2 Rosary, 3 auth/profile, 4 prayer library (prayers, collections, favorites, search, intentions, Rosary history), 5 PWA, 6 polish. Phases 1–4 and a hand-written PWA are done; Phase 5 (PWA hardening) is built and awaiting review; Phase 6 (polish) is next. Out of scope: push/reminders, social, liturgical calendar (beyond the season-color function), readings, audio, i18n, other chaplets (architecture only).
 
 ## Commands
 
