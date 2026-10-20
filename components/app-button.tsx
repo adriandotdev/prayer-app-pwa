@@ -15,7 +15,11 @@ const VARIANTS: Record<Variant, string> = {
   primary: "bg-primary text-primary-foreground hover:bg-primary/90",
   outline: "border border-border bg-background text-foreground hover:bg-secondary",
   ghost: "text-foreground hover:bg-secondary",
-  destructive: "bg-destructive text-background hover:bg-destructive/90",
+  // In the Red season the filled primary button is red too, so destructive turns into an outline there.
+  destructive:
+    "bg-destructive text-background hover:bg-destructive/90 " +
+    "in-data-[season=red]:border in-data-[season=red]:border-destructive in-data-[season=red]:bg-background " +
+    "in-data-[season=red]:text-destructive in-data-[season=red]:hover:bg-destructive/10",
 };
 
 // Touch targets: never below 44px, primary actions 52–56px.
