@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Logo } from "@/components/brand/logo";
 import { usePathname } from "next/navigation";
 import { SidebarUser } from "./sidebar-user";
+import { AppearanceLink } from "@/components/theme/appearance-link";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { EASE_ORA } from "@/lib/motion";
 import { NAV_ITEMS, isActive } from "@/lib/nav";
@@ -35,7 +36,7 @@ export function AppSidebar() {
                   className={cn(
                     "relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors duration-150",
                     active
-                      ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                      ? "bg-sidebar-accent font-semibold text-sidebar-accent-foreground"
                       : "text-muted-foreground hover:bg-sidebar-accent/60 hover:text-sidebar-foreground",
                   )}
                 >
@@ -59,6 +60,7 @@ export function AppSidebar() {
 
       <div className="flex items-center gap-2 border-t border-sidebar-border px-3 py-3">
         <SidebarUser pathname={pathname} />
+        <AppearanceLink />
         <ThemeToggle />
       </div>
     </aside>

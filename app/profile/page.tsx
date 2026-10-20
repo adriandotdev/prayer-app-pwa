@@ -5,6 +5,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { ProfileForm } from "@/components/auth/profile-form";
 import { SignOutForm } from "@/components/profile/sign-out-form";
 import { RosaryHistory } from "@/components/rosary/history";
+import { AppearanceRow } from "@/components/profile/appearance-row";
 import { PageHeader } from "@/components/layout/page-header";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "./actions";
@@ -31,6 +32,9 @@ export default async function ProfilePage() {
           <RosaryHistory />
         </Reveal>
         <Reveal index={2}>
+          <AppearanceRow />
+        </Reveal>
+        <Reveal index={3}>
           <SignOutForm action={signOut} />
         </Reveal>
       </div>

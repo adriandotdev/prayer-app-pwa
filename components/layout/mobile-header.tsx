@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/brand/logo";
+import { AppearanceLink } from "@/components/theme/appearance-link";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 
 export function MobileHeader() {
@@ -8,7 +9,10 @@ export function MobileHeader() {
       <Link href="/" aria-label="Ora home" className="text-xl">
         <Logo />
       </Link>
-      <ThemeToggle />
+      <div className="flex items-center gap-1">
+        <AppearanceLink />
+        <ThemeToggle />
+      </div>
     </header>
   );
 }
