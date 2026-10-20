@@ -55,9 +55,11 @@ export function BottomNav() {
 								/>
 								<span
 									className={cn(
-										"flex size-9 items-center justify-center rounded-md transition-transform duration-200 ease-out motion-reduce:transition-none",
+										"flex h-9 w-14 items-center justify-center rounded-full transition-[transform,background-color] duration-200 ease-out motion-reduce:transition-none",
 										active && "-translate-y-0.5",
-										rosary && "bg-gold/10",
+										rosary && !active && "bg-gold/10",
+										// A pill behind the icon, so the active tab never relies on colour alone.
+										active && "bg-accent",
 									)}
 								>
 									<Icon
