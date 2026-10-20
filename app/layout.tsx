@@ -3,7 +3,9 @@ import { Cormorant_Garamond, Hanken_Grotesk, Source_Serif_4 } from "next/font/go
 import { AppShell } from "@/components/layout/app-shell";
 import { RosarySync } from "@/components/pwa/rosary-sync";
 import { ServiceWorkerRegister } from "@/components/pwa/service-worker-register";
+import { SeasonSync } from "@/components/theme/season-sync";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { SEASON_INIT_SCRIPT } from "@/lib/theme/season";
 import "./globals.css";
 
 const ui = Hanken_Grotesk({ variable: "--font-ui", subsets: ["latin"], display: "swap" });
@@ -46,9 +48,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
       className={`${ui.variable} ${prayer.variable} ${display.variable}`}
     >
+      <head>
+        {/* Sets data-season before first paint, like next-themes does for .dark. */}
+        <script dangerouslySetInnerHTML={{ __html: SEASON_INIT_SCRIPT }} />
+      </head>
       <body className="min-h-dvh">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <ServiceWorkerRegister />
+          <SeasonSync />
           <RosarySync />
           <AppShell>{children}</AppShell>
         </ThemeProvider>
