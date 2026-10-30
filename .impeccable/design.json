@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-30T00:00:00Z",
+  "title": "Design System: Ora",
+  "extensions": {
+    "colorMeta": {
+      "vellum-ivory": { "role": "neutral", "displayName": "Vellum Ivory", "canonical": "oklch(0.973 0.014 88)", "tonalRamp": ["oklch(0.25 0.014 88)", "oklch(0.38 0.014 88)", "oklch(0.52 0.014 88)", "oklch(0.66 0.014 88)", "oklch(0.78 0.014 88)", "oklch(0.88 0.014 88)", "oklch(0.94 0.014 88)", "oklch(0.973 0.014 88)"] },
+      "vesper-blue": { "role": "primary", "displayName": "Vesper Blue", "canonical": "oklch(0.32 0.075 258)", "tonalRamp": ["oklch(0.18 0.075 258)", "oklch(0.25 0.075 258)", "oklch(0.32 0.075 258)", "oklch(0.45 0.075 258)", "oklch(0.58 0.075 258)", "oklch(0.72 0.06 258)", "oklch(0.85 0.04 258)", "oklch(0.95 0.02 258)"] },
+      "altar-gold": { "role": "secondary", "displayName": "Altar Gold", "canonical": "oklch(0.68 0.12 82)", "tonalRamp": ["oklch(0.25 0.06 82)", "oklch(0.35 0.08 82)", "oklch(0.48 0.1 82)", "oklch(0.58 0.12 82)", "oklch(0.68 0.12 82)", "oklch(0.78 0.1 82)", "oklch(0.88 0.07 82)", "oklch(0.95 0.03 82)"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Page titles in Cormorant Garamond." },
+      "prayer": { "displayName": "Prayer", "purpose": "All prayer text, Source Serif 4, scaled by --prayer-scale." }
+    },
+    "shadows": [
+      { "name": "sheet-phone", "value": "0 -12px 40px -12px color-mix(in oklab, var(--foreground) 20%, transparent)", "purpose": "Confirmation sheet on phone." },
+      { "name": "sheet-desktop", "value": "0 24px 60px -20px color-mix(in oklab, var(--foreground) 25%, transparent)", "purpose": "Confirmation modal on desktop." }
+    ],
+    "motion": [
+      { "name": "ease-ora", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Default easing for everything: arrives like light." },
+      { "name": "rise", "value": "240ms, translateY(12px) phone / 6px desktop", "purpose": "Standard enter." },
+      { "name": "breathe", "value": "3s ease-in-out infinite, scale 1.08", "purpose": "Current-bead halo; the one ambient motion." }
+    ],
+    "breakpoints": [
+      { "name": "md", "value": "48rem" },
+      { "name": "lg", "value": "64rem" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Pill action; the main action of a screen.",
+      "html": "<button class=\"ds-btn-primary\">Begin the Rosary</button>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;border:0;border-radius:9999px;background:oklch(0.32 0.075 258);color:oklch(0.97 0.014 88);font:500 1rem 'Hanken Grotesk',system-ui,sans-serif;transition:transform 200ms cubic-bezier(0.22,1,0.36,1),background-color 200ms}.ds-btn-primary:hover{background:oklch(0.32 0.075 258 / 0.9)}.ds-btn-primary:active{transform:scale(0.97)}.ds-btn-primary:focus-visible{outline:2px solid oklch(0.62 0.12 82);outline-offset:2px}"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary pill, raised by tone rather than border.",
+      "html": "<button class=\"ds-btn-outline\">Add to collection</button>",
+      "css": ".ds-btn-outline{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;border:0;border-radius:9999px;background:oklch(0.94 0.02 86);color:oklch(0.3 0.06 258);font:500 1rem 'Hanken Grotesk',system-ui,sans-serif;transition:transform 200ms cubic-bezier(0.22,1,0.36,1),background-color 200ms}.ds-btn-outline:hover{background:oklch(0.92 0.045 88)}.ds-btn-outline:active{transform:scale(0.97)}.ds-btn-outline:focus-visible{outline:2px solid oklch(0.62 0.12 82);outline-offset:2px}"
+    },
+    {
+      "name": "Prayer Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "A prayer in a list, with the arch glyph.",
+      "html": "<div class=\"ds-card\"><span class=\"ds-arch\"></span><div><div class=\"ds-card-title\">Hail Mary</div><div class=\"ds-card-sub\">Starter prayer</div></div></div>",
+      "css": ".ds-card{display:flex;align-items:center;gap:16px;padding:16px;border-radius:1.65rem;background:oklch(0.99 0.008 88);color:oklch(0.26 0.05 258);transition:background-color 180ms}.ds-card:hover{background:oklch(0.94 0.02 86)}.ds-arch{width:56px;height:72px;flex:none;border-radius:9rem 9rem 0.75rem 0.75rem;background:oklch(0.92 0.045 88)}.ds-card-title{font:600 1.5rem 'Cormorant Garamond',Georgia,serif;letter-spacing:-0.025em}.ds-card-sub{font:400 0.95rem 'Hanken Grotesk',system-ui,sans-serif;color:oklch(0.47 0.035 258)}"
+    },
+    {
+      "name": "Filter Chip (selected)",
+      "kind": "chip",
+      "refersTo": "chip-selected",
+      "description": "Active filter pill.",
+      "html": "<span class=\"ds-chip\">Favorites</span>",
+      "css": ".ds-chip{display:inline-flex;align-items:center;min-height:44px;padding:0 20px;border-radius:9999px;background:oklch(0.32 0.075 258);color:oklch(0.97 0.014 88);font:500 0.95rem 'Hanken Grotesk',system-ui,sans-serif}"
+    },
+    {
+      "name": "Bottom Nav Tab",
+      "kind": "nav",
+      "refersTo": "nav-pill-active",
+      "description": "Active tab with a Candle Wash pill.",
+      "html": "<div class=\"ds-tab\"><span class=\"ds-tab-pill\"></span><span>Rosary</span></div>",
+      "css": ".ds-tab{display:flex;flex-direction:column;align-items:center;gap:4px;font:600 13px 'Hanken Grotesk',system-ui,sans-serif;color:oklch(0.32 0.075 258)}.ds-tab-pill{width:56px;height:36px;border-radius:9999px;background:oklch(0.92 0.045 88)}"
+    },
+    {
+      "name": "Prayer Text",
+      "kind": "custom",
+      "refersTo": "prayer",
+      "description": "Sacred text at a generous measure.",
+      "html": "<p class=\"ds-prayer\">Hail Mary, full of grace, the Lord is with thee.</p>",
+      "css": ".ds-prayer{max-width:38rem;margin:0;font:400 1.25rem/1.75 'Source Serif 4',Georgia,serif;color:oklch(0.26 0.05 258)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Candlelit Chapel",
+    "overview": "Ora is a quiet room with one light in it. Surfaces are ivory paper tinted warm, text is a deep ink-blue rather than black, and gold is spent like a single flame. Day is ivory and blue; night is the same room with the lamps turned down.",
+    "keyCharacteristics": [
+      "Warm ivory ground, ink-blue text, gold as a rare point of light.",
+      "Flat tonal layering; depth comes from tinted surfaces and big corners, not shadows.",
+      "One repeated shape: the chapel-window arch.",
+      "Fully pill-shaped actions with 48–56px touch targets.",
+      "Serif for what is prayed, sans for what is operated.",
+      "Slow, opacity-and-transform-only motion that disappears under reduced motion."
+    ],
+    "rules": [
+      { "name": "The One Flame Rule", "body": "Gold appears as a point, a ring, a rule or a halo, never as a surface fill larger than an icon backing.", "section": "colors" },
+      { "name": "The Season Owns the Hue Rule", "body": "Components use tokens, never a literal blue or green, so a season swap recolors every surface with no component edits.", "section": "colors" },
+      { "name": "The Ink, Not Black Rule", "body": "Text is never #000 and grounds are never #fff; both are tinted toward the palette hue.", "section": "colors" },
+      { "name": "The Sacred Text Is Serif Rule", "body": "Anything prayed is Source Serif 4 and scales with --prayer-scale. UI chrome never uses it.", "section": "typography" },
+      { "name": "The Scale Is Theirs Rule", "body": "Layouts around prayer text must reflow, never clip or truncate it.", "section": "typography" },
+      { "name": "The Flat Until Floating Rule", "body": "In-flow surfaces get tone, never a shadow. Only overlays that cover the page may cast one.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use semantic tokens so seasons and night mode recolor everything for free.",
+      "Do set prayer text with .prayer-text and let --prayer-scale govern its size.",
+      "Do keep every interactive target at 44px or more and use AppButton.",
+      "Do animate with opacity and transform only, on ease-ora, and honor prefers-reduced-motion.",
+      "Do keep gold to a point, ring, rule or halo.",
+      "Do use tonal steps (card → secondary → accent) to separate surfaces."
+    ],
+    "donts": [
+      "Don't add shadows to in-flow cards or buttons.",
+      "Don't hard-code colors or use #000 / #fff.",
+      "Don't introduce streak flames, badges, confetti or any gamified visual.",
+      "Don't paraphrase, truncate, restyle or auto-generate traditional prayer text.",
+      "Don't put an arch on a button.",
+      "Don't fill large areas with gold or add a second accent hue.",
+      "Don't animate layout properties or run more than one ambient motion on a screen."
+    ]
+  }
+}

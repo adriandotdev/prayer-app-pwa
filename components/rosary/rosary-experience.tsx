@@ -87,7 +87,10 @@ export function RosaryExperience() {
 
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-10 lg:max-w-none">
-      <PageHeader title="The Rosary" description="Pray with the mysteries of today." />
+      {/* PageHeader already has a bottom margin; cancel it so the gap-10 above is the only spacing. */}
+      <div className="-mb-7 md:-mb-10">
+        <PageHeader title="The Rosary" description="Pray with the mysteries of today." />
+      </div>
       {resumeSet && saved && (
         <section className="ora-enter rounded-3xl bg-card p-6">
           <h2 className="font-heading text-3xl">Continue where you left off</h2>
