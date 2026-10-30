@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, BookOpen, HandHeart } from "lucide-react";
+import { MysteryArt } from "@/components/rosary/mystery-art";
 
 import { AppButton } from "@/components/app-button";
 import { BeadTracker } from "@/components/sequence/bead-tracker";
@@ -64,12 +65,12 @@ export function SequencePlayer({ sequence, initialIndex, initialMode, onFinish, 
   });
 
   return (
-    <div className="mx-auto flex w-full max-w-5xl flex-col gap-3 md:flex-row md:items-start md:gap-10">
-      <div className="md:sticky md:top-6 md:w-72 md:shrink-0">
+    <div className="mx-auto flex w-full max-w-5xl flex-col gap-3 md:flex-row md:items-start md:gap-10 lg:max-w-none lg:gap-16">
+      <div className="md:sticky md:top-6 md:w-72 md:shrink-0 lg:top-10 lg:w-80">
         <BeadTracker
           sequence={sequence}
           index={index}
-          className="h-64 w-auto max-md:pointer-events-none sm:h-72 md:h-[30rem]"
+          className="h-44 w-auto max-md:pointer-events-none sm:h-64 md:h-[30rem] lg:h-[34rem]"
           onSelectBead={(beadId) => {
             const target = firstStepForBead(sequence, beadId);
             if (target >= 0) setIndex(target);
@@ -86,7 +87,7 @@ export function SequencePlayer({ sequence, initialIndex, initialMode, onFinish, 
           >
             Leave
           </button>
-          <div role="group" aria-label="Mode" className="inline-flex rounded-full border border-border p-0.5">
+          <div role="group" aria-label="Mode" className="inline-flex rounded-full bg-secondary p-1">
             <ModeButton active={mode === "learn"} onClick={() => setMode("learn")} icon={<BookOpen className="size-3.5" />}>
               Learn
             </ModeButton>
@@ -114,7 +115,7 @@ export function SequencePlayer({ sequence, initialIndex, initialMode, onFinish, 
               else back();
             }
           }}
-          className="flex min-h-60 flex-col gap-3 rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-6"
+          className="flex min-h-72 flex-col gap-4 rounded-3xl bg-card p-5 sm:p-8 lg:p-12"
         >
           <AnimatePresence mode="wait" initial={false} custom={direction}>
             <motion.div
@@ -130,16 +131,32 @@ export function SequencePlayer({ sequence, initialIndex, initialMode, onFinish, 
               exit="exit"
               className="flex flex-1 flex-col gap-3"
             >
-            <p className="text-xs uppercase tracking-widest text-muted-foreground">
-              {step.section} · {position} of {total}
-            </p>
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-sm font-medium text-gold-foreground dark:text-gold">
+                {step.section} · {position} of {total}
+              </p>
+              {total > 1 && total <= 12 && (
+                <span aria-hidden className="flex items-center gap-1">
+                  {Array.from({ length: total }, (_, i) => (
+                    <span
+                      key={i}
+                      className={cn(
+                        "size-1.5 rounded-full transition-colors duration-300",
+                        i < position ? "bg-gold" : "bg-muted-foreground/30",
+                      )}
+                    />
+                  ))}
+                </span>
+              )}
+            </div>
             <div>
-              <h2 className="font-heading text-3xl">{step.title}</h2>
-              {step.subtitle && <p className="mt-1 text-sm text-muted-foreground">{step.subtitle}</p>}
+              <h2 className="font-heading text-4xl leading-[1.05]">{step.title}</h2>
+              {step.subtitle && <p className="mt-2 text-base text-muted-foreground">{step.subtitle}</p>}
             </div>
 
             {mode === "learn" && step.reflection && (
-              <div className="rounded-lg bg-secondary/60 p-4 text-sm leading-relaxed">
+              <div className="rounded-2xl bg-secondary/70 p-5 text-base leading-relaxed">
+                <MysteryArt name={step.reflection.heading} className="mb-3 size-16 text-primary dark:text-gold" />
                 <p className="font-medium">
                   {step.reflection.heading}
                   {step.reflection.reference && (
@@ -175,13 +192,13 @@ export function SequencePlayer({ sequence, initialIndex, initialMode, onFinish, 
             )}
 
             {mode === "learn" && prayer?.learn && (
-              <p className="mt-auto border-t border-border pt-3 text-sm text-muted-foreground">{prayer.learn}</p>
+              <p className="mt-auto pt-3 text-base text-muted-foreground">{prayer.learn}</p>
             )}
             </motion.div>
           </AnimatePresence>
         </article>
 
-        <div className="sticky bottom-(--bottom-nav-height) z-20 -mx-4 flex items-center gap-3 border-t border-border bg-background/95 px-4 py-3 backdrop-blur md:static md:mx-0 md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none">
+        <div className="sticky bottom-(--bottom-nav-height) z-20 -mx-4 flex items-center gap-3 bg-background px-4 py-3 shadow-[0_-10px_20px_-12px_oklch(0_0_0/0.12)] md:static md:mx-0 md:bg-transparent md:p-0 md:shadow-none">
           <AppButton variant="outline" size="lg" onClick={back} disabled={index === 0}>
             <ArrowLeft />
             Back
@@ -191,7 +208,7 @@ export function SequencePlayer({ sequence, initialIndex, initialMode, onFinish, 
             <ArrowRight />
           </AppButton>
         </div>
-        <p className="text-center text-xs text-muted-foreground">
+        <p className="text-center text-sm text-muted-foreground">
           Step {index + 1} of {sequence.steps.length} · swipe<span className="hidden md:inline"> or tap a bead</span>
         </p>
       </div>
