@@ -14,7 +14,7 @@ export default async function EditIntentionPage({ params }: PageProps<"/intentio
 
   return (
     <div className="mx-auto max-w-2xl">
-      <IntentionForm title="Edit intention" action={updateIntention} submitLabel="Save changes" intention={intention} />
+      <IntentionForm title="Edit your intention" action={updateIntention} submitLabel="Save changes" intention={intention} />
     </div>
   );
 }
