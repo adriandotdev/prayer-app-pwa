@@ -11,7 +11,7 @@ export function DeleteButton({ id }: { id: string }) {
 
   return (
     <>
-      <AppButton variant="outline" className="flex-1 sm:flex-none" onClick={() => setOpen(true)}>
+      <AppButton variant="outline" aria-label="Delete prayer" className="flex-1 sm:flex-none" onClick={() => setOpen(true)}>
         Delete
       </AppButton>
       <ConfirmationSheet

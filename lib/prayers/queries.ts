@@ -1,5 +1,7 @@
 import "server-only";
 
+import { cache } from "react";
+
 import { createClient } from "@/lib/supabase/server";
 import type { Tables } from "@/lib/database.types";
 import { isUuid } from "@/lib/validation";
@@ -48,9 +50,10 @@ export async function listPrayers(filter: PrayerFilter, favoriteIds: Set<string>
   return data ?? [];
 }
 
-export async function getPrayer(id: string): Promise<Prayer | null> {
+/** Cached per request: the page and its generateMetadata both call it. */
+export const getPrayer = cache(async (id: string): Promise<Prayer | null> => {
   if (!isUuid(id)) return null;
   const supabase = await createClient();
   const { data } = await supabase.from("prayers").select(COLUMNS).eq("id", id).maybeSingle();
   return data;
-}
+});
