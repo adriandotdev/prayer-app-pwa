@@ -1,0 +1,23 @@
+name: Supabase keep-alive
+
+# Free-tier Supabase projects pause after ~7 days without activity.
+# A cheap read every few days counts as activity and keeps the project awake.
+
+on:
+  schedule:
+    - cron: "0 6 */3 * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Query a starter prayer
+        env:
+          SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+        run: |
+          curl --fail --silent --show-error --retry 3 --retry-delay 10 \
+            "$SUPABASE_URL/rest/v1/prayers?select=id&user_id=is.null&limit=1" \
+            -H "apikey: $SUPABASE_KEY" \
+            -H "Authorization: Bearer $SUPABASE_KEY"
