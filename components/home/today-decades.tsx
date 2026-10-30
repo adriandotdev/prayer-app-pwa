@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 import { MYSTERY_SETS } from "@/data/rosary/mysteries";
@@ -20,10 +20,10 @@ export function TodayDecades() {
         </h2>
         <Link
           href="/rosary"
-          className="ora-press group inline-flex min-h-11 items-center gap-1.5 rounded-full bg-secondary px-5 text-[0.95rem] font-medium hover:bg-accent"
+          className="ora-press group inline-flex min-h-11 items-center gap-1.5 rounded-full bg-secondary px-5 text-base font-medium hover:bg-accent"
         >
           Begin
-          <ArrowUpRight className="size-4 text-primary transition-transform duration-200 ease-ora group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden />
+          <ArrowRight className="size-4 text-primary transition-transform duration-200 ease-ora group-hover:translate-x-0.5" aria-hidden />
         </Link>
       </div>
       {set ? (

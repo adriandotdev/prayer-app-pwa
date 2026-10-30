@@ -1,29 +1,289 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-30T00:00:00Z",
+  "generatedAt": "2026-10-30T15:18:52Z",
   "title": "Design System: Ora",
   "extensions": {
     "colorMeta": {
-      "vellum-ivory": { "role": "neutral", "displayName": "Vellum Ivory", "canonical": "oklch(0.973 0.014 88)", "tonalRamp": ["oklch(0.25 0.014 88)", "oklch(0.38 0.014 88)", "oklch(0.52 0.014 88)", "oklch(0.66 0.014 88)", "oklch(0.78 0.014 88)", "oklch(0.88 0.014 88)", "oklch(0.94 0.014 88)", "oklch(0.973 0.014 88)"] },
-      "vesper-blue": { "role": "primary", "displayName": "Vesper Blue", "canonical": "oklch(0.32 0.075 258)", "tonalRamp": ["oklch(0.18 0.075 258)", "oklch(0.25 0.075 258)", "oklch(0.32 0.075 258)", "oklch(0.45 0.075 258)", "oklch(0.58 0.075 258)", "oklch(0.72 0.06 258)", "oklch(0.85 0.04 258)", "oklch(0.95 0.02 258)"] },
-      "altar-gold": { "role": "secondary", "displayName": "Altar Gold", "canonical": "oklch(0.68 0.12 82)", "tonalRamp": ["oklch(0.25 0.06 82)", "oklch(0.35 0.08 82)", "oklch(0.48 0.1 82)", "oklch(0.58 0.12 82)", "oklch(0.68 0.12 82)", "oklch(0.78 0.1 82)", "oklch(0.88 0.07 82)", "oklch(0.95 0.03 82)"] }
+      "vellum-ivory": {
+        "role": "neutral",
+        "displayName": "Vellum Ivory",
+        "canonical": "oklch(0.973 0.014 88)",
+        "tonalRamp": [
+          "oklch(0.15 0.014 88)",
+          "oklch(0.25 0.014 88)",
+          "oklch(0.35 0.014 88)",
+          "oklch(0.45 0.014 88)",
+          "oklch(0.6 0.014 88)",
+          "oklch(0.75 0.014 88)",
+          "oklch(0.88 0.014 88)",
+          "oklch(0.95 0.014 88)"
+        ]
+      },
+      "vesper-blue": {
+        "role": "primary",
+        "displayName": "Vesper Blue",
+        "canonical": "oklch(0.32 0.075 258)",
+        "tonalRamp": [
+          "oklch(0.15 0.075 258)",
+          "oklch(0.25 0.075 258)",
+          "oklch(0.35 0.075 258)",
+          "oklch(0.45 0.075 258)",
+          "oklch(0.6 0.075 258)",
+          "oklch(0.75 0.075 258)",
+          "oklch(0.88 0.075 258)",
+          "oklch(0.95 0.075 258)"
+        ]
+      },
+      "vesper-ink": {
+        "role": "neutral",
+        "displayName": "Vesper Ink",
+        "canonical": "oklch(0.26 0.05 258)",
+        "tonalRamp": [
+          "oklch(0.15 0.05 258)",
+          "oklch(0.25 0.05 258)",
+          "oklch(0.35 0.05 258)",
+          "oklch(0.45 0.05 258)",
+          "oklch(0.6 0.05 258)",
+          "oklch(0.75 0.05 258)",
+          "oklch(0.88 0.05 258)",
+          "oklch(0.95 0.05 258)"
+        ]
+      },
+      "altar-gold": {
+        "role": "secondary",
+        "displayName": "Altar Gold",
+        "canonical": "oklch(0.68 0.12 82)",
+        "tonalRamp": [
+          "oklch(0.15 0.12 82)",
+          "oklch(0.25 0.12 82)",
+          "oklch(0.35 0.12 82)",
+          "oklch(0.45 0.12 82)",
+          "oklch(0.6 0.12 82)",
+          "oklch(0.75 0.12 82)",
+          "oklch(0.88 0.12 82)",
+          "oklch(0.95 0.12 82)"
+        ]
+      },
+      "linen-card": {
+        "role": "neutral",
+        "displayName": "Linen Card",
+        "canonical": "oklch(0.99 0.008 88)",
+        "tonalRamp": [
+          "oklch(0.15 0.008 88)",
+          "oklch(0.25 0.008 88)",
+          "oklch(0.35 0.008 88)",
+          "oklch(0.45 0.008 88)",
+          "oklch(0.6 0.008 88)",
+          "oklch(0.75 0.008 88)",
+          "oklch(0.88 0.008 88)",
+          "oklch(0.95 0.008 88)"
+        ]
+      },
+      "parchment": {
+        "role": "neutral",
+        "displayName": "Parchment",
+        "canonical": "oklch(0.94 0.02 86)",
+        "tonalRamp": [
+          "oklch(0.15 0.02 86)",
+          "oklch(0.25 0.02 86)",
+          "oklch(0.35 0.02 86)",
+          "oklch(0.45 0.02 86)",
+          "oklch(0.6 0.02 86)",
+          "oklch(0.75 0.02 86)",
+          "oklch(0.88 0.02 86)",
+          "oklch(0.95 0.02 86)"
+        ]
+      },
+      "candle-wash": {
+        "role": "neutral",
+        "displayName": "Candle Wash",
+        "canonical": "oklch(0.92 0.045 88)",
+        "tonalRamp": [
+          "oklch(0.15 0.045 88)",
+          "oklch(0.25 0.045 88)",
+          "oklch(0.35 0.045 88)",
+          "oklch(0.45 0.045 88)",
+          "oklch(0.6 0.045 88)",
+          "oklch(0.75 0.045 88)",
+          "oklch(0.88 0.045 88)",
+          "oklch(0.95 0.045 88)"
+        ]
+      },
+      "ash-text": {
+        "role": "neutral",
+        "displayName": "Ash Text",
+        "canonical": "oklch(0.47 0.035 258)",
+        "tonalRamp": [
+          "oklch(0.15 0.035 258)",
+          "oklch(0.25 0.035 258)",
+          "oklch(0.35 0.035 258)",
+          "oklch(0.45 0.035 258)",
+          "oklch(0.6 0.035 258)",
+          "oklch(0.75 0.035 258)",
+          "oklch(0.88 0.035 258)",
+          "oklch(0.95 0.035 258)"
+        ]
+      },
+      "rule-line": {
+        "role": "neutral",
+        "displayName": "Rule Line",
+        "canonical": "oklch(0.88 0.02 86)",
+        "tonalRamp": [
+          "oklch(0.15 0.02 86)",
+          "oklch(0.25 0.02 86)",
+          "oklch(0.35 0.02 86)",
+          "oklch(0.45 0.02 86)",
+          "oklch(0.6 0.02 86)",
+          "oklch(0.75 0.02 86)",
+          "oklch(0.88 0.02 86)",
+          "oklch(0.95 0.02 86)"
+        ]
+      },
+      "penitent-red": {
+        "role": "destructive",
+        "displayName": "Penitent Red",
+        "canonical": "oklch(0.52 0.19 27)",
+        "tonalRamp": [
+          "oklch(0.15 0.19 27)",
+          "oklch(0.25 0.19 27)",
+          "oklch(0.35 0.19 27)",
+          "oklch(0.45 0.19 27)",
+          "oklch(0.6 0.19 27)",
+          "oklch(0.75 0.19 27)",
+          "oklch(0.88 0.19 27)",
+          "oklch(0.95 0.19 27)"
+        ]
+      },
+      "night-vellum": {
+        "role": "neutral",
+        "displayName": "Night Vellum",
+        "canonical": "oklch(0.18 0.035 258)",
+        "tonalRamp": [
+          "oklch(0.15 0.035 258)",
+          "oklch(0.25 0.035 258)",
+          "oklch(0.35 0.035 258)",
+          "oklch(0.45 0.035 258)",
+          "oklch(0.6 0.035 258)",
+          "oklch(0.75 0.035 258)",
+          "oklch(0.88 0.035 258)",
+          "oklch(0.95 0.035 258)"
+        ]
+      },
+      "night-card": {
+        "role": "neutral",
+        "displayName": "Night Card",
+        "canonical": "oklch(0.22 0.04 258)",
+        "tonalRamp": [
+          "oklch(0.15 0.04 258)",
+          "oklch(0.25 0.04 258)",
+          "oklch(0.35 0.04 258)",
+          "oklch(0.45 0.04 258)",
+          "oklch(0.6 0.04 258)",
+          "oklch(0.75 0.04 258)",
+          "oklch(0.88 0.04 258)",
+          "oklch(0.95 0.04 258)"
+        ]
+      },
+      "night-gold": {
+        "role": "secondary",
+        "displayName": "Night Gold",
+        "canonical": "oklch(0.8 0.1 85)",
+        "tonalRamp": [
+          "oklch(0.15 0.1 85)",
+          "oklch(0.25 0.1 85)",
+          "oklch(0.35 0.1 85)",
+          "oklch(0.45 0.1 85)",
+          "oklch(0.6 0.1 85)",
+          "oklch(0.75 0.1 85)",
+          "oklch(0.88 0.1 85)",
+          "oklch(0.95 0.1 85)"
+        ]
+      },
+      "night-text": {
+        "role": "neutral",
+        "displayName": "Night Text",
+        "canonical": "oklch(0.93 0.02 88)",
+        "tonalRamp": [
+          "oklch(0.15 0.02 88)",
+          "oklch(0.25 0.02 88)",
+          "oklch(0.35 0.02 88)",
+          "oklch(0.45 0.02 88)",
+          "oklch(0.6 0.02 88)",
+          "oklch(0.75 0.02 88)",
+          "oklch(0.88 0.02 88)",
+          "oklch(0.95 0.02 88)"
+        ]
+      }
     },
     "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "Page titles in Cormorant Garamond." },
-      "prayer": { "displayName": "Prayer", "purpose": "All prayer text, Source Serif 4, scaled by --prayer-scale." }
+      "display": {
+        "displayName": "Display",
+        "purpose": "Page titles on desktop via PageHeader (Cormorant Garamond)."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page titles on phone, including the Home h1 (2.5rem); all h1–h3 use Cormorant."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card and section headings."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "UI text and descriptions in Hanken Grotesk."
+      },
+      "prayer": {
+        "displayName": "Prayer",
+        "purpose": "All prayed text in Source Serif 4, scaled by --prayer-scale."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Nav labels, chips and buttons."
+      }
     },
     "shadows": [
-      { "name": "sheet-phone", "value": "0 -12px 40px -12px color-mix(in oklab, var(--foreground) 20%, transparent)", "purpose": "Confirmation sheet on phone." },
-      { "name": "sheet-desktop", "value": "0 24px 60px -20px color-mix(in oklab, var(--foreground) 25%, transparent)", "purpose": "Confirmation modal on desktop." }
+      {
+        "name": "sheet-phone",
+        "value": "0 -12px 40px -12px color-mix(in oklab, var(--foreground) 20%, transparent)",
+        "purpose": "Confirmation sheet on phone."
+      },
+      {
+        "name": "sheet-desktop",
+        "value": "0 24px 60px -20px color-mix(in oklab, var(--foreground) 25%, transparent)",
+        "purpose": "Confirmation modal on desktop."
+      }
     ],
     "motion": [
-      { "name": "ease-ora", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Default easing for everything: arrives like light." },
-      { "name": "rise", "value": "240ms, translateY(12px) phone / 6px desktop", "purpose": "Standard enter." },
-      { "name": "breathe", "value": "3s ease-in-out infinite, scale 1.08", "purpose": "Current-bead halo; the one ambient motion." }
+      {
+        "name": "ease-ora",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "Default easing for everything: arrives like light."
+      },
+      {
+        "name": "rise",
+        "value": "240ms, translateY(12px) phone / 6px desktop",
+        "purpose": "Standard enter."
+      },
+      {
+        "name": "breathe",
+        "value": "3s ease-in-out infinite, scale 1.08",
+        "purpose": "Current-bead halo; the one ambient motion."
+      },
+      {
+        "name": "candle",
+        "value": "5s ease-in-out infinite, opacity 0.55–0.9, scale 1.06",
+        "purpose": "Halo behind the Christ figure on Home; the one ambient motion on that screen. The bead row there is static."
+      }
     ],
     "breakpoints": [
-      { "name": "md", "value": "48rem" },
-      { "name": "lg", "value": "64rem" }
+      {
+        "name": "md",
+        "value": "48rem"
+      },
+      {
+        "name": "lg",
+        "value": "64rem"
+      }
     ]
   },
   "components": [
@@ -74,6 +334,22 @@
       "description": "Sacred text at a generous measure.",
       "html": "<p class=\"ds-prayer\">Hail Mary, full of grace, the Lord is with thee.</p>",
       "css": ".ds-prayer{max-width:38rem;margin:0;font:400 1.25rem/1.75 'Source Serif 4',Georgia,serif;color:oklch(0.26 0.05 258)}"
+    },
+    {
+      "name": "Hero CTA",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The inverted primary pill on the Home hero panel; label becomes “Continue your Rosary” when a session is in progress.",
+      "html": "<button class=\"ds-hero-cta\">Pray the Rosary</button>",
+      "css": ".ds-hero-cta{min-height:56px;width:100%;padding:0 24px;border:0;border-radius:9999px;background:oklch(0.973 0.014 88);color:oklch(0.32 0.075 258);font-size:1.125rem;font-weight:500;transition:transform 200ms cubic-bezier(0.22,1,0.36,1),background-color 200ms}.ds-hero-cta:hover{background:oklch(0.973 0.014 88 / 0.9)}.ds-hero-cta:active{transform:scale(0.97)}.ds-hero-cta:focus-visible{outline:2px solid oklch(0.68 0.12 82);outline-offset:2px}"
+    },
+    {
+      "name": "Library Link Tile",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Home link into the signed-in library; the line under the title says whether sign-in is needed or you are offline.",
+      "html": "<a class=\"ds-tile\" href=\"#\"><span class=\"ds-tile-head\"><span class=\"ds-tile-title\">Your prayers</span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></span><span class=\"ds-tile-body\">Sign in to keep the prayers you love, organised into collections.</span></a>",
+      "css": ".ds-tile{display:flex;flex-direction:column;justify-content:space-between;gap:24px;min-height:128px;padding:24px;border-radius:1.65rem;background:oklch(0.99 0.008 88);color:oklch(0.26 0.05 258);text-decoration:none;transition:transform 180ms cubic-bezier(0.22,1,0.36,1),background-color 180ms}.ds-tile:hover{background:oklch(0.94 0.02 86)}.ds-tile:active{transform:scale(0.985)}.ds-tile:focus-visible{outline:2px solid oklch(0.68 0.12 82);outline-offset:2px}.ds-tile-head{display:flex;justify-content:space-between;gap:16px;color:oklch(0.32 0.075 258)}.ds-tile-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.875rem;line-height:1;color:oklch(0.26 0.05 258)}.ds-tile-body{max-width:20rem;font-size:1rem;color:oklch(0.47 0.035 258)}"
     }
   ],
   "narrative": {
@@ -88,28 +364,57 @@
       "Slow, opacity-and-transform-only motion that disappears under reduced motion."
     ],
     "rules": [
-      { "name": "The One Flame Rule", "body": "Gold appears as a point, a ring, a rule or a halo, never as a surface fill larger than an icon backing.", "section": "colors" },
-      { "name": "The Season Owns the Hue Rule", "body": "Components use tokens, never a literal blue or green, so a season swap recolors every surface with no component edits.", "section": "colors" },
-      { "name": "The Ink, Not Black Rule", "body": "Text is never #000 and grounds are never #fff; both are tinted toward the palette hue.", "section": "colors" },
-      { "name": "The Sacred Text Is Serif Rule", "body": "Anything prayed is Source Serif 4 and scales with --prayer-scale. UI chrome never uses it.", "section": "typography" },
-      { "name": "The Scale Is Theirs Rule", "body": "Layouts around prayer text must reflow, never clip or truncate it.", "section": "typography" },
-      { "name": "The Flat Until Floating Rule", "body": "In-flow surfaces get tone, never a shadow. Only overlays that cover the page may cast one.", "section": "elevation" }
+      {
+        "name": "The One Flame Rule",
+        "body": "Gold appears as a point, a ring, a rule or a halo, never as a surface fill larger than an icon backing. Its rarity is what makes it read as light.",
+        "section": "colors"
+      },
+      {
+        "name": "The Season Owns the Hue Rule",
+        "body": "Components use tokens (`primary`, `accent`, `gold`), never a literal blue or green. A season swap must recolor every surface with no component edits. The one sanctioned exception: in the Red season the destructive button becomes an outline, because filled primary is already red.",
+        "section": "colors"
+      },
+      {
+        "name": "The Ink, Not Black Rule",
+        "body": "Text is never `#000` and grounds are never `#fff`; both are tinted toward the palette hue.",
+        "section": "colors"
+      },
+      {
+        "name": "The Sacred Text Is Serif Rule",
+        "body": "Anything prayed (prayer bodies and the Rosary's prayer text) is Source Serif 4 and scales with `--prayer-scale`. UI chrome never uses it.",
+        "section": "typography"
+      },
+      {
+        "name": "The Scale Is Theirs Rule",
+        "body": "Prayer size is user-controlled; layouts around prayer text must reflow, never clip or truncate it.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Until Floating Rule",
+        "body": "A surface that sits in the page flow gets tone, never a shadow. Only overlays that cover the page may cast one.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Pill and the Arch Rule",
+        "body": "Actions are pills; the arch is for objects of devotion (prayers, figures). Never put an arch on a button or a pill on a prayer.",
+        "section": "shapes"
+      }
     ],
     "dos": [
-      "Do use semantic tokens so seasons and night mode recolor everything for free.",
-      "Do set prayer text with .prayer-text and let --prayer-scale govern its size.",
-      "Do keep every interactive target at 44px or more and use AppButton.",
-      "Do animate with opacity and transform only, on ease-ora, and honor prefers-reduced-motion.",
-      "Do keep gold to a point, ring, rule or halo.",
+      "Do use semantic tokens (`bg-primary`, `bg-accent`, `text-muted-foreground`, `text-gold`) so seasons and night mode recolor everything for free.",
+      "Do set prayer text with `.prayer-text` and let `--prayer-scale` govern its size; reflow layouts to fit.",
+      "Do keep every interactive target at 44px or more, primary actions 52–56px, and use `AppButton` rather than any shadcn Button.",
+      "Do animate with opacity and transform only, on `ease-ora` (cubic-bezier(0.22, 1, 0.36, 1)), 180–240ms for UI and 520ms for staggered entrances, and honor `prefers-reduced-motion` by removing animation entirely.",
+      "Do keep gold to a point, ring, rule or halo, and keep fixed UI clear of safe-area insets.",
       "Do use tonal steps (card → secondary → accent) to separate surfaces."
     ],
     "donts": [
-      "Don't add shadows to in-flow cards or buttons.",
-      "Don't hard-code colors or use #000 / #fff.",
-      "Don't introduce streak flames, badges, confetti or any gamified visual.",
-      "Don't paraphrase, truncate, restyle or auto-generate traditional prayer text.",
+      "Don't add shadows to in-flow cards or buttons; only overlays (sheets, toasts) float.",
+      "Don't hard-code colors or use `#000` / `#fff`; every color comes from a token.",
+      "Don't introduce streak flames, badges, confetti, progress-guilt, or any gamified or loss-aversion visual.",
+      "Don't paraphrase, truncate, restyle or auto-generate traditional prayer text; set it plainly and in full.",
       "Don't put an arch on a button.",
-      "Don't fill large areas with gold or add a second accent hue.",
+      "Don't fill large areas with gold or add a second accent hue; seasons change the primary, not the accent system.",
       "Don't animate layout properties or run more than one ambient motion on a screen."
     ]
   }
