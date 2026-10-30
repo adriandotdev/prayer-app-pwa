@@ -10,6 +10,6 @@ export async function requireUser(next: string) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) redirect(`/login?next=${next}`);
+  if (!user) redirect(`/login?next=${encodeURIComponent(next)}`);
   return { supabase, user };
 }
