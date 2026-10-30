@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { PageHeader } from "@/components/layout/page-header";
 import { PrayerForm } from "@/components/prayers/prayer-form";
 import { updatePrayer } from "@/lib/prayers/actions";
 import { getPrayer } from "@/lib/prayers/queries";
@@ -16,8 +15,14 @@ export default async function EditPrayerPage({ params }: PageProps<"/prayers/[id
 
   return (
     <div className="mx-auto max-w-2xl">
-      <PageHeader title="Edit prayer" />
-      <PrayerForm action={updatePrayer} cancelHref={`/prayers/${id}`} submitLabel="Save changes" prayer={prayer} />
+      <PrayerForm
+        title="Edit prayer"
+        backHref={`/prayers/${id}`}
+        backLabel="Back to prayer"
+        action={updatePrayer}
+        submitLabel="Save changes"
+        prayer={prayer}
+      />
     </div>
   );
 }

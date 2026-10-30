@@ -9,7 +9,8 @@ import { flash } from "@/lib/toast-flash";
 import { formId } from "@/lib/validation";
 import { prayerSchema } from "./schema";
 
-export type PrayerFormState = { status: "idle" | "error"; message?: string };
+export type PrayerField = "title" | "body" | "source";
+export type PrayerFormState = { status: "idle" | "error"; message?: string; field?: PrayerField };
 
 const SAVE_ERROR = "We couldn't save that. Please try again.";
 const DELETE_ERROR = "We couldn't delete that prayer. Please try again.";
@@ -22,9 +23,20 @@ function parseForm(formData: FormData) {
   });
 }
 
+/** The first problem, tagged with the field it belongs to so the form can show it there. */
+function invalid(error: { issues: { path: PropertyKey[]; message: string }[] }): PrayerFormState {
+  const issue = error.issues[0];
+  const field = issue?.path[0];
+  return {
+    status: "error",
+    message: issue?.message,
+    field: field === "title" || field === "body" || field === "source" ? field : undefined,
+  };
+}
+
 export async function createPrayer(_prev: PrayerFormState, formData: FormData): Promise<PrayerFormState> {
   const parsed = parseForm(formData);
-  if (!parsed.success) return { status: "error", message: parsed.error.issues[0]?.message };
+  if (!parsed.success) return invalid(parsed.error);
 
   const { supabase, user } = await requireUser("/prayers/new");
   const { data, error } = await supabase
@@ -36,14 +48,14 @@ export async function createPrayer(_prev: PrayerFormState, formData: FormData): 
 
   revalidatePath("/prayers");
   await flash("Prayer added");
-  redirect(`/prayers/${data.id}`);
+  redirect(`/prayers/${data.id}?added=1`);
 }
 
 export async function updatePrayer(_prev: PrayerFormState, formData: FormData): Promise<PrayerFormState> {
   const id = formId(formData);
   if (!id) return { status: "error", message: SAVE_ERROR };
   const parsed = parseForm(formData);
-  if (!parsed.success) return { status: "error", message: parsed.error.issues[0]?.message };
+  if (!parsed.success) return invalid(parsed.error);
 
   const { supabase, user } = await requireUser(`/prayers/${id}/edit`);
   // user_id filter + RLS: starter prayers and other people's prayers match nothing.
