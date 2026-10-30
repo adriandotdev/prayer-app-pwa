@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ChevronDown, HandHeart, Plus } from "lucide-react";
 
 import { AppButton } from "@/components/app-button";
+import { DraftClear } from "@/components/intentions/draft-clear";
 import { IntentionItem } from "@/components/intentions/intention-item";
 import { EmptyState } from "@/components/layout/empty-state";
 import { PageHeader } from "@/components/layout/page-header";
@@ -12,7 +13,9 @@ export const metadata: Metadata = { title: "Intentions" };
 const LIST = "grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-4 lg:items-start";
 const SECTION_HEADING = "font-display text-2xl md:text-3xl";
 
-export default async function IntentionsPage() {
+export default async function IntentionsPage({ searchParams }: PageProps<"/intentions">) {
+  const { added } = await searchParams;
+  const addedId = typeof added === "string" ? added : undefined;
   const { active, answered } = await listIntentions();
   const empty = active.length === 0 && answered.length === 0;
 
@@ -24,6 +27,7 @@ export default async function IntentionsPage() {
 
   return (
     <>
+      {addedId ? <DraftClear /> : null}
       <PageHeader
         title="Intentions"
         description={description}
@@ -51,7 +55,7 @@ export default async function IntentionsPage() {
             {active.length > 0 ? (
               <ul className={LIST}>
                 {active.map((i, n) => (
-                  <IntentionItem key={i.id} intention={i} index={n} />
+                  <IntentionItem key={i.id} intention={i} index={n} highlight={i.id === addedId} />
                 ))}
               </ul>
             ) : (
