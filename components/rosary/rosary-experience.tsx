@@ -10,6 +10,7 @@ import { SequencePlayer } from "@/components/sequence/sequence-player";
 import { MYSTERY_SETS, MYSTERY_SET_ORDER, type MysterySetId } from "@/data/rosary/mysteries";
 import { mysterySetForDay } from "@/data/rosary/schedule";
 import { buildRosary } from "@/data/rosary/sequence";
+import { setFromSequenceId } from "@/lib/rosary/resume";
 import { recordOrQueueRosary } from "@/lib/rosary/pending";
 import { clearProgress, saveProgress, useSavedProgress, type PrayerMode } from "@/lib/sequence/progress";
 import { useToday } from "@/lib/use-today";
@@ -26,11 +27,6 @@ const SET_CARD: Record<MysterySetId, { art: string; days: string }> = {
 };
 
 const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
-function setFromSequenceId(id: string): MysterySetId | null {
-  const value = id.replace("rosary:", "") as MysterySetId;
-  return value in MYSTERY_SETS ? value : null;
-}
 
 export function RosaryExperience() {
   const today = useToday();
