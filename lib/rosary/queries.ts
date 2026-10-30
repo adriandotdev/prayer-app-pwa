@@ -14,3 +14,15 @@ export async function getRosaryHistory(limit = 10): Promise<{ total: number; rec
     .limit(limit);
   return { total: count ?? 0, recent: (data ?? []) as RosarySession[] };
 }
+
+const STATS_ROW_CAP = 5000;
+
+export async function getRosaryStatsRows(): Promise<{ mystery_set: string; completed_at: string }[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("rosary_sessions")
+    .select("mystery_set, completed_at")
+    .order("completed_at", { ascending: false })
+    .limit(STATS_ROW_CAP);
+  return data ?? [];
+}
