@@ -34,7 +34,7 @@ export function AppSidebar() {
                   href={href}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "relative flex items-center gap-3 rounded-full px-4 py-3 text-[0.95rem] font-medium transition-colors duration-200 lg:text-base",
+                    "relative flex items-center gap-3 rounded-full px-4 py-3 text-base font-medium transition-colors duration-200",
                     active
                       ? "bg-sidebar-accent font-semibold text-sidebar-accent-foreground"
                       : "text-muted-foreground hover:bg-sidebar-accent/60 hover:text-sidebar-foreground",
