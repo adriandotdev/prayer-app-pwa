@@ -36,7 +36,9 @@ export const SEASON_INFO: Record<
 };
 
 /**
- * Source of the <head> script that sets data-season before first paint. It inlines
- * `seasonForDate` so there is one copy of the calendar rules.
+ * Source of the <head> script that sets data-season, and the status-bar colour, before first paint.
+ * It inlines `seasonForDate` so there is one copy of the calendar rules. The colour is applied once
+ * the tags exist, since Next may stream its metadata after this script runs; the original colour is
+ * stashed first so `SeasonSync` can restore it when the visitor goes back to Ora's own palette.
  */
-export const SEASON_INIT_SCRIPT = `(function(){try{var c=localStorage.getItem(${JSON.stringify(SEASON_STORAGE_KEY)});if(c==="auto")c=(${seasonForDate.toString()})(new Date());if(${JSON.stringify(SEASONS)}.indexOf(c)>-1)document.documentElement.setAttribute("data-season",c)}catch(e){}})()`;
+export const SEASON_INIT_SCRIPT = `(function(){try{var c=localStorage.getItem(${JSON.stringify(SEASON_STORAGE_KEY)});if(c==="auto")c=(${seasonForDate.toString()})(new Date());if(${JSON.stringify(SEASONS)}.indexOf(c)>-1){document.documentElement.setAttribute("data-season",c);try{var t=localStorage.getItem("theme"),d=t==="dark"||(t!=="light"&&matchMedia("(prefers-color-scheme: dark)").matches),b=${JSON.stringify(SEASON_BACKGROUNDS)}[c][d?"dark":"light"],f=function(){document.querySelectorAll('meta[name="theme-color"]').forEach(function(m){m.dataset.oraOriginal=m.dataset.oraOriginal||m.content;m.content=b})};f();document.addEventListener("DOMContentLoaded",f)}catch(e){}}}catch(e){}})()`;
