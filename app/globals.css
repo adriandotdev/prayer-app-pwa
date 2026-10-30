@@ -131,7 +131,7 @@
     @apply border-border outline-ring/50;
   }
   html {
-    @apply font-sans;
+    @apply bg-background font-sans;
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
   }
