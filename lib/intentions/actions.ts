@@ -3,8 +3,10 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+import { FAILED, OK, type ActionResult } from "@/lib/action-result";
 import { requireUser } from "@/lib/auth/require-user";
 import { flash } from "@/lib/toast-flash";
+import { formId } from "@/lib/validation";
 import { intentionSchema } from "./schema";
 
 export type IntentionFormState = { status: "idle" | "error"; message?: string };
@@ -29,7 +31,8 @@ export async function createIntention(_prev: IntentionFormState, formData: FormD
 }
 
 export async function updateIntention(_prev: IntentionFormState, formData: FormData): Promise<IntentionFormState> {
-  const id = String(formData.get("id") ?? "");
+  const id = formId(formData);
+  if (!id) return { status: "error", message: SAVE_ERROR };
   const parsed = parseForm(formData);
   if (!parsed.success) return { status: "error", message: parsed.error.issues[0]?.message };
 
@@ -47,24 +50,31 @@ export async function updateIntention(_prev: IntentionFormState, formData: FormD
   redirect("/intentions");
 }
 
-export async function setIntentionAnswered(formData: FormData) {
-  const id = String(formData.get("id") ?? "");
+export async function setIntentionAnswered(formData: FormData): Promise<ActionResult> {
+  const id = formId(formData);
+  if (!id) return FAILED;
   const answered = formData.get("answered") === "true";
   const { supabase, user } = await requireUser("/intentions");
 
-  await supabase
+  const { data, error } = await supabase
     .from("intentions")
     .update({ is_answered: answered, answered_at: answered ? new Date().toISOString() : null })
     .eq("id", id)
-    .eq("user_id", user.id);
+    .eq("user_id", user.id)
+    .select("id");
+  if (error || !data?.length) return FAILED;
 
   revalidatePath("/intentions");
+  return OK;
 }
 
-export async function deleteIntention(formData: FormData) {
-  const id = String(formData.get("id") ?? "");
+export async function deleteIntention(formData: FormData): Promise<ActionResult> {
+  const id = formId(formData);
+  if (!id) return FAILED;
   const { supabase, user } = await requireUser("/intentions");
-  await supabase.from("intentions").delete().eq("id", id).eq("user_id", user.id);
+  const { error } = await supabase.from("intentions").delete().eq("id", id).eq("user_id", user.id);
+  if (error) return FAILED;
 
   revalidatePath("/intentions");
+  return OK;
 }
