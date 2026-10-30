@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, Copy, FolderPlus, Pencil } from "lucide-react";
 
 import { AppButton } from "@/components/app-button";
+import { PrayerDraftClear } from "@/components/prayers/draft-clear";
 import { DeleteButton } from "@/components/prayers/delete-button";
 import { FavoriteButton } from "@/components/prayers/favorite-button";
 import { PrayerBody } from "@/components/prayers/prayer-body";
@@ -15,14 +16,15 @@ export async function generateMetadata({ params }: PageProps<"/prayers/[id]">): 
   return { title: prayer?.title ?? "Prayer" };
 }
 
-export default async function PrayerPage({ params }: PageProps<"/prayers/[id]">) {
-  const { id } = await params;
+export default async function PrayerPage({ params, searchParams }: PageProps<"/prayers/[id]">) {
+  const [{ id }, { added }] = await Promise.all([params, searchParams]);
   const [prayer, favoriteIds] = await Promise.all([getPrayer(id), getFavoriteIds()]);
   if (!prayer) notFound();
   const isOwn = prayer.user_id !== null;
 
   return (
     <article className="mx-auto max-w-3xl">
+      {added ? <PrayerDraftClear href={`/prayers/${id}`} /> : null}
       <div className="mb-2 flex items-center justify-between">
         <AppButton href="/prayers" variant="ghost" className="-ml-3">
           <ArrowLeft aria-hidden /> Prayers

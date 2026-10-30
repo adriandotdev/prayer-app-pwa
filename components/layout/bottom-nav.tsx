@@ -11,8 +11,8 @@ export function BottomNav() {
 	const pathname = usePathname();
 	const reduceMotion = useReducedMotion();
 
-	// The intention form has its own Save bar above the keyboard, and writing is a focus zone.
-	if (/^\/intentions\/(new|[^/]+\/edit)$/.test(pathname)) return null;
+	// The intention and prayer forms have their own Save bar above the keyboard, and writing is a focus zone.
+	if (/^\/(intentions|prayers)\/(new|[^/]+\/edit)$/.test(pathname)) return null;
 
 	return (
 		<nav
