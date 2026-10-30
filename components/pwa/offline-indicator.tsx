@@ -1,22 +1,13 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
 import { WifiOff } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 
 import { EASE_ORA } from "@/lib/motion";
-
-function subscribe(cb: () => void) {
-  window.addEventListener("online", cb);
-  window.addEventListener("offline", cb);
-  return () => {
-    window.removeEventListener("online", cb);
-    window.removeEventListener("offline", cb);
-  };
-}
+import { useOnline } from "@/lib/use-online";
 
 export function OfflineIndicator() {
-  const online = useSyncExternalStore(subscribe, () => navigator.onLine, () => true);
+  const online = useOnline();
   return (
     <AnimatePresence initial={false}>
       {online ? null : (
