@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { safeNext } from "@/lib/auth/paths";
 import { createClient } from "@/lib/supabase/server";
 
-/** Completes magic-link and OAuth sign-in by exchanging the code for a session. */
+/** Completes Google sign-in by exchanging the code for a session. */
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = request.nextUrl;
   const code = searchParams.get("code");
