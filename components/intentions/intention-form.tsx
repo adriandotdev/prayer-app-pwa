@@ -2,15 +2,13 @@
 
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import { useActionState, useEffect, useId, useState, useSyncExternalStore, type FormEvent, type KeyboardEvent } from "react";
-import { createPortal } from "react-dom";
+import { useActionState, useEffect, useId, useState, type FormEvent, type KeyboardEvent } from "react";
 import { ChevronLeft } from "lucide-react";
 
 import { AppButton } from "@/components/app-button";
 import { ConfirmationSheet } from "@/components/confirmation-sheet";
+import { FormSaveBar } from "@/components/form-save-bar";
 import type { IntentionFormState } from "@/lib/intentions/actions";
-import { useIsDesktop } from "@/lib/use-is-desktop";
-import { useKeyboardInset } from "@/lib/use-keyboard-inset";
 import { cn } from "@/lib/utils";
 
 // Tiptap is heavy and only needed on this form, so keep it out of the shared bundle.
@@ -18,8 +16,6 @@ const MarkdownEditor = dynamic(() => import("@/components/prayers/markdown-edito
   ssr: false,
   loading: () => <div className="h-56 animate-pulse rounded-2xl bg-muted" aria-hidden />,
 });
-
-const noopSubscribe = () => () => {};
 
 const initial: IntentionFormState = { status: "idle" };
 
@@ -48,9 +44,6 @@ export function IntentionForm({ title, action, submitLabel, intention }: Props) 
   // The editor takes its starting text once, so it waits for the saved draft to be looked up first.
   const [draftChecked, setDraftChecked] = useState(Boolean(intention));
   const [startText, setStartText] = useState(intention?.text ?? "");
-  const keyboardInset = useKeyboardInset();
-  const isDesktop = useIsDesktop();
-  const mounted = useSyncExternalStore(noopSubscribe, () => true, () => false);
   const formId = useId();
 
   const headingId = useId();
@@ -125,19 +118,6 @@ export function IntentionForm({ title, action, submitLabel, intention }: Props) 
   const message = emptyError ? "Write your intention first." : state.status === "error" ? state.message : undefined;
   const showCount = text.length >= SHOW_COUNT_FROM;
 
-  const saveButton = (
-    <AppButton
-      type="submit"
-      form={formId}
-      size="lg"
-      pending={pending}
-      pendingLabel="Saving…"
-      className="mx-auto w-full max-w-3xl md:w-auto md:min-w-48"
-    >
-      {submitLabel}
-    </AppButton>
-  );
-
   return (
     <>
       <AppButton variant="ghost" onClick={leave} className="-ml-3 mb-4 text-muted-foreground">
@@ -194,23 +174,9 @@ export function IntentionForm({ title, action, submitLabel, intention }: Props) 
           ) : null}
         </div>
 
-            </form>
+      </form>
 
-      {/* On a phone Save rides above the keyboard. It is portaled to <body> because the page's entrance
-          animation transforms its ancestors, which would anchor a fixed bar to the page, not the screen. */}
-      {mounted && !isDesktop ? (
-        createPortal(
-          <div
-            style={{ bottom: keyboardInset, paddingBottom: keyboardInset > 0 ? "0.75rem" : "max(0.75rem, env(safe-area-inset-bottom))" }}
-            className="ora-fade fixed inset-x-0 z-30 bg-background/95 px-4 pt-3"
-          >
-            {saveButton}
-          </div>,
-          document.body,
-        )
-      ) : (
-        <div className={mounted ? "mt-3" : "mt-3 max-md:hidden"}>{saveButton}</div>
-      )}
+      <FormSaveBar formId={formId} label={submitLabel} pending={pending} />
 
       <ConfirmationSheet
         open={leaveOpen}
