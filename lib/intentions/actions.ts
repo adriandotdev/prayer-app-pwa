@@ -11,7 +11,7 @@ import { intentionSchema } from "./schema";
 
 export type IntentionFormState = { status: "idle" | "error"; message?: string };
 
-const SAVE_ERROR = "We couldn't save that. Please try again.";
+const SAVE_ERROR = "We couldn't save that. Your words are still here, so try again.";
 
 function parseForm(formData: FormData) {
   return intentionSchema.safeParse({ text: String(formData.get("text") ?? "") });
@@ -22,12 +22,17 @@ export async function createIntention(_prev: IntentionFormState, formData: FormD
   if (!parsed.success) return { status: "error", message: parsed.error.issues[0]?.message };
 
   const { supabase, user } = await requireUser("/intentions/new");
-  const { error } = await supabase.from("intentions").insert({ user_id: user.id, text: parsed.data.text });
-  if (error) return { status: "error", message: SAVE_ERROR };
+  const { data, error } = await supabase
+    .from("intentions")
+    .insert({ user_id: user.id, text: parsed.data.text })
+    .select("id")
+    .single();
+  if (error || !data) return { status: "error", message: SAVE_ERROR };
 
   revalidatePath("/intentions");
   await flash("Intention added");
-  redirect("/intentions");
+  // The list lights the new card once, and clears the saved draft.
+  redirect(`/intentions?added=${data.id}`);
 }
 
 export async function updateIntention(_prev: IntentionFormState, formData: FormData): Promise<IntentionFormState> {

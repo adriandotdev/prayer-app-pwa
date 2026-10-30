@@ -31,7 +31,7 @@ function plainSnippet(markdown: string) {
 /** Tall enough for a short petition to show whole; longer ones fold behind "Read more". */
 const COLLAPSED_MAX = "max-h-56";
 
-export function IntentionItem({ intention, index = 0 }: { intention: Intention; index?: number }) {
+export function IntentionItem({ intention, index = 0, highlight = false }: { intention: Intention; index?: number; highlight?: boolean }) {
   const [confirmOpen, setConfirmOpen] = useState(false);
   // Flips the card the instant the button is pressed, until the server confirms and the card moves lists.
   const [answered, setOptimisticAnswered] = useOptimistic(intention.is_answered);
@@ -67,7 +67,7 @@ export function IntentionItem({ intention, index = 0 }: { intention: Intention; 
   }
 
   return (
-    <StaggerItem index={index} className="flex min-w-0 flex-col rounded-3xl bg-card p-5">
+    <StaggerItem index={index} className={`flex min-w-0 flex-col rounded-3xl bg-card p-5 ${highlight ? "ora-glow" : ""}`}>
       {/* The same small arch as the prayer cards; it carries the state, and the line beside it says when. */}
       <div className="flex min-h-12 items-center gap-3">
         <span

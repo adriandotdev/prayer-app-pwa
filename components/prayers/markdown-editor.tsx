@@ -7,7 +7,7 @@ import { Decoration, DecorationSet } from "@tiptap/pm/view";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Bold, Heading2, Italic, List, ListOrdered, MessageSquareQuote, Quote, type LucideIcon } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { FIELD } from "@/components/field";
 
@@ -74,6 +74,10 @@ type Props = {
   tools?: string[];
   /** Called with the markdown on every edit. */
   onMarkdownChange?: (markdown: string) => void;
+  /** Ids of hint and error text that describe the editable surface. */
+  describedBy?: string;
+  /** Marks the editable surface invalid for assistive tech. */
+  invalid?: boolean;
 };
 
 /**
@@ -89,6 +93,8 @@ export function MarkdownEditor({
   autoFocus = false,
   tools,
   onMarkdownChange,
+  describedBy,
+  invalid,
 }: Props) {
   const [markdown, setMarkdown] = useState(defaultValue);
 
@@ -116,6 +122,22 @@ export function MarkdownEditor({
       onMarkdownChange?.(next);
     },
   });
+
+  // The surface's attributes are fixed when the editor is created, so hint and error links are applied after.
+  useEffect(() => {
+    if (!editor) return;
+    editor.setOptions({
+      editorProps: {
+        attributes: {
+          id,
+          "aria-label": label,
+          class: `${FIELD} prayer-text prayer-editor ${className} py-3`,
+          ...(describedBy ? { "aria-describedby": describedBy } : {}),
+          ...(invalid ? { "aria-invalid": "true" } : {}),
+        },
+      },
+    });
+  }, [editor, id, label, className, describedBy, invalid]);
 
   return (
     <div className="flex flex-col gap-2">
