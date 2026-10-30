@@ -45,7 +45,7 @@ export default async function CollectionPage({ params }: PageProps<"/collections
           action={<AppButton href={`/collections/${id}/add`}>Add prayers</AppButton>}
         />
       ) : (
-        <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
+        <ul className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
           {prayers.map((p, i) => (
             <PrayerCard
               key={p.id}
@@ -58,7 +58,7 @@ export default async function CollectionPage({ params }: PageProps<"/collections
         </ul>
       )}
 
-      <div className="mt-10 flex flex-wrap items-center gap-3 border-t border-border pt-6">
+      <div className="mt-10 flex flex-wrap items-center gap-3">
         <AppButton href={`/collections/${id}/edit`} variant="outline" className="flex-1 sm:flex-none">
           Rename
         </AppButton>

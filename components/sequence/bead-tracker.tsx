@@ -27,7 +27,7 @@ export function BeadTracker({ sequence, index, onSelectBead, className }: Props)
     >
       {sequence.beads.map((bead) => {
         const state = states.get(bead.id) ?? "upcoming";
-        const r = RADIUS[bead.kind];
+        const r = RADIUS[bead.kind] + (state === "current" && bead.kind !== "anchor" ? 1.5 : 0);
         const label = `${bead.label}, ${state === "current" ? "current" : state}`;
         return (
           <g
@@ -60,7 +60,7 @@ export function BeadTracker({ sequence, index, onSelectBead, className }: Props)
                 strokeWidth={1.75}
                 className={cn(
                   "transition-colors duration-300",
-                  state === "completed" && "fill-primary stroke-primary",
+                  state === "completed" && "fill-primary stroke-primary dark:fill-primary/55 dark:stroke-primary/55",
                   state === "current" && "fill-gold stroke-gold",
                   state === "upcoming" && "fill-muted stroke-muted-foreground",
                 )}
@@ -76,7 +76,7 @@ export function BeadTracker({ sequence, index, onSelectBead, className }: Props)
 function Anchor({ bead, state }: { bead: Bead; state: "completed" | "current" | "upcoming" }) {
   const cls = cn(
     "transition-colors duration-300",
-    state === "completed" && "fill-primary stroke-primary",
+    state === "completed" && "fill-primary stroke-primary dark:fill-primary/55 dark:stroke-primary/55",
     state === "current" && "fill-gold stroke-gold",
     state === "upcoming" && "fill-muted stroke-muted-foreground",
   );

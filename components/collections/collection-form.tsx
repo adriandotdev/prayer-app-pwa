@@ -19,10 +19,10 @@ export function CollectionForm({ action, cancelHref, submitLabel, collection }: 
   const [state, formAction, pending] = useActionState(action, initial);
 
   return (
-    <form action={formAction} className="flex flex-col gap-3">
+    <form action={formAction} className="flex flex-col gap-3 rounded-3xl bg-card p-5 md:p-8">
       {collection ? <input type="hidden" name="id" value={collection.id} /> : null}
 
-      <label htmlFor="name" className="text-sm font-medium">
+      <label htmlFor="name" className="text-base font-medium">
         Name
       </label>
       <input

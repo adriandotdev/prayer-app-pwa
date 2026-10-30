@@ -48,8 +48,7 @@ function ToastCard({ item, isDesktop }: { item: ToastItem; isDesktop: boolean })
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
       className={cn(
-        "pointer-events-auto flex touch-pan-y items-center gap-3 rounded-2xl border border-border border-l-[3px] bg-card py-1 pr-1 pl-4 text-card-foreground shadow-lg",
-        item.kind === "error" ? "border-l-destructive" : "border-l-gold",
+        "pointer-events-auto flex touch-pan-y items-center gap-3 rounded-3xl bg-card py-1 pr-1 pl-5 text-card-foreground shadow-lg",
       )}
     >
       <Icon aria-hidden className={cn("size-5 shrink-0", item.kind === "error" ? "text-destructive" : "text-gold")} />

@@ -5,7 +5,7 @@ export function AppearanceRow() {
   return (
     <Link
       href="/appearance"
-      className="flex min-h-14 items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 transition-colors active:bg-accent"
+      className="flex min-h-14 items-center gap-3 rounded-3xl bg-card px-5 py-3 transition-colors duration-200 hover:bg-secondary active:bg-accent"
     >
       <Palette className="size-5 text-gold" aria-hidden />
       <span className="flex-1">

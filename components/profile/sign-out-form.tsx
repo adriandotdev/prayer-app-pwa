@@ -16,7 +16,7 @@ export function SignOutForm({ action }: { action: () => Promise<void> }) {
         navigator.serviceWorker?.controller?.postMessage({ type: "clear-private-pages" });
       }}
     >
-      <SubmitButton variant="outline" className="w-full" pendingLabel="Signing out…">
+      <SubmitButton variant="outline" size="lg" className="w-full" pendingLabel="Signing out…">
         Sign out
       </SubmitButton>
     </form>

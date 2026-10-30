@@ -5,8 +5,10 @@ import { requireSupabaseEnv } from "@/lib/env";
 
 /** Supabase client for Server Components, Server Actions and Route Handlers. */
 export async function createClient() {
-  const { url, anonKey } = requireSupabaseEnv();
+  // Read cookies first so the route is rendered per request, not prerendered
+  // at build time, where the Supabase env may be absent (e.g. CI).
   const cookieStore = await cookies();
+  const { url, anonKey } = requireSupabaseEnv();
 
   return createServerClient<Database>(url, anonKey, {
     cookies: {

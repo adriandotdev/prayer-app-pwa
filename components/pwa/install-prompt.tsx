@@ -61,10 +61,10 @@ export function InstallPrompt() {
   return (
     <section
       aria-label="Install Ora"
-      className="mb-6 flex items-start gap-3 rounded-2xl border border-gold/40 bg-card p-4"
+      className="ora-enter mb-8 flex items-start gap-3 rounded-3xl bg-card p-5"
     >
-      <div className="min-w-0 flex-1 text-sm">
-        <p className="font-medium">Install Ora</p>
+      <div className="min-w-0 flex-1 text-base">
+        <p className="font-display text-2xl">Install Ora</p>
         {deferred ? (
           <p className="mt-0.5 text-muted-foreground">Add it to your home screen to pray the Rosary even offline.</p>
         ) : (
@@ -86,7 +86,7 @@ export function InstallPrompt() {
           </AppButton>
         )}
       </div>
-      <button type="button" onClick={dismiss} aria-label="Dismiss" className="-m-1 -mt-2 flex size-11 shrink-0 items-center justify-center rounded text-muted-foreground hover:text-foreground">
+      <button type="button" onClick={dismiss} aria-label="Dismiss" className="-m-1 -mt-2 flex size-11 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground">
         <X className="size-4" />
       </button>
     </section>

@@ -7,7 +7,7 @@ export async function RosaryHistory() {
 
   return (
     <section aria-labelledby="history-heading">
-      <h2 id="history-heading" className="font-heading text-2xl">
+      <h2 id="history-heading" className="font-heading text-3xl">
         Rosary history
       </h2>
       {total === 0 ? (
@@ -19,9 +19,9 @@ export async function RosaryHistory() {
           <p className="mt-1 text-sm text-muted-foreground">
             {total} {total === 1 ? "Rosary" : "Rosaries"} completed
           </p>
-          <ul className="mt-3 divide-y divide-border rounded-2xl border border-border bg-card">
+          <ul className="mt-4 flex flex-col gap-1">
             {recent.map((s) => (
-              <li key={s.id} className="flex min-h-12 items-center justify-between gap-3 px-4 py-3">
+              <li key={s.id} className="flex min-h-12 items-center justify-between gap-3 rounded-2xl px-4 py-3 odd:bg-secondary/60">
                 <span className="font-medium">{MYSTERY_SETS[s.mystery_set]?.name ?? s.mystery_set}</span>
                 <span className="text-sm text-muted-foreground">
                   <LocalDate iso={s.completed_at} />

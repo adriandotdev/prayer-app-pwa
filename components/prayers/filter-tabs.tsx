@@ -16,7 +16,7 @@ const LABELS: Record<PrayerFilter, string> = {
 };
 
 const PILL =
-  "relative inline-flex min-h-11 items-center rounded-full border px-4 text-sm font-medium whitespace-nowrap transition-colors duration-150";
+  "relative inline-flex min-h-11 items-center rounded-full px-5 text-[0.95rem] font-medium whitespace-nowrap transition-colors duration-200";
 
 function hrefFor(filter: PrayerFilter, query: string) {
   const params = new URLSearchParams();
@@ -51,7 +51,7 @@ export function FilterTabs({ active: confirmed, query }: { active: PrayerFilter;
             onClick={() => setTapped(f)}
             className={cn(
               PILL,
-              f === active ? "border-primary text-primary-foreground" : "border-border hover:bg-secondary",
+              f === active ? "text-primary-foreground" : "bg-secondary text-secondary-foreground hover:bg-accent",
             )}
           >
             {/* The filled pill slides to the chosen tab instead of jumping. */}
@@ -66,7 +66,7 @@ export function FilterTabs({ active: confirmed, query }: { active: PrayerFilter;
             <span className="relative">{LABELS[f]}</span>
           </Link>
         ))}
-        <Link href="/collections" className={cn(PILL, "border-gold/50 hover:bg-secondary")}>
+        <Link href="/collections" className={cn(PILL, "bg-accent text-accent-foreground hover:bg-accent/70")}>
           Collections
         </Link>
       </nav>

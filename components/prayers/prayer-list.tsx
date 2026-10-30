@@ -41,11 +41,16 @@ export async function PrayerList({ filter, query }: { filter: PrayerFilter; quer
             : EMPTY[filter])}
         />
       ) : (
-        <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
+        <>
+          <p className="mb-3 text-sm text-muted-foreground" aria-hidden={query ? true : undefined}>
+            {prayers.length} {prayers.length === 1 ? "prayer" : "prayers"}
+          </p>
+          <ul className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3 lg:gap-4">
           {prayers.map((p, i) => (
             <PrayerCard key={p.id} prayer={p} isFavorite={favoriteIds.has(p.id)} index={i} />
           ))}
-        </ul>
+          </ul>
+        </>
       )}
     </>
   );

@@ -19,14 +19,27 @@ const FAVORITES = [
  * set on this element (see app/seasons.css). The app's `dark:` variant matches anything under `.dark`,
  * so nothing in here may use `dark:`; the logo is picked by `mode` instead of the LogoMark component.
  */
-export function SeasonPreview({ season, mode, label }: { season: string; mode: PreviewMode; label: string }) {
+export function SeasonPreview({
+  season,
+  mode,
+  label,
+  className,
+}: {
+  season: string;
+  mode: PreviewMode;
+  label: string;
+  className?: string;
+}) {
   return (
     <div
       data-preview-season={season}
       data-preview-mode={mode}
       role="img"
       aria-label={`Preview of the ${label} theme in ${mode === "dark" ? "night" : "day"} mode`}
-      className="overflow-hidden rounded-2xl border border-border bg-background text-foreground transition-colors duration-300 motion-reduce:transition-none"
+      className={cn(
+        "overflow-hidden rounded-2xl border border-border bg-background text-foreground transition-colors duration-300 motion-reduce:transition-none",
+        className,
+      )}
     >
       {/* Decorative mock: inert keeps its buttons and links out of the tab order. */}
       <div inert className="pointer-events-none flex flex-col">
