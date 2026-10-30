@@ -144,6 +144,13 @@
   h2,
   h3 {
     @apply font-heading tracking-tight;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  ::selection {
+    background: color-mix(in oklab, var(--gold) 35%, transparent);
   }
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-ring;
@@ -165,6 +172,11 @@
     font-size: calc(1.25rem * var(--prayer-scale));
     line-height: 1.75;
     max-width: 38rem;
+  }
+  @media (min-width: 64rem) {
+    .prayer-text {
+      font-size: calc(1.4rem * var(--prayer-scale));
+    }
   }
 }
 
@@ -199,9 +211,8 @@
 .prayer-editor blockquote,
 .prayer-quote {
   position: relative;
-  border-left: 4px solid var(--primary);
-  border-radius: 0 0.75rem 0.75rem 0;
-  background: color-mix(in oklab, var(--primary) 8%, transparent);
+  border-radius: 1.25rem;
+  background: color-mix(in oklab, var(--primary) 7%, transparent);
   padding: 1rem 1rem 1rem 2.75rem;
   font-size: 1.1em;
   font-style: italic;
@@ -338,6 +349,89 @@
   animation: ora-fade 500ms var(--ease-ora) backwards;
 }
 
+
+/* Staggered entrance in pure CSS, so server-rendered content is visible without script.
+   Set --i on each child; the first eight are delayed. */
+@keyframes ora-rise-soft {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.ora-stagger > * {
+  animation: ora-rise-soft 520ms var(--ease-ora) backwards;
+  animation-delay: calc(min(var(--i, 0), 8) * 70ms + 80ms);
+}
+
+/* The arch: the one shape the app repeats, from the windows of a chapel. */
+.ora-arch {
+  /* A fixed radius, not 999px: oversized radii shrink every corner of the box, bottom ones included. */
+  border-top-left-radius: 9rem;
+  border-top-right-radius: 9rem;
+}
+
+/* A candle's glow: a slow breath on a soft halo, transform and opacity only. */
+@keyframes ora-candle {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.06);
+  }
+}
+.ora-candle {
+  animation: ora-candle 5s ease-in-out infinite;
+}
+
+/* A string of beads lighting one after another, like a thumb moving along a decade. */
+@keyframes ora-bead-pass {
+  0%,
+  100% {
+    opacity: 0.28;
+    transform: scale(1);
+  }
+  8%,
+  16% {
+    opacity: 1;
+    transform: scale(1.25);
+  }
+  30% {
+    opacity: 0.28;
+    transform: scale(1);
+  }
+}
+.ora-bead-pass {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ora-bead-pass 4.4s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 0.22s);
+}
+
+/* Pressable surfaces: a touch of weight on press, a gentle lift only where hover exists. */
+.ora-press {
+  transition:
+    transform 180ms var(--ease-ora),
+    background-color 180ms var(--ease-ora);
+}
+.ora-press:active {
+  transform: scale(0.985);
+}
+@media (hover: hover) {
+  .ora-press:hover {
+    transform: translateY(-2px);
+  }
+  .ora-press:active {
+    transform: scale(0.985);
+  }
+}
+
 /* No animation at all, so nothing waits out an animation delay hidden or in its start state. */
 @media (prefers-reduced-motion: reduce) {
   .ora-enter,
@@ -345,8 +439,16 @@
   .ora-pop,
   .ora-glow,
   .ora-rule,
-  .ora-chrome {
+  .ora-chrome,
+  .ora-stagger > *,
+  .ora-candle,
+  .ora-bead-pass {
     animation: none;
+  }
+  .ora-press,
+  .ora-press:hover,
+  .ora-press:active {
+    transform: none;
   }
 }
 

@@ -16,15 +16,15 @@ export function AppSidebar() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <aside className="ora-chrome fixed inset-y-0 left-0 hidden w-60 flex-col border-r border-sidebar-border bg-sidebar md:flex">
-      <div className="px-6 pt-8 pb-6">
+    <aside className="ora-chrome fixed inset-y-0 left-[max(0px,calc((100%_-_90rem)_/_2))] hidden w-60 flex-col lg:w-72 bg-sidebar md:flex">
+      <div className="px-6 pt-8 pb-8 lg:px-8 lg:pt-10">
         <Link href="/" aria-label="Ora home" className="text-2xl">
           <Logo />
         </Link>
-        <p className="mt-1 text-xs text-muted-foreground">A quiet place to pray</p>
+        <p className="mt-1.5 text-sm text-muted-foreground">A quiet place to pray</p>
       </div>
 
-      <nav aria-label="Main" className="flex-1 px-3">
+      <nav aria-label="Main" className="flex-1 px-3 lg:px-5">
         <ul className="space-y-1">
           {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
             const active = isActive(pathname, href);
@@ -34,7 +34,7 @@ export function AppSidebar() {
                   href={href}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors duration-150",
+                    "relative flex items-center gap-3 rounded-full px-4 py-3 text-[0.95rem] font-medium transition-colors duration-200 lg:text-base",
                     active
                       ? "bg-sidebar-accent font-semibold text-sidebar-accent-foreground"
                       : "text-muted-foreground hover:bg-sidebar-accent/60 hover:text-sidebar-foreground",
@@ -46,7 +46,7 @@ export function AppSidebar() {
                       layoutId="sidebar-marker"
                       aria-hidden
                       transition={{ duration: reduceMotion ? 0 : 0.24, ease: EASE_ORA }}
-                      className="absolute inset-y-2 left-0 w-0.5 rounded-full bg-gold"
+                      className="absolute top-1/2 left-1.5 size-1.5 -translate-y-1/2 rounded-full bg-gold"
                     />
                   )}
                   <Icon className={cn("size-5", active && "text-gold")} aria-hidden />
@@ -58,7 +58,7 @@ export function AppSidebar() {
         </ul>
       </nav>
 
-      <div className="flex items-center gap-2 border-t border-sidebar-border px-3 py-3">
+      <div className="flex items-center gap-2 px-3 py-3">
         <SidebarUser pathname={pathname} />
         <AppearanceLink />
         <ThemeToggle />

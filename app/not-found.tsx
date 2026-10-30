@@ -1,15 +1,14 @@
+import { Compass } from "lucide-react";
+
 import { AppButton } from "@/components/app-button";
+import { StatePage } from "@/components/layout/state-page";
 
 export default function NotFound() {
   return (
-    <div className="py-16 text-center">
-      <h1 className="text-4xl">Page not found</h1>
-      <p className="mx-auto mt-3 max-w-sm text-muted-foreground">
-        We couldn&apos;t find what you were looking for.
-      </p>
-      <AppButton href="/" className="mt-6">
+    <StatePage icon={Compass} title="Page not found" description="We couldn’t find what you were looking for.">
+      <AppButton href="/" size="lg">
         Return home
       </AppButton>
-    </div>
+    </StatePage>
   );
 }

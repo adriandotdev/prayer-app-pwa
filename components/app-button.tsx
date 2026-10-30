@@ -7,13 +7,13 @@ type Variant = "primary" | "outline" | "ghost" | "destructive";
 type Size = "md" | "lg" | "icon";
 
 const BASE =
-  "inline-flex shrink-0 select-none items-center justify-center gap-2 whitespace-nowrap rounded-xl font-medium " +
-  "transition-colors active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring " +
+  "inline-flex shrink-0 select-none items-center justify-center gap-2 whitespace-nowrap rounded-full font-medium " +
+  "transition-[transform,background-color,color] duration-200 ease-ora active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring " +
   "disabled:pointer-events-none disabled:opacity-50 [&_svg]:size-5 [&_svg]:shrink-0";
 
 const VARIANTS: Record<Variant, string> = {
   primary: "bg-primary text-primary-foreground hover:bg-primary/90",
-  outline: "border border-border bg-background text-foreground hover:bg-secondary",
+  outline: "bg-secondary text-secondary-foreground hover:bg-accent",
   ghost: "text-foreground hover:bg-secondary",
   // In the Red season the filled primary button is red too, so destructive turns into an outline there.
   destructive:

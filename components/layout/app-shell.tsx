@@ -16,13 +16,14 @@ export function AppShell({ children }: { children: ReactNode }) {
         Skip to content
       </a>
       <AppSidebar />
-      <div className="md:pl-60">
+      {/* One centered frame (sidebar + content), so on very wide screens the two stay together. */}
+      <div className="mx-auto max-w-[90rem] md:pl-60 lg:pl-72">
         {/* In flow, not fixed: it pushes the header and back buttons down instead of covering them. */}
         <OfflineIndicator />
         <MobileHeader />
         <main
           id="main"
-          className="mx-auto w-full max-w-3xl px-4 pt-6 pb-[calc(var(--bottom-nav-height)+1.5rem)] md:px-10 md:pt-14 md:pb-16"
+          className="mx-auto w-full max-w-3xl px-4 pt-6 pb-[calc(var(--bottom-nav-height)+1.5rem)] md:px-10 md:pt-14 md:pb-16 lg:max-w-6xl lg:px-14 lg:pt-16 lg:pb-20"
         >
           <InstallPrompt />
           {children}
