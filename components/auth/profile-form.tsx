@@ -17,7 +17,7 @@ export function ProfileForm({ displayName }: { displayName: string }) {
 
   return (
     <form action={action} className="flex flex-col gap-3">
-      <label htmlFor="displayName" className="text-sm font-medium">
+      <label htmlFor="displayName" className="text-base font-medium">
         Display name
       </label>
       <input
@@ -27,7 +27,7 @@ export function ProfileForm({ displayName }: { displayName: string }) {
         maxLength={60}
         autoComplete="name"
         enterKeyHint="done"
-        className="min-h-14 rounded-xl border border-border bg-background px-4 text-base outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+        className="min-h-14 rounded-2xl border border-input bg-background px-4 text-base outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
       />
       {state.status === "error" && (
         <p role="alert" className="text-sm text-destructive">

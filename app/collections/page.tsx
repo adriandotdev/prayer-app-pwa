@@ -35,15 +35,15 @@ export default async function CollectionsPage() {
           action={<AppButton href="/collections/new">Create a collection</AppButton>}
         />
       ) : (
-        <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
+        <ul className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3 lg:gap-4">
           {collections.map((c, i) => (
             <StaggerItem key={c.id} index={i}>
               <Link
                 href={`/collections/${c.id}`}
-                className="flex min-h-16 items-center gap-3 rounded-2xl border border-border bg-card p-4 transition-colors duration-150 hover:border-gold/40 hover:bg-secondary/50 active:bg-secondary/50 focus-visible:outline-2 focus-visible:outline-ring"
+                className="ora-press flex min-h-20 items-center gap-3 rounded-3xl bg-card p-5 transition-colors duration-200 hover:bg-secondary active:bg-secondary focus-visible:outline-2 focus-visible:outline-ring"
               >
                 <span className="min-w-0 flex-1">
-                  <span className="block truncate font-display text-xl">{c.name}</span>
+                  <span className="block truncate font-display text-2xl leading-tight">{c.name}</span>
                   <span className="block text-sm text-muted-foreground">
                     {c.count} {c.count === 1 ? "prayer" : "prayers"}
                   </span>

@@ -53,7 +53,7 @@ export function SearchForm({
 	}, [value, filter, pathname, router]);
 
 	return (
-		<form role="search" action="/prayers" className="mb-4">
+		<form role="search" action="/prayers" className="mb-4 lg:max-w-lg">
 			{filter !== "all" ? (
 				<input type="hidden" name="filter" value={filter} />
 			) : null}

@@ -17,7 +17,7 @@ function Row({ isMember, label, hint }: { isMember: boolean; label: string; hint
       aria-pressed={isMember}
       className={cn(
         "flex min-h-14 w-full items-center gap-3 rounded-2xl border px-4 py-2 text-left transition-colors active:bg-secondary",
-        isMember ? "border-gold bg-gold/10" : "border-border bg-card hover:bg-secondary/50",
+        isMember ? "border-transparent bg-accent" : "border-transparent bg-card hover:bg-secondary",
       )}
     >
       <span className="min-w-0 flex-1">

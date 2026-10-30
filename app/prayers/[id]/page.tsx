@@ -22,17 +22,17 @@ export default async function PrayerPage({ params }: PageProps<"/prayers/[id]">)
   const isOwn = prayer.user_id !== null;
 
   return (
-    <article className="mx-auto max-w-2xl">
+    <article className="mx-auto max-w-3xl">
       <AppButton href="/prayers" variant="ghost" className="-ml-3 mb-2">
         <ArrowLeft aria-hidden /> Prayers
       </AppButton>
 
-      <div className="mb-6 flex items-start justify-between gap-4">
+      <div className="mb-6 flex flex-col gap-5 md:mb-8 md:flex-row md:items-end md:justify-between md:gap-8">
         <div className="min-w-0">
-          <h1 className="text-3xl font-medium break-words md:text-5xl">{prayer.title}</h1>
-          {prayer.source ? <p className="mt-2 text-sm text-muted-foreground">{prayer.source}</p> : null}
+          <h1 className="text-[2.5rem] leading-[1.02] font-medium tracking-[-0.02em] break-words md:text-6xl">{prayer.title}</h1>
+          {prayer.source ? <p className="mt-3 text-base font-medium text-gold-foreground dark:text-gold">{prayer.source}</p> : null}
         </div>
-        <div className="-mr-2 flex shrink-0 items-center gap-1">
+        <div className="flex shrink-0 items-center gap-1 self-start rounded-full bg-card p-1 md:self-auto">
           <AppButton
             href={`/prayers/${prayer.id}/collections`}
             variant="ghost"
@@ -60,10 +60,12 @@ export default async function PrayerPage({ params }: PageProps<"/prayers/[id]">)
         </div>
       </div>
 
-      <PrayerBody body={prayer.body} />
+      <div className="ora-enter rounded-3xl bg-card p-6 [animation-delay:120ms] md:p-12">
+        <PrayerBody body={prayer.body} />
+      </div>
 
       {isOwn ? (
-        <div className="mt-10 flex flex-wrap items-center gap-3 border-t border-border pt-6">
+        <div className="mt-6 flex flex-wrap items-center gap-3">
           <AppButton href={`/prayers/${prayer.id}/edit`} variant="outline" className="flex-1 sm:flex-none">
             Edit
           </AppButton>

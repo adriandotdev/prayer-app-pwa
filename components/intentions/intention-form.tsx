@@ -9,7 +9,7 @@ import type { IntentionFormState } from "@/lib/intentions/actions";
 // Tiptap is heavy and only needed on this form, so keep it out of the shared bundle.
 const MarkdownEditor = dynamic(() => import("@/components/prayers/markdown-editor").then((m) => m.MarkdownEditor), {
   ssr: false,
-  loading: () => <div className="h-56 animate-pulse rounded-xl bg-muted" aria-hidden />,
+  loading: () => <div className="h-56 animate-pulse rounded-2xl bg-muted" aria-hidden />,
 });
 
 const initial: IntentionFormState = { status: "idle" };
@@ -24,14 +24,14 @@ export function IntentionForm({ action, submitLabel, intention }: Props) {
   const [state, formAction, pending] = useActionState(action, initial);
 
   return (
-    <form action={formAction} className="flex flex-col gap-3">
+    <form action={formAction} className="flex flex-col gap-3 rounded-3xl bg-card p-5 md:p-8">
       {intention ? <input type="hidden" name="id" value={intention.id} /> : null}
 
-      <label htmlFor="text" className="text-sm font-medium">
+      <label htmlFor="text" className="text-base font-medium">
         Who or what are you praying for?
       </label>
       <MarkdownEditor name="text" id="text" label="Intention" defaultValue={intention?.text} autoFocus={!intention} className="min-h-40" />
-      <p className="text-xs text-muted-foreground">Line breaks are kept. Supports **bold**, *italic*, - lists, 1. numbered lists and &gt; quotes.</p>
+      <p className="text-sm text-muted-foreground">Line breaks are kept. Supports **bold**, *italic*, - lists, 1. numbered lists and &gt; quotes.</p>
 
       {state.status === "error" && (
         <p role="alert" className="text-sm text-destructive">

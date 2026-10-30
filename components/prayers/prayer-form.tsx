@@ -10,7 +10,7 @@ import type { PrayerFormState } from "@/lib/prayers/actions";
 // Tiptap is heavy and only needed on this form, so keep it out of the shared bundle.
 const MarkdownEditor = dynamic(() => import("@/components/prayers/markdown-editor").then((m) => m.MarkdownEditor), {
   ssr: false,
-  loading: () => <div className="h-96 animate-pulse rounded-xl bg-muted" aria-hidden />,
+  loading: () => <div className="h-96 animate-pulse rounded-2xl bg-muted" aria-hidden />,
 });
 
 const initial: PrayerFormState = { status: "idle" };
@@ -26,21 +26,21 @@ export function PrayerForm({ action, cancelHref, submitLabel, prayer }: Props) {
   const [state, formAction, pending] = useActionState(action, initial);
 
   return (
-    <form action={formAction} className="flex flex-col gap-3">
+    <form action={formAction} className="flex flex-col gap-3 rounded-3xl bg-card p-5 md:p-8">
       {prayer ? <input type="hidden" name="id" value={prayer.id} /> : null}
 
-      <label htmlFor="title" className="text-sm font-medium">
+      <label htmlFor="title" className="text-base font-medium">
         Title
       </label>
       <input id="title" name="title" defaultValue={prayer?.title} maxLength={200} required enterKeyHint="next" autoComplete="off" className={`${FIELD} min-h-14`} />
 
-      <label htmlFor="body" className="mt-2 text-sm font-medium">
+      <label htmlFor="body" className="mt-2 text-base font-medium">
         Prayer
       </label>
       <MarkdownEditor defaultValue={prayer?.body} />
-      <p className="text-xs text-muted-foreground">Line breaks are kept. Supports **bold**, *italic*, ## headings, - lists, 1. numbered lists and &gt; quotes.</p>
+      <p className="text-sm text-muted-foreground">Line breaks are kept. Supports **bold**, *italic*, ## headings, - lists, 1. numbered lists and &gt; quotes.</p>
 
-      <label htmlFor="source" className="mt-2 text-sm font-medium">
+      <label htmlFor="source" className="mt-2 text-base font-medium">
         Source <span className="font-normal text-muted-foreground">(optional)</span>
       </label>
       <input id="source" name="source" defaultValue={prayer?.source ?? ""} maxLength={200} enterKeyHint="done" autoComplete="off" className={`${FIELD} min-h-14`} />
