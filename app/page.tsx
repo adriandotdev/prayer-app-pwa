@@ -1,55 +1,52 @@
-import { ArrowRight, BookOpen, Cross, HandHeart } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
-import { StaggerItem } from "@/components/motion/stagger-item";
-import { PageHeader } from "@/components/layout/page-header";
+
+import { TodayDecades } from "@/components/home/today-decades";
+import { TodayHero } from "@/components/home/today-hero";
 
 const SECTIONS = [
-  {
-    href: "/rosary",
-    title: "Pray the Rosary",
-    body: "A guided, visual Rosary. No account needed, and it works offline.",
-    icon: Cross,
-  },
   {
     href: "/prayers",
     title: "Your prayers",
     body: "Keep the prayers you love, organised into collections.",
-    icon: BookOpen,
   },
   {
     href: "/intentions",
     title: "Intentions",
     body: "Hold the people and needs you are praying for.",
-    icon: HandHeart,
   },
 ];
 
 export default function HomePage() {
   return (
-    <>
-      <PageHeader title="Peace be with you" description="Take a moment. What would you like to pray?" />
-      <ul className="grid grid-cols-1 gap-4">
-        {SECTIONS.map(({ href, title, body, icon: Icon }, i) => (
-          <StaggerItem key={href} index={i}>
-            <Link
-              href={href}
-              className="group flex items-center gap-5 rounded-2xl border border-border bg-card p-5 transition-colors hover:border-gold/60 active:bg-secondary/50"
-            >
-              <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-accent text-gold-foreground dark:text-gold">
-                <Icon className="size-6" aria-hidden />
-              </span>
-              <span className="flex-1">
-                <span className="block font-display text-2xl leading-tight">{title}</span>
-                <span className="mt-1 block text-sm text-muted-foreground">{body}</span>
-              </span>
-              <ArrowRight
-                className="size-5 text-muted-foreground transition-transform group-hover:translate-x-0.5"
-                aria-hidden
-              />
-            </Link>
-          </StaggerItem>
-        ))}
-      </ul>
-    </>
+    <div className="mx-auto grid max-w-3xl gap-4 lg:max-w-none lg:grid-cols-[22rem_1fr] lg:gap-8">
+      <div className="ora-stagger contents">
+        <div className="lg:h-full" style={{ ["--i" as string]: 0 }}>
+          <TodayHero />
+        </div>
+        <div className="flex flex-col gap-4 lg:gap-8" style={{ ["--i" as string]: 1 }}>
+          <TodayDecades />
+          <ul className="grid flex-1 grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8">
+            {SECTIONS.map(({ href, title, body }) => (
+              <li key={href} className="flex">
+                <Link
+                  href={href}
+                  className="ora-press group flex min-h-32 w-full flex-col justify-between gap-6 rounded-3xl bg-card p-6 lg:min-h-48 lg:p-8"
+                >
+                  <span className="flex items-start justify-between gap-4">
+                    <span className="font-display text-3xl leading-none lg:text-4xl">{title}</span>
+                    <ArrowUpRight
+                      className="size-6 shrink-0 text-primary transition-transform duration-200 ease-ora group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      aria-hidden
+                    />
+                  </span>
+                  <span className="block max-w-xs text-base text-muted-foreground">{body}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
   );
 }
