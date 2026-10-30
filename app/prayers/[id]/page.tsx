@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Copy, FolderPlus } from "lucide-react";
+import { ArrowLeft, Copy, FolderPlus, Pencil } from "lucide-react";
 
 import { AppButton } from "@/components/app-button";
 import { DeleteButton } from "@/components/prayers/delete-button";
@@ -23,55 +23,50 @@ export default async function PrayerPage({ params }: PageProps<"/prayers/[id]">)
 
   return (
     <article className="mx-auto max-w-3xl">
-      <AppButton href="/prayers" variant="ghost" className="-ml-3 mb-2">
-        <ArrowLeft aria-hidden /> Prayers
-      </AppButton>
+      <div className="mb-2 flex items-center justify-between">
+        <AppButton href="/prayers" variant="ghost" className="-ml-3">
+          <ArrowLeft aria-hidden /> Prayers
+        </AppButton>
+        <FavoriteButton id={prayer.id} isFavorite={favoriteIds.has(prayer.id)} className="-mr-3" />
+      </div>
 
-      <div className="mb-6 flex flex-col gap-5 md:mb-8 md:flex-row md:items-end md:justify-between md:gap-8">
-        <div className="min-w-0">
-          <h1 className="text-[2.5rem] leading-[1.02] font-medium tracking-[-0.02em] break-words md:text-6xl">{prayer.title}</h1>
-          {prayer.source ? <p className="mt-3 text-base font-medium text-gold-foreground dark:text-gold">{prayer.source}</p> : null}
-        </div>
-        <div className="flex shrink-0 items-center gap-1 self-start rounded-full bg-card p-1 md:self-auto">
-          <AppButton
-            href={`/prayers/${prayer.id}/collections`}
-            variant="ghost"
-            size="icon"
-            aria-label="Add to collection"
-            title="Add to collection"
-          >
-            <FolderPlus aria-hidden />
+      <header className="mb-6 md:mb-8">
+        <h1 className="text-[2.5rem] leading-[1.02] font-medium tracking-[-0.02em] text-balance break-words md:text-6xl">{prayer.title}</h1>
+        <p className="mt-3 text-base font-medium text-gold-foreground dark:text-gold">
+          {[isOwn ? "My prayer" : "Starter prayer", prayer.source].filter(Boolean).join(" · ")}
+        </p>
+
+        <div className="mt-5 flex flex-wrap items-center gap-2">
+          <AppButton href={`/prayers/${prayer.id}/collections`} variant="outline" className="flex-1 sm:flex-none">
+            <FolderPlus aria-hidden /> Add to collection
           </AppButton>
           {isOwn ? null : (
-            <form action={copyPrayer}>
+            <form action={copyPrayer} className="flex-1 sm:flex-none">
               <input type="hidden" name="id" value={prayer.id} />
-              <SubmitButton
-                variant="ghost"
-                size="icon"
-                aria-label="Copy to my prayers"
-                title="Copy to my prayers"
-                pendingLabel={<span className="sr-only">Copying…</span>}
-              >
-                <Copy aria-hidden />
+              <SubmitButton variant="outline" pendingLabel="Copying…" className="w-full sm:w-auto">
+                <Copy aria-hidden /> Make my copy
               </SubmitButton>
             </form>
           )}
-          <FavoriteButton id={prayer.id} isFavorite={favoriteIds.has(prayer.id)} />
         </div>
-      </div>
+      </header>
 
-      <div className="ora-enter rounded-3xl bg-card p-6 [animation-delay:120ms] md:p-12">
+      <div className="ora-enter rounded-3xl bg-card p-6 md:p-12">
         <PrayerBody body={prayer.body} />
       </div>
 
       {isOwn ? (
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <AppButton href={`/prayers/${prayer.id}/edit`} variant="outline" className="flex-1 sm:flex-none">
-            Edit
+            <Pencil aria-hidden /> Edit
           </AppButton>
           <DeleteButton id={prayer.id} />
         </div>
-      ) : null}
+      ) : (
+        <p className="mt-6 text-base text-muted-foreground">
+          Starter prayers can’t be edited. Make your copy to change the words or add your own.
+        </p>
+      )}
     </article>
   );
 }
