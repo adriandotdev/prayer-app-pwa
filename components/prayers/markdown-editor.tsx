@@ -70,13 +70,26 @@ type Props = {
   /** Extra classes for the editable surface, e.g. its min height. */
   className?: string;
   autoFocus?: boolean;
+  /** Limit the toolbar to these tool labels, in toolbar order. Defaults to all of them. */
+  tools?: string[];
+  /** Called with the markdown on every edit. */
+  onMarkdownChange?: (markdown: string) => void;
 };
 
 /**
  * WYSIWYG markdown editor for prayers and intentions. Stored as markdown in a hidden input,
  * restricted to what `PrayerBody` can render (bold, italic, ## headings, lists, quotes, rules, line breaks).
  */
-export function MarkdownEditor({ defaultValue = "", name = "body", id = "body", label = "Prayer", className = "min-h-72", autoFocus = false }: Props) {
+export function MarkdownEditor({
+  defaultValue = "",
+  name = "body",
+  id = "body",
+  label = "Prayer",
+  className = "min-h-72",
+  autoFocus = false,
+  tools,
+  onMarkdownChange,
+}: Props) {
   const [markdown, setMarkdown] = useState(defaultValue);
 
   const editor = useEditor({
@@ -97,14 +110,18 @@ export function MarkdownEditor({ defaultValue = "", name = "body", id = "body", 
         class: `${FIELD} prayer-text prayer-editor ${className} py-3`,
       },
     },
-    onUpdate: ({ editor }) => setMarkdown(editor.getMarkdown()),
+    onUpdate: ({ editor }) => {
+      const next = editor.getMarkdown();
+      setMarkdown(next);
+      onMarkdownChange?.(next);
+    },
   });
 
   return (
     <div className="flex flex-col gap-2">
       <input type="hidden" name={name} value={markdown} />
       <div role="toolbar" aria-label="Formatting" className="-ml-2 flex overflow-x-auto">
-        {TOOLS.map(({ label, icon: Icon, active, run }) => {
+        {TOOLS.filter((t) => !tools || tools.includes(t.label)).map(({ label, icon: Icon, active, run }) => {
           const on = editor && active ? (Array.isArray(active) ? editor.isActive(active[0], active[1]) : editor.isActive(active)) : false;
           return (
             <button
