@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { IntentionForm } from "@/components/intentions/intention-form";
-import { PageHeader } from "@/components/layout/page-header";
 import { updateIntention } from "@/lib/intentions/actions";
 import { getIntention } from "@/lib/intentions/queries";
 
@@ -15,8 +14,7 @@ export default async function EditIntentionPage({ params }: PageProps<"/intentio
 
   return (
     <div className="mx-auto max-w-2xl">
-      <PageHeader title="Edit intention" />
-      <IntentionForm action={updateIntention} submitLabel="Save changes" intention={intention} />
+      <IntentionForm title="Edit intention" action={updateIntention} submitLabel="Save changes" intention={intention} />
     </div>
   );
 }
