@@ -26,7 +26,7 @@ export function FavoriteButton({ id, isFavorite, className }: { id: string; isFa
         type="submit"
         variant="ghost"
         size="icon"
-        aria-label={optimistic ? "Remove from favorites" : "Add to favorites"}
+        aria-label="Favorite"
         aria-pressed={optimistic}
       >
         <FavoriteHeart isFavorite={optimistic} />
