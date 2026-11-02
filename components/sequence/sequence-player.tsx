@@ -70,7 +70,7 @@ export function SequencePlayer({ sequence, initialIndex, initialMode, onFinish, 
         <BeadTracker
           sequence={sequence}
           index={index}
-          className="h-44 w-auto max-md:pointer-events-none sm:h-64 md:h-[30rem] lg:h-[34rem]"
+          className="h-44 w-auto max-w-full max-md:pointer-events-none sm:h-64 md:h-[30rem] lg:h-[34rem]"
           onSelectBead={(beadId) => {
             const target = firstStepForBead(sequence, beadId);
             if (target >= 0) setIndex(target);
