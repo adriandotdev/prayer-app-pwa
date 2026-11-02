@@ -39,8 +39,6 @@ export function RosaryStatsView({ rows }: { rows: StatsRow[] }) {
       <dl className="mt-4 grid grid-cols-2 gap-2">
         <Stat label="Rosaries" value={stats.total} />
         <Stat label="Decades" value={stats.decades} />
-        <Stat label="Current streak" value={stats.currentStreak} />
-        <Stat label="Best streak" value={stats.bestStreak} />
       </dl>
       <ul className="mt-4 flex flex-col gap-1">
         {MYSTERY_SET_ORDER.map((id) => (
