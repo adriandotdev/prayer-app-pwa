@@ -9,7 +9,19 @@ export function ServiceWorkerRegister() {
 
   useEffect(() => {
     if (process.env.NODE_ENV !== "production" || !("serviceWorker" in navigator)) return;
-    navigator.serviceWorker.register("/sw.js", { scope: "/", updateViaCache: "none" }).catch(() => {});
+    let cleanup = () => {};
+    navigator.serviceWorker
+      .register("/sw.js", { scope: "/", updateViaCache: "none" })
+      .then((reg) => {
+        // A standalone app can stay open for days; look for a new worker whenever it comes back to the foreground.
+        const check = () => {
+          if (document.visibilityState === "visible") reg.update().catch(() => {});
+        };
+        document.addEventListener("visibilitychange", check);
+        cleanup = () => document.removeEventListener("visibilitychange", check);
+      })
+      .catch(() => {});
+    return () => cleanup();
   }, []);
 
   // Tell the worker which page is on screen so client-side navigations get cached too.
