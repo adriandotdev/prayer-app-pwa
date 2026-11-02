@@ -29,7 +29,7 @@ export default async function PrayerPage({ params, searchParams }: PageProps<"/p
         <AppButton href="/prayers" variant="ghost" className="-ml-3">
           <ArrowLeft aria-hidden /> Prayers
         </AppButton>
-        <FavoriteButton id={prayer.id} isFavorite={favoriteIds.has(prayer.id)} className="-mr-3" />
+        <FavoriteButton id={prayer.id} title={prayer.title} isFavorite={favoriteIds.has(prayer.id)} className="-mr-3" />
       </div>
 
       <header className="mb-6 md:mb-8">

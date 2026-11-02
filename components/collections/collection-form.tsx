@@ -34,11 +34,13 @@ export function CollectionForm({ action, cancelHref, submitLabel, collection }: 
         autoFocus={!collection}
         enterKeyHint="done"
         autoComplete="off"
+        aria-invalid={state.status === "error"}
+        aria-describedby={state.status === "error" ? "name-error" : undefined}
         className={`${FIELD} min-h-14`}
       />
 
       {state.status === "error" && (
-        <p role="alert" className="text-sm text-destructive">
+        <p id="name-error" role="alert" className="text-sm text-destructive">
           {state.message}
         </p>
       )}

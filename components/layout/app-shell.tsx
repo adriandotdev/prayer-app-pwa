@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { AppSidebar } from "./app-sidebar";
 import { BottomNav } from "./bottom-nav";
 import { MobileHeader } from "./mobile-header";
+import { RouteFocus } from "./route-focus";
 import { OfflineIndicator } from "@/components/pwa/offline-indicator";
 import { Toaster } from "@/components/toast/toaster";
 import { InstallPrompt } from "@/components/pwa/install-prompt";
@@ -15,6 +16,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       >
         Skip to content
       </a>
+      <RouteFocus />
       <AppSidebar />
       {/* One centered frame (sidebar + content), so on very wide screens the two stay together. */}
       <div className="mx-auto max-w-[90rem] md:pl-60 lg:pl-72">
@@ -23,7 +25,8 @@ export function AppShell({ children }: { children: ReactNode }) {
         <MobileHeader />
         <main
           id="main"
-          className="mx-auto w-full max-w-3xl px-4 pt-6 pb-[calc(var(--bottom-nav-height)+1.5rem)] md:px-10 md:pt-14 md:pb-16 lg:max-w-6xl lg:px-14 lg:pt-16 lg:pb-20"
+          tabIndex={-1}
+          className="mx-auto outline-none w-full max-w-3xl px-4 pt-6 pb-[calc(var(--bottom-nav-height)+1.5rem)] md:px-10 md:pt-14 md:pb-16 lg:max-w-6xl lg:px-14 lg:pt-16 lg:pb-20"
         >
           <InstallPrompt />
           {children}

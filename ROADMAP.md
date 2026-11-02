@@ -7,12 +7,11 @@ Items marked **(was out of scope)** were deliberately left out of the original p
 ## Where things stand
 
 - **Done:** setup, interactive Rosary, Google auth and profile, prayer library (prayers, collections, favorites, search, intentions, Rosary history), hand-written PWA, liturgical season themes and appearance screen, home screen redesign.
-- **In flight:** Phase 5 (PWA hardening) awaiting review, then Phase 6 (polish).
+- **In flight:** Phase 6 (polish) built and awaiting review: focus management, roving tabindex on the bead tracker, contrast tests, error boundaries, skeletons, performance budget (`docs/`).
 
 ## Next: finish the plan
 
-- Review and merge Phase 5 (offline sync, install prompt, service worker caching).
-- Phase 6 polish: accessibility pass (WCAG 2.2 AA, focus order, reduced motion, screen-reader labels on the bead tracker), empty and error states, loading skeletons, performance budget.
+- Review and merge Phase 6. Still open from it: Lighthouse and real-device Web Vitals numbers, a screen-reader pass (`docs/accessibility-checklist.md`). Original scope: accessibility pass (WCAG 2.2 AA, focus order, reduced motion, screen-reader labels on the bead tracker), empty and error states, loading skeletons, performance budget.
 - Test coverage beyond the pure code: component tests for the Rosary player, and an end-to-end smoke test (Playwright) for the Rosary flow and offline fallback.
 - Error monitoring and basic privacy-friendly analytics, so real-world failures show up.
 
@@ -30,6 +29,9 @@ Small, low-risk additions that build on current tables and components.
 | Import / export | Users own their prayers | Export prayers, collections and intentions as JSON or Markdown. |
 | Account deletion | Required for trust and store listings | Delete profile and all rows, with a confirmation. |
 | Larger prayer text, line spacing, font choice | `--prayer-scale` already exists | Surface more reading controls in Appearance. |
+| Night-friendly prayer mode | Ora is often used in the dark | A dimmer, low-contrast-glare theme for the Rosary and reader, with an optional keep-screen-awake toggle. Must still meet WCAG 2.2 AA contrast. |
+| Intention on the completion screen and in history | Builds on "Intentions inside the Rosary" | Record the intention a Rosary was offered for, and show it on completion and in Rosary history ("Prayed for: ..."). |
+| Share a prayer as an image | Extends prayer sharing | Render a prayer as a styled card for the native share sheet, alongside the plain link. |
 
 ## Later: new prayer content
 
@@ -47,6 +49,7 @@ Rosary data lives in `data/rosary/` and the engine in `lib/sequence/` is generic
 - **Liturgical calendar** **(was out of scope beyond the season-color function)**: feast and memorial names, saint of the day, fasting and abstinence days. Season theming already exists in `lib/theme/liturgical-season.ts`, so this extends it.
 - **Daily readings** **(was out of scope)**: Mass readings and Gospel. Requires a licensed or public-domain source, caching for offline, and a clear attribution.
 - **Prayer of the day** on the home screen, chosen from the library by season.
+- **"Today" card**: feast or season, plus the day's suggested mysteries with a one-tap start (the day schedule already lives in `data/rosary/`).
 
 ## Later: richer experience
 

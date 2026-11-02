@@ -37,7 +37,7 @@ export function PrayerCard({
           <span className="mt-2 block text-sm text-gold-foreground dark:text-gold">{prayer.user_id ? "Mine" : "Starter"}</span>
         </span>
       </Link>
-      <FavoriteButton id={prayer.id} isFavorite={isFavorite} />
+      <FavoriteButton id={prayer.id} title={prayer.title} isFavorite={isFavorite} />
       {actions}
     </StaggerItem>
   );
