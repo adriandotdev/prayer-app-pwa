@@ -7,6 +7,7 @@ import { PrayerDraftClear } from "@/components/prayers/draft-clear";
 import { DeleteButton } from "@/components/prayers/delete-button";
 import { FavoriteButton } from "@/components/prayers/favorite-button";
 import { PrayerBody } from "@/components/prayers/prayer-body";
+import { KeepAwake } from "@/components/reader/keep-awake";
 import { SubmitButton } from "@/components/submit-button";
 import { copyPrayer } from "@/lib/prayers/actions";
 import { getFavoriteIds, getPrayer } from "@/lib/prayers/queries";
@@ -53,7 +54,8 @@ export default async function PrayerPage({ params, searchParams }: PageProps<"/p
         </div>
       </header>
 
-      <div className="ora-enter rounded-3xl bg-card p-6 md:p-12">
+      <div className="reader-surface ora-enter rounded-3xl bg-card p-6 md:p-12">
+        <KeepAwake />
         <PrayerBody body={prayer.body} />
       </div>
 

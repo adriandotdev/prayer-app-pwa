@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 
-// WCAG 2.2 AA over every theme block in globals.css (default) and seasons.css (7 seasons, day and night).
+// WCAG 2.2 AA over every theme block in globals.css (default, sepia and night reading) and seasons.css (7 seasons, day and night).
 // Text needs 4.5:1; the focus ring and the gold used for icons and bead states need 3:1 (non-text, 1.4.11).
 
 type RGB = [number, number, number];
@@ -81,8 +81,9 @@ const NON_TEXT: [string, string][] = [
 ];
 
 describe("theme contrast (WCAG 2.2 AA)", () => {
-  it("found the default and season themes", () => {
-    expect(all.size).toBeGreaterThanOrEqual(16);
+  it("found the default, season and reading themes", () => {
+    expect(all.size).toBeGreaterThanOrEqual(18);
+    expect([...all.keys()].filter((s) => s.includes("data-reading"))).toHaveLength(2);
   });
 
   for (const [selector, t] of all) {
