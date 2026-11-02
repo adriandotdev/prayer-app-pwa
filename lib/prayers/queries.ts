@@ -1,7 +1,10 @@
 import "server-only";
 
+import { cache } from "react";
+
 import { createClient } from "@/lib/supabase/server";
 import type { Tables } from "@/lib/database.types";
+import { isUuid } from "@/lib/validation";
 import type { PrayerFilter } from "./schema";
 
 export type Prayer = Pick<Tables<"prayers">, "id" | "user_id" | "title" | "body" | "source" | "updated_at">;
@@ -14,8 +17,17 @@ export async function getFavoriteIds(): Promise<Set<string>> {
   return new Set((data ?? []).map((r) => r.prayer_id));
 }
 
+/** Letters, digits, apostrophes and hyphens only, so a term can't carry LIKE or filter syntax. */
+function searchTerms(search: string): string[] {
+  return search
+    .split(/\s+/)
+    .map((word) => word.replace(/[^\p{L}\p{N}'’-]/gu, ""))
+    .filter(Boolean)
+    .slice(0, 6);
+}
+
 /** RLS already limits rows to the starter library plus the signed-in user's own prayers. */
-export async function listPrayers(filter: PrayerFilter, favoriteIds: Set<string>): Promise<Prayer[]> {
+export async function listPrayers(filter: PrayerFilter, favoriteIds: Set<string>, search = ""): Promise<Prayer[]> {
   const supabase = await createClient();
   let query = supabase.from("prayers").select(COLUMNS).order("title");
 
@@ -26,15 +38,22 @@ export async function listPrayers(filter: PrayerFilter, favoriteIds: Set<string>
     query = query.in("id", [...favoriteIds]);
   }
 
+  // Every typed word must appear (as part of a word) in the title or body. Not full-text
+  // search on purpose: English full-text drops stop words like "our", so "Our" would never
+  // find "Our Father", and it can't match a half-typed word while the visitor is typing.
+  for (const term of searchTerms(search)) {
+    query = query.or(`title.ilike.%${term}%,body.ilike.%${term}%`);
+  }
+
   const { data, error } = await query;
   if (error) throw new Error("Could not load prayers.");
   return data ?? [];
 }
 
-export async function getPrayer(id: string): Promise<Prayer | null> {
-  // A malformed id would make Postgres reject the uuid; treat it as not found.
-  if (!/^[0-9a-f-]{36}$/i.test(id)) return null;
+/** Cached per request: the page and its generateMetadata both call it. */
+export const getPrayer = cache(async (id: string): Promise<Prayer | null> => {
+  if (!isUuid(id)) return null;
   const supabase = await createClient();
   const { data } = await supabase.from("prayers").select(COLUMNS).eq("id", id).maybeSingle();
   return data;
-}
+});

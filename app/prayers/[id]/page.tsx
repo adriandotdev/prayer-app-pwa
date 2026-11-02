@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Copy, FolderPlus, Pencil } from "lucide-react";
 
 import { AppButton } from "@/components/app-button";
+import { PrayerDraftClear } from "@/components/prayers/draft-clear";
 import { DeleteButton } from "@/components/prayers/delete-button";
 import { FavoriteButton } from "@/components/prayers/favorite-button";
 import { PrayerBody } from "@/components/prayers/prayer-body";
+import { SubmitButton } from "@/components/submit-button";
 import { copyPrayer } from "@/lib/prayers/actions";
 import { getFavoriteIds, getPrayer } from "@/lib/prayers/queries";
 
@@ -14,45 +16,59 @@ export async function generateMetadata({ params }: PageProps<"/prayers/[id]">): 
   return { title: prayer?.title ?? "Prayer" };
 }
 
-export default async function PrayerPage({ params }: PageProps<"/prayers/[id]">) {
-  const { id } = await params;
+export default async function PrayerPage({ params, searchParams }: PageProps<"/prayers/[id]">) {
+  const [{ id }, { added }] = await Promise.all([params, searchParams]);
   const [prayer, favoriteIds] = await Promise.all([getPrayer(id), getFavoriteIds()]);
   if (!prayer) notFound();
   const isOwn = prayer.user_id !== null;
 
   return (
-    <article className="mx-auto max-w-2xl">
-      <AppButton href="/prayers" variant="ghost" className="-ml-3 mb-2">
-        <ArrowLeft aria-hidden /> Prayers
-      </AppButton>
+    <article className="mx-auto max-w-3xl">
+      {added ? <PrayerDraftClear href={`/prayers/${id}`} /> : null}
+      <div className="mb-2 flex items-center justify-between">
+        <AppButton href="/prayers" variant="ghost" className="-ml-3">
+          <ArrowLeft aria-hidden /> Prayers
+        </AppButton>
+        <FavoriteButton id={prayer.id} isFavorite={favoriteIds.has(prayer.id)} className="-mr-3" />
+      </div>
 
-      <div className="mb-6 flex items-start justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-medium md:text-5xl">{prayer.title}</h1>
-          {prayer.source ? <p className="mt-2 text-sm text-muted-foreground">{prayer.source}</p> : null}
+      <header className="mb-6 md:mb-8">
+        <h1 className="text-[2.5rem] leading-[1.02] font-medium tracking-[-0.02em] text-balance break-words md:text-6xl">{prayer.title}</h1>
+        <p className="mt-3 text-base font-medium text-gold-foreground dark:text-gold">
+          {[isOwn ? "My prayer" : "Starter prayer", prayer.source].filter(Boolean).join(" · ")}
+        </p>
+
+        <div className="mt-5 flex flex-wrap items-center gap-2">
+          <AppButton href={`/prayers/${prayer.id}/collections`} variant="outline" className="flex-1 sm:flex-none">
+            <FolderPlus aria-hidden /> Add to collection
+          </AppButton>
+          {isOwn ? null : (
+            <form action={copyPrayer} className="flex-1 sm:flex-none">
+              <input type="hidden" name="id" value={prayer.id} />
+              <SubmitButton variant="outline" pendingLabel="Copying…" className="w-full sm:w-auto">
+                <Copy aria-hidden /> Make my copy
+              </SubmitButton>
+            </form>
+          )}
         </div>
-        <FavoriteButton id={prayer.id} isFavorite={favoriteIds.has(prayer.id)} />
+      </header>
+
+      <div className="ora-enter rounded-3xl bg-card p-6 md:p-12">
+        <PrayerBody body={prayer.body} />
       </div>
 
-      <PrayerBody body={prayer.body} />
-
-      <div className="mt-10 flex flex-wrap items-center gap-3 border-t border-border pt-6">
-        {isOwn ? (
-          <>
-            <AppButton href={`/prayers/${prayer.id}/edit`} variant="outline">
-              Edit
-            </AppButton>
-            <DeleteButton id={prayer.id} />
-          </>
-        ) : (
-          <form action={copyPrayer}>
-            <input type="hidden" name="id" value={prayer.id} />
-            <AppButton type="submit" variant="outline">
-              Copy to my prayers
-            </AppButton>
-          </form>
-        )}
-      </div>
+      {isOwn ? (
+        <div className="mt-6 flex flex-wrap items-center gap-3">
+          <AppButton href={`/prayers/${prayer.id}/edit`} variant="outline" className="flex-1 sm:flex-none">
+            <Pencil aria-hidden /> Edit
+          </AppButton>
+          <DeleteButton id={prayer.id} />
+        </div>
+      ) : (
+        <p className="mt-6 text-base text-muted-foreground">
+          Starter prayers can’t be edited. Make your copy to change the words or add your own.
+        </p>
+      )}
     </article>
   );
 }

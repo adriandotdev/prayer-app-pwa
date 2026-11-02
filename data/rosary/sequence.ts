@@ -10,7 +10,7 @@ const RADIUS = 120;
 
 /**
  * Layout: crucifix at the bottom, the tail rising to the medal, then the
- * loop of five decades. 59 beads in all: 1 + 3 on the tail and 5 × (1 + 10)
+ * loop of five decades. 61 beads in all: crucifix, 4 on the tail, the medal and 5 × (1 + 10)
  * on the loop. The crucifix and medal are anchors for the Creed and the
  * Hail, Holy Queen.
  */

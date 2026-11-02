@@ -1,5 +1,9 @@
 import { Loader } from "@/components/brand/loader";
 
 export default function Loading() {
-  return <Loader />;
+  return (
+    <div className="ora-fade [animation-delay:150ms]">
+      <Loader />
+    </div>
+  );
 }

@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ora
 
-## Getting Started
+A Catholic prayer PWA: an offline-capable interactive Rosary (public, no account) and a signed-in prayer library with collections, favorites, search, intentions and Rosary history.
 
-First, run the development server:
+Built with Next.js 16 (App Router), React 19, TypeScript, Tailwind v4 and Supabase. Next 16 differs from older versions, so read `node_modules/next/dist/docs/` before changing framework-level code. `CLAUDE.md` has the full architecture notes.
+
+## Getting started
 
 ```bash
+npm install
+cp .env.example .env     # then fill in the two Supabase values
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The Rosary works without Supabase. Sign-in and the library need `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, and Google enabled as an auth provider in the Supabase project.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Dev server. The service worker is not registered in dev. |
+| `npm run build` / `npm run start` | Production build and server. Test the PWA here (`-p 3100` if dev is on 3000). |
+| `npm run typecheck` | `tsc --noEmit`. Run `npx next typegen` first if route types are missing. |
+| `npm run lint` | ESLint. |
+| `npm test` | Vitest, for the pure code (liturgical season, Rosary engine, validation). |
 
-## Learn More
+CI runs typecheck, lint, tests and a production build on every pull request.
 
-To learn more about Next.js, take a look at the following resources:
+## Database
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Schema lives in `supabase/migrations/`. Change it with a new migration, never by editing an applied one.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+supabase db push --include-seed                              # apply migrations and seed
+supabase gen types typescript --linked > lib/database.types.ts   # after schema changes
+```
 
-## Deploy on Vercel
+## PWA
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The manifest is `app/manifest.ts` and the service worker is hand-written in `public/sw.js` (no Serwist). It registers in production only. Bump `VERSION` in `sw.js` whenever the cached paths change.

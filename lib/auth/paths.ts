@@ -1,5 +1,5 @@
 /** Routes that require a signed-in user. The Rosary and sign-in stay public. */
-const PROTECTED_PREFIXES = ["/prayers", "/intentions", "/profile"];
+const PROTECTED_PREFIXES = ["/prayers", "/collections", "/intentions", "/profile"];
 
 export function isProtectedPath(pathname: string) {
   return PROTECTED_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`));

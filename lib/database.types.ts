@@ -211,18 +211,21 @@ export type Database = {
       }
       rosary_sessions: {
         Row: {
+          client_id: string | null
           completed_at: string
           id: string
           mystery_set: string
           user_id: string
         }
         Insert: {
+          client_id?: string | null
           completed_at?: string
           id?: string
           mystery_set: string
           user_id: string
         }
         Update: {
+          client_id?: string | null
           completed_at?: string
           id?: string
           mystery_set?: string

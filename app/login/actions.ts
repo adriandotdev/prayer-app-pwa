@@ -2,38 +2,22 @@
 
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { z } from "zod";
 
 import { safeNext } from "@/lib/auth/paths";
 import { createClient } from "@/lib/supabase/server";
 
-export type LoginState = { status: "idle" | "sent" | "error"; message?: string; email?: string };
-
+/**
+ * Where Google should send the visitor back to. `NEXT_PUBLIC_SITE_URL` pins it in production; without
+ * it the request's own host is used, which suits local dev and preview deployments. Supabase's
+ * redirect allow-list still has the final say.
+ */
 async function siteOrigin() {
+  const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/+$/, "");
+  if (configured) return configured;
   const h = await headers();
   const host = h.get("x-forwarded-host") ?? h.get("host");
   const proto = h.get("x-forwarded-proto") ?? (host?.startsWith("localhost") ? "http" : "https");
   return `${proto}://${host}`;
-}
-
-const emailSchema = z.object({ email: z.email("Enter a valid email address.") });
-
-export async function signInWithEmail(_prev: LoginState, formData: FormData): Promise<LoginState> {
-  const parsed = emailSchema.safeParse({ email: String(formData.get("email") ?? "").trim() });
-  if (!parsed.success) {
-    return { status: "error", message: parsed.error.issues[0]?.message, email: String(formData.get("email") ?? "") };
-  }
-  const next = safeNext(String(formData.get("next") ?? ""));
-
-  const supabase = await createClient();
-  const { error } = await supabase.auth.signInWithOtp({
-    email: parsed.data.email,
-    options: { emailRedirectTo: `${await siteOrigin()}/auth/callback?next=${encodeURIComponent(next)}` },
-  });
-  if (error) {
-    return { status: "error", message: "We couldn't send the link. Please try again.", email: parsed.data.email };
-  }
-  return { status: "sent", email: parsed.data.email };
 }
 
 export async function signInWithGoogle(formData: FormData) {

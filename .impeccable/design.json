@@ -1,0 +1,421 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-30T15:18:52Z",
+  "title": "Design System: Ora",
+  "extensions": {
+    "colorMeta": {
+      "vellum-ivory": {
+        "role": "neutral",
+        "displayName": "Vellum Ivory",
+        "canonical": "oklch(0.973 0.014 88)",
+        "tonalRamp": [
+          "oklch(0.15 0.014 88)",
+          "oklch(0.25 0.014 88)",
+          "oklch(0.35 0.014 88)",
+          "oklch(0.45 0.014 88)",
+          "oklch(0.6 0.014 88)",
+          "oklch(0.75 0.014 88)",
+          "oklch(0.88 0.014 88)",
+          "oklch(0.95 0.014 88)"
+        ]
+      },
+      "vesper-blue": {
+        "role": "primary",
+        "displayName": "Vesper Blue",
+        "canonical": "oklch(0.32 0.075 258)",
+        "tonalRamp": [
+          "oklch(0.15 0.075 258)",
+          "oklch(0.25 0.075 258)",
+          "oklch(0.35 0.075 258)",
+          "oklch(0.45 0.075 258)",
+          "oklch(0.6 0.075 258)",
+          "oklch(0.75 0.075 258)",
+          "oklch(0.88 0.075 258)",
+          "oklch(0.95 0.075 258)"
+        ]
+      },
+      "vesper-ink": {
+        "role": "neutral",
+        "displayName": "Vesper Ink",
+        "canonical": "oklch(0.26 0.05 258)",
+        "tonalRamp": [
+          "oklch(0.15 0.05 258)",
+          "oklch(0.25 0.05 258)",
+          "oklch(0.35 0.05 258)",
+          "oklch(0.45 0.05 258)",
+          "oklch(0.6 0.05 258)",
+          "oklch(0.75 0.05 258)",
+          "oklch(0.88 0.05 258)",
+          "oklch(0.95 0.05 258)"
+        ]
+      },
+      "altar-gold": {
+        "role": "secondary",
+        "displayName": "Altar Gold",
+        "canonical": "oklch(0.68 0.12 82)",
+        "tonalRamp": [
+          "oklch(0.15 0.12 82)",
+          "oklch(0.25 0.12 82)",
+          "oklch(0.35 0.12 82)",
+          "oklch(0.45 0.12 82)",
+          "oklch(0.6 0.12 82)",
+          "oklch(0.75 0.12 82)",
+          "oklch(0.88 0.12 82)",
+          "oklch(0.95 0.12 82)"
+        ]
+      },
+      "linen-card": {
+        "role": "neutral",
+        "displayName": "Linen Card",
+        "canonical": "oklch(0.99 0.008 88)",
+        "tonalRamp": [
+          "oklch(0.15 0.008 88)",
+          "oklch(0.25 0.008 88)",
+          "oklch(0.35 0.008 88)",
+          "oklch(0.45 0.008 88)",
+          "oklch(0.6 0.008 88)",
+          "oklch(0.75 0.008 88)",
+          "oklch(0.88 0.008 88)",
+          "oklch(0.95 0.008 88)"
+        ]
+      },
+      "parchment": {
+        "role": "neutral",
+        "displayName": "Parchment",
+        "canonical": "oklch(0.94 0.02 86)",
+        "tonalRamp": [
+          "oklch(0.15 0.02 86)",
+          "oklch(0.25 0.02 86)",
+          "oklch(0.35 0.02 86)",
+          "oklch(0.45 0.02 86)",
+          "oklch(0.6 0.02 86)",
+          "oklch(0.75 0.02 86)",
+          "oklch(0.88 0.02 86)",
+          "oklch(0.95 0.02 86)"
+        ]
+      },
+      "candle-wash": {
+        "role": "neutral",
+        "displayName": "Candle Wash",
+        "canonical": "oklch(0.92 0.045 88)",
+        "tonalRamp": [
+          "oklch(0.15 0.045 88)",
+          "oklch(0.25 0.045 88)",
+          "oklch(0.35 0.045 88)",
+          "oklch(0.45 0.045 88)",
+          "oklch(0.6 0.045 88)",
+          "oklch(0.75 0.045 88)",
+          "oklch(0.88 0.045 88)",
+          "oklch(0.95 0.045 88)"
+        ]
+      },
+      "ash-text": {
+        "role": "neutral",
+        "displayName": "Ash Text",
+        "canonical": "oklch(0.47 0.035 258)",
+        "tonalRamp": [
+          "oklch(0.15 0.035 258)",
+          "oklch(0.25 0.035 258)",
+          "oklch(0.35 0.035 258)",
+          "oklch(0.45 0.035 258)",
+          "oklch(0.6 0.035 258)",
+          "oklch(0.75 0.035 258)",
+          "oklch(0.88 0.035 258)",
+          "oklch(0.95 0.035 258)"
+        ]
+      },
+      "rule-line": {
+        "role": "neutral",
+        "displayName": "Rule Line",
+        "canonical": "oklch(0.88 0.02 86)",
+        "tonalRamp": [
+          "oklch(0.15 0.02 86)",
+          "oklch(0.25 0.02 86)",
+          "oklch(0.35 0.02 86)",
+          "oklch(0.45 0.02 86)",
+          "oklch(0.6 0.02 86)",
+          "oklch(0.75 0.02 86)",
+          "oklch(0.88 0.02 86)",
+          "oklch(0.95 0.02 86)"
+        ]
+      },
+      "penitent-red": {
+        "role": "destructive",
+        "displayName": "Penitent Red",
+        "canonical": "oklch(0.52 0.19 27)",
+        "tonalRamp": [
+          "oklch(0.15 0.19 27)",
+          "oklch(0.25 0.19 27)",
+          "oklch(0.35 0.19 27)",
+          "oklch(0.45 0.19 27)",
+          "oklch(0.6 0.19 27)",
+          "oklch(0.75 0.19 27)",
+          "oklch(0.88 0.19 27)",
+          "oklch(0.95 0.19 27)"
+        ]
+      },
+      "night-vellum": {
+        "role": "neutral",
+        "displayName": "Night Vellum",
+        "canonical": "oklch(0.18 0.035 258)",
+        "tonalRamp": [
+          "oklch(0.15 0.035 258)",
+          "oklch(0.25 0.035 258)",
+          "oklch(0.35 0.035 258)",
+          "oklch(0.45 0.035 258)",
+          "oklch(0.6 0.035 258)",
+          "oklch(0.75 0.035 258)",
+          "oklch(0.88 0.035 258)",
+          "oklch(0.95 0.035 258)"
+        ]
+      },
+      "night-card": {
+        "role": "neutral",
+        "displayName": "Night Card",
+        "canonical": "oklch(0.22 0.04 258)",
+        "tonalRamp": [
+          "oklch(0.15 0.04 258)",
+          "oklch(0.25 0.04 258)",
+          "oklch(0.35 0.04 258)",
+          "oklch(0.45 0.04 258)",
+          "oklch(0.6 0.04 258)",
+          "oklch(0.75 0.04 258)",
+          "oklch(0.88 0.04 258)",
+          "oklch(0.95 0.04 258)"
+        ]
+      },
+      "night-gold": {
+        "role": "secondary",
+        "displayName": "Night Gold",
+        "canonical": "oklch(0.8 0.1 85)",
+        "tonalRamp": [
+          "oklch(0.15 0.1 85)",
+          "oklch(0.25 0.1 85)",
+          "oklch(0.35 0.1 85)",
+          "oklch(0.45 0.1 85)",
+          "oklch(0.6 0.1 85)",
+          "oklch(0.75 0.1 85)",
+          "oklch(0.88 0.1 85)",
+          "oklch(0.95 0.1 85)"
+        ]
+      },
+      "night-text": {
+        "role": "neutral",
+        "displayName": "Night Text",
+        "canonical": "oklch(0.93 0.02 88)",
+        "tonalRamp": [
+          "oklch(0.15 0.02 88)",
+          "oklch(0.25 0.02 88)",
+          "oklch(0.35 0.02 88)",
+          "oklch(0.45 0.02 88)",
+          "oklch(0.6 0.02 88)",
+          "oklch(0.75 0.02 88)",
+          "oklch(0.88 0.02 88)",
+          "oklch(0.95 0.02 88)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Page titles on desktop via PageHeader (Cormorant Garamond)."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page titles on phone, including the Home h1 (2.5rem); all h1–h3 use Cormorant."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card and section headings."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "UI text and descriptions in Hanken Grotesk."
+      },
+      "prayer": {
+        "displayName": "Prayer",
+        "purpose": "All prayed text in Source Serif 4, scaled by --prayer-scale."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Nav labels, chips and buttons."
+      }
+    },
+    "shadows": [
+      {
+        "name": "sheet-phone",
+        "value": "0 -12px 40px -12px color-mix(in oklab, var(--foreground) 20%, transparent)",
+        "purpose": "Confirmation sheet on phone."
+      },
+      {
+        "name": "sheet-desktop",
+        "value": "0 24px 60px -20px color-mix(in oklab, var(--foreground) 25%, transparent)",
+        "purpose": "Confirmation modal on desktop."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-ora",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "Default easing for everything: arrives like light."
+      },
+      {
+        "name": "rise",
+        "value": "240ms, translateY(12px) phone / 6px desktop",
+        "purpose": "Standard enter."
+      },
+      {
+        "name": "breathe",
+        "value": "3s ease-in-out infinite, scale 1.08",
+        "purpose": "Current-bead halo; the one ambient motion."
+      },
+      {
+        "name": "candle",
+        "value": "5s ease-in-out infinite, opacity 0.55–0.9, scale 1.06",
+        "purpose": "Halo behind the Christ figure on Home; the one ambient motion on that screen. The bead row there is static."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "md",
+        "value": "48rem"
+      },
+      {
+        "name": "lg",
+        "value": "64rem"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Pill action; the main action of a screen.",
+      "html": "<button class=\"ds-btn-primary\">Begin the Rosary</button>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;border:0;border-radius:9999px;background:oklch(0.32 0.075 258);color:oklch(0.97 0.014 88);font:500 1rem 'Hanken Grotesk',system-ui,sans-serif;transition:transform 200ms cubic-bezier(0.22,1,0.36,1),background-color 200ms}.ds-btn-primary:hover{background:oklch(0.32 0.075 258 / 0.9)}.ds-btn-primary:active{transform:scale(0.97)}.ds-btn-primary:focus-visible{outline:2px solid oklch(0.62 0.12 82);outline-offset:2px}"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary pill, raised by tone rather than border.",
+      "html": "<button class=\"ds-btn-outline\">Add to collection</button>",
+      "css": ".ds-btn-outline{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;border:0;border-radius:9999px;background:oklch(0.94 0.02 86);color:oklch(0.3 0.06 258);font:500 1rem 'Hanken Grotesk',system-ui,sans-serif;transition:transform 200ms cubic-bezier(0.22,1,0.36,1),background-color 200ms}.ds-btn-outline:hover{background:oklch(0.92 0.045 88)}.ds-btn-outline:active{transform:scale(0.97)}.ds-btn-outline:focus-visible{outline:2px solid oklch(0.62 0.12 82);outline-offset:2px}"
+    },
+    {
+      "name": "Prayer Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "A prayer in a list, with the arch glyph.",
+      "html": "<div class=\"ds-card\"><span class=\"ds-arch\"></span><div><div class=\"ds-card-title\">Hail Mary</div><div class=\"ds-card-sub\">Starter prayer</div></div></div>",
+      "css": ".ds-card{display:flex;align-items:center;gap:16px;padding:16px;border-radius:1.65rem;background:oklch(0.99 0.008 88);color:oklch(0.26 0.05 258);transition:background-color 180ms}.ds-card:hover{background:oklch(0.94 0.02 86)}.ds-arch{width:56px;height:72px;flex:none;border-radius:9rem 9rem 0.75rem 0.75rem;background:oklch(0.92 0.045 88)}.ds-card-title{font:600 1.5rem 'Cormorant Garamond',Georgia,serif;letter-spacing:-0.025em}.ds-card-sub{font:400 0.95rem 'Hanken Grotesk',system-ui,sans-serif;color:oklch(0.47 0.035 258)}"
+    },
+    {
+      "name": "Filter Chip (selected)",
+      "kind": "chip",
+      "refersTo": "chip-selected",
+      "description": "Active filter pill.",
+      "html": "<span class=\"ds-chip\">Favorites</span>",
+      "css": ".ds-chip{display:inline-flex;align-items:center;min-height:44px;padding:0 20px;border-radius:9999px;background:oklch(0.32 0.075 258);color:oklch(0.97 0.014 88);font:500 0.95rem 'Hanken Grotesk',system-ui,sans-serif}"
+    },
+    {
+      "name": "Bottom Nav Tab",
+      "kind": "nav",
+      "refersTo": "nav-pill-active",
+      "description": "Active tab with a Candle Wash pill.",
+      "html": "<div class=\"ds-tab\"><span class=\"ds-tab-pill\"></span><span>Rosary</span></div>",
+      "css": ".ds-tab{display:flex;flex-direction:column;align-items:center;gap:4px;font:600 13px 'Hanken Grotesk',system-ui,sans-serif;color:oklch(0.32 0.075 258)}.ds-tab-pill{width:56px;height:36px;border-radius:9999px;background:oklch(0.92 0.045 88)}"
+    },
+    {
+      "name": "Prayer Text",
+      "kind": "custom",
+      "refersTo": "prayer",
+      "description": "Sacred text at a generous measure.",
+      "html": "<p class=\"ds-prayer\">Hail Mary, full of grace, the Lord is with thee.</p>",
+      "css": ".ds-prayer{max-width:38rem;margin:0;font:400 1.25rem/1.75 'Source Serif 4',Georgia,serif;color:oklch(0.26 0.05 258)}"
+    },
+    {
+      "name": "Hero CTA",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The inverted primary pill on the Home hero panel; label becomes “Continue your Rosary” when a session is in progress.",
+      "html": "<button class=\"ds-hero-cta\">Pray the Rosary</button>",
+      "css": ".ds-hero-cta{min-height:56px;width:100%;padding:0 24px;border:0;border-radius:9999px;background:oklch(0.973 0.014 88);color:oklch(0.32 0.075 258);font-size:1.125rem;font-weight:500;transition:transform 200ms cubic-bezier(0.22,1,0.36,1),background-color 200ms}.ds-hero-cta:hover{background:oklch(0.973 0.014 88 / 0.9)}.ds-hero-cta:active{transform:scale(0.97)}.ds-hero-cta:focus-visible{outline:2px solid oklch(0.68 0.12 82);outline-offset:2px}"
+    },
+    {
+      "name": "Library Link Tile",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Home link into the signed-in library; the line under the title says whether sign-in is needed or you are offline.",
+      "html": "<a class=\"ds-tile\" href=\"#\"><span class=\"ds-tile-head\"><span class=\"ds-tile-title\">Your prayers</span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></span><span class=\"ds-tile-body\">Sign in to keep the prayers you love, organised into collections.</span></a>",
+      "css": ".ds-tile{display:flex;flex-direction:column;justify-content:space-between;gap:24px;min-height:128px;padding:24px;border-radius:1.65rem;background:oklch(0.99 0.008 88);color:oklch(0.26 0.05 258);text-decoration:none;transition:transform 180ms cubic-bezier(0.22,1,0.36,1),background-color 180ms}.ds-tile:hover{background:oklch(0.94 0.02 86)}.ds-tile:active{transform:scale(0.985)}.ds-tile:focus-visible{outline:2px solid oklch(0.68 0.12 82);outline-offset:2px}.ds-tile-head{display:flex;justify-content:space-between;gap:16px;color:oklch(0.32 0.075 258)}.ds-tile-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.875rem;line-height:1;color:oklch(0.26 0.05 258)}.ds-tile-body{max-width:20rem;font-size:1rem;color:oklch(0.47 0.035 258)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Candlelit Chapel",
+    "overview": "Ora is a quiet room with one light in it. Surfaces are ivory paper tinted warm, text is a deep ink-blue rather than black, and gold is spent like a single flame. Day is ivory and blue; night is the same room with the lamps turned down.",
+    "keyCharacteristics": [
+      "Warm ivory ground, ink-blue text, gold as a rare point of light.",
+      "Flat tonal layering; depth comes from tinted surfaces and big corners, not shadows.",
+      "One repeated shape: the chapel-window arch.",
+      "Fully pill-shaped actions with 48–56px touch targets.",
+      "Serif for what is prayed, sans for what is operated.",
+      "Slow, opacity-and-transform-only motion that disappears under reduced motion."
+    ],
+    "rules": [
+      {
+        "name": "The One Flame Rule",
+        "body": "Gold appears as a point, a ring, a rule or a halo, never as a surface fill larger than an icon backing. Its rarity is what makes it read as light.",
+        "section": "colors"
+      },
+      {
+        "name": "The Season Owns the Hue Rule",
+        "body": "Components use tokens (`primary`, `accent`, `gold`), never a literal blue or green. A season swap must recolor every surface with no component edits. The one sanctioned exception: in the Red season the destructive button becomes an outline, because filled primary is already red.",
+        "section": "colors"
+      },
+      {
+        "name": "The Ink, Not Black Rule",
+        "body": "Text is never `#000` and grounds are never `#fff`; both are tinted toward the palette hue.",
+        "section": "colors"
+      },
+      {
+        "name": "The Sacred Text Is Serif Rule",
+        "body": "Anything prayed (prayer bodies and the Rosary's prayer text) is Source Serif 4 and scales with `--prayer-scale`. UI chrome never uses it.",
+        "section": "typography"
+      },
+      {
+        "name": "The Scale Is Theirs Rule",
+        "body": "Prayer size is user-controlled; layouts around prayer text must reflow, never clip or truncate it.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Until Floating Rule",
+        "body": "A surface that sits in the page flow gets tone, never a shadow. Only overlays that cover the page may cast one.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Pill and the Arch Rule",
+        "body": "Actions are pills; the arch is for objects of devotion (prayers, figures). Never put an arch on a button or a pill on a prayer.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "Do use semantic tokens (`bg-primary`, `bg-accent`, `text-muted-foreground`, `text-gold`) so seasons and night mode recolor everything for free.",
+      "Do set prayer text with `.prayer-text` and let `--prayer-scale` govern its size; reflow layouts to fit.",
+      "Do keep every interactive target at 44px or more, primary actions 52–56px, and use `AppButton` rather than any shadcn Button.",
+      "Do animate with opacity and transform only, on `ease-ora` (cubic-bezier(0.22, 1, 0.36, 1)), 180–240ms for UI and 520ms for staggered entrances, and honor `prefers-reduced-motion` by removing animation entirely.",
+      "Do keep gold to a point, ring, rule or halo, and keep fixed UI clear of safe-area insets.",
+      "Do use tonal steps (card → secondary → accent) to separate surfaces."
+    ],
+    "donts": [
+      "Don't add shadows to in-flow cards or buttons; only overlays (sheets, toasts) float.",
+      "Don't hard-code colors or use `#000` / `#fff`; every color comes from a token.",
+      "Don't introduce streak flames, badges, confetti, progress-guilt, or any gamified or loss-aversion visual.",
+      "Don't paraphrase, truncate, restyle or auto-generate traditional prayer text; set it plainly and in full.",
+      "Don't put an arch on a button.",
+      "Don't fill large areas with gold or add a second accent hue; seasons change the primary, not the accent system.",
+      "Don't animate layout properties or run more than one ambient motion on a screen."
+    ]
+  }
+}
