@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-"Ora" is a Catholic prayer PWA: an offline-capable interactive Rosary (public, no account) plus a signed-in prayer library. Built in six phases with a stop for user review after each: 1 setup, 2 Rosary, 3 auth/profile, 4 prayer library (prayers, collections, favorites, search, intentions, Rosary history), 5 PWA, 6 polish. Phases 1–4 and a hand-written PWA are done; Phase 5 (PWA hardening) is built and awaiting review; Phase 6 (polish) is next. Out of scope: push/reminders, social, liturgical calendar (beyond the season-color function), readings, audio, i18n, other chaplets (architecture only).
+"Ora" is a Catholic prayer PWA: an offline-capable interactive Rosary (public, no account) plus a signed-in prayer library. Built in six phases with a stop for user review after each: 1 setup, 2 Rosary, 3 auth/profile, 4 prayer library (prayers, collections, favorites, search, intentions, Rosary history), 5 PWA, 6 polish. Phases 1–4 and a hand-written PWA are done; Phase 5 (PWA hardening) is built; Phase 6 (polish: accessibility, error/loading states, performance budget) is built and awaiting review. Out of scope: push/reminders, social, liturgical calendar (beyond the season-color function), readings, audio, i18n, other chaplets (architecture only).
 
 ## Commands
 
@@ -18,7 +18,7 @@ npm run lint         # eslint
 npx tsc --noEmit     # type-check; if `PageProps<"/x">` is unknown run `npx next typegen` first
 ```
 
-There is no test runner. Verify with `tsc`, `eslint`, a production build, and `curl` against `next start`.
+`npm test` runs vitest (pure logic plus theme contrast; no component or e2e tests yet), and CI runs typecheck, lint, test and build. Use Node 22 (CI's version; older Node 20 breaks vitest). Also verify with `curl` against `next start`. See `docs/performance-budget.md` and `docs/accessibility-checklist.md`.
 
 Supabase (CLI, project ref `ltgjhevwtfxlhhurxrdx`): `supabase db push --include-seed` applies `supabase/migrations/` and `seed.sql`; `supabase gen types typescript --linked > lib/database.types.ts` regenerates types after schema changes.
 
