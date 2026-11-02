@@ -2,13 +2,18 @@
 
 import { AppButton } from "@/components/app-button";
 import { ChristFigure } from "@/components/home/christ-figure";
-import { buildDivineMercy, DIVINE_MERCY_ID } from "@/data/divine-mercy/sequence";
+import { savedPractice } from "@/components/practice/other-practice-progress";
+import type { PracticeId } from "@/components/practice/practice-switch";
 import { MYSTERY_SETS } from "@/data/rosary/mysteries";
-import { buildRosary } from "@/data/rosary/sequence";
 import { mysterySetForDay } from "@/data/rosary/schedule";
-import { setFromSequenceId } from "@/lib/rosary/resume";
 import { useSavedProgress } from "@/lib/sequence/progress";
 import { useToday } from "@/lib/use-today";
+
+const RESUME_COPY: Record<PracticeId, { line: string; message: string; button: string }> = {
+  rosary: { line: "", message: "Your Rosary is where you left it.", button: "Continue your Rosary" },
+  "divine-mercy": { line: "Divine Mercy Chaplet", message: "Your chaplet is where you left it.", button: "Continue the chaplet" },
+  angelus: { line: "The Angelus", message: "Your Angelus is where you left it.", button: "Continue the Angelus" },
+};
 
 const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
@@ -17,13 +22,9 @@ export function TodayHero() {
   const today = useToday();
   const set = today === null ? null : MYSTERY_SETS[mysterySetForDay(today)];
   const saved = useSavedProgress();
-  const resumeSetId = saved && !saved.completed ? setFromSequenceId(saved.sequenceId) : null;
-  const resumeMercy = saved && !saved.completed && saved.sequenceId === DIVINE_MERCY_ID;
-  const resumeLine = saved && resumeSetId
-    ? `${MYSTERY_SETS[resumeSetId].name} · step ${saved.index + 1} of ${buildRosary(resumeSetId).steps.length}`
-    : saved && resumeMercy
-      ? `Divine Mercy Chaplet · step ${saved.index + 1} of ${buildDivineMercy().steps.length}`
-      : null;
+  const resume = savedPractice(saved);
+  const copy = resume ? RESUME_COPY[resume.id] : null;
+  const resumeLine = resume && copy ? (copy.line ? `${copy.line} · ${resume.detail.charAt(0).toLowerCase()}${resume.detail.slice(1)}` : resume.detail) : null;
   const dayLine = today !== null && set ? `${DAY_NAMES[today]} · ${set.name}` : null;
 
   return (
@@ -44,15 +45,15 @@ export function TodayHero() {
         Peace be with you
       </h1>
       <p className="mt-3 max-w-[18rem] text-base opacity-80">
-        {resumeLine ? (resumeMercy ? "Your chaplet is where you left it." : "Your Rosary is where you left it.") : "Take a moment. What would you like to pray?"}
+        {copy ? copy.message : "Take a moment. What would you like to pray?"}
       </p>
 
       <AppButton
-        href={resumeMercy ? "/divine-mercy" : "/rosary"}
+        href={resume ? resume.href : "/rosary"}
         size="lg"
         className="mt-7 w-full bg-primary-foreground text-primary hover:bg-primary-foreground/90 dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/90"
       >
-        {resumeLine ? (resumeMercy ? "Continue the chaplet" : "Continue your Rosary") : "Pray the Rosary"}
+        {copy ? copy.button : "Pray the Rosary"}
       </AppButton>
     </section>
   );
