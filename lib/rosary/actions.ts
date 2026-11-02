@@ -40,7 +40,10 @@ export async function recordRosarySession(setId: string, completedAt?: string, c
     .insert({ user_id: user.id, mystery_set: setId, client_id: clientId, ...(when && { completed_at: when }) });
   // The same Rosary arriving twice is already on record.
   if (error?.code === UNIQUE_VIOLATION) return "recorded";
-  if (error) return "rejected";
+  if (error) {
+    console.error("recordRosarySession insert failed:", error.code, error.message);
+    return "rejected";
+  }
   revalidatePath("/profile");
   return "recorded";
 }

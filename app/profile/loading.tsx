@@ -1,9 +1,5 @@
-import { Loader } from "@/components/brand/loader";
+import { PageSkeleton } from "@/components/layout/page-skeleton";
 
 export default function Loading() {
-  return (
-    <div className="ora-fade [animation-delay:150ms]">
-      <Loader />
-    </div>
-  );
+  return <PageSkeleton label="Loading profile" variant="form" />;
 }
