@@ -13,7 +13,7 @@ export type RosaryStats = {
 const DECADES_PER_ROSARY = 5;
 
 /** Local calendar day as a whole-day index; noon-anchored UTC math keeps DST days exact. */
-function dayIndex(d: Date): number {
+export function dayIndex(d: Date): number {
   return Math.round(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86_400_000);
 }
 

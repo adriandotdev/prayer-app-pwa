@@ -1,82 +1,27 @@
-# Ora roadmap
+# Roadmap
 
-Ideas for what to build after the current six phases. Ora is used mostly one-handed on a phone, often at night, so every item should work at 360–430px first, stay calm, and keep the Rosary usable offline and without an account.
+Feature backlog for Ora after Phase 6 (polish). Items are numbered so they can be referred to in conversation and PRs.
 
-Items marked **(was out of scope)** were deliberately left out of the original plan in `CLAUDE.md`; they are listed here so the decision to take them on is explicit.
+**Suggested next phase:** items 1, 2 and 5 together (no new backend), then 6 and 8 to harden the foundation before reminders (10).
 
-## Where things stand
+## High value, in scope
 
-- **Done:** setup, interactive Rosary, Google auth and profile, prayer library (prayers, collections, favorites, search, intentions, Rosary history), hand-written PWA, liturgical season themes and appearance screen, home screen redesign.
-- **In flight:** Phase 6 (polish) built and awaiting review: focus management, roving tabindex on the bead tracker, contrast tests, error boundaries, skeletons, performance budget (`docs/`).
+1. **Prayer streak and Rosary stats.** Built from the existing `rosary_sessions`: streak, count by mystery set, history calendar on the profile page.
+2. **Intentions linked to prayers.** Attach an intention to a Rosary or Chaplet session and show it in the history.
+3. **Resume for all sequences.** "Continue where you left off" for every sequence, including Divine Mercy and future chaplets, through the generic engine.
+4. **Data export and account deletion.** JSON export of prayers, collections, intentions and history, plus delete account.
+5. **Prayer reader preferences.** Line-height option, sepia/night theme, and keep-screen-awake (Wake Lock API) while praying.
 
-## Next: finish the plan
+## Medium value
 
-- Review and merge Phase 6. Still open from it: Lighthouse and real-device Web Vitals numbers, a screen-reader pass (`docs/accessibility-checklist.md`). Original scope: accessibility pass (WCAG 2.2 AA, focus order, reduced motion, screen-reader labels on the bead tracker), empty and error states, loading skeletons, performance budget.
-- Test coverage beyond the pure code: component tests for the Rosary player, and an end-to-end smoke test (Playwright) for the Rosary flow and offline fallback.
-- Error monitoring and basic privacy-friendly analytics, so real-world failures show up.
+6. **Offline-first library.** Cache a signed-in user's prayers and favorites in IndexedDB and sync on reconnect (the biggest PWA gap).
+7. **Sharing.** Read-only public link for a prayer or collection, plus the Web Share API.
+8. **Tests.** Playwright e2e (Rosary flow, sign-in, offline fallback) and component tests.
+9. **More chaplets and devotions.** Seven Sorrows, Stations of the Cross, Angelus. Data only, thanks to the sequence engine.
 
-## Soon: deepen what exists
+## Outside the current scope (needs an explicit go-ahead)
 
-Small, low-risk additions that build on current tables and components.
-
-| Feature | Why it fits | Notes |
-| --- | --- | --- |
-| Rosary streak and stats | `rosary_sessions` already stores history | Gentle framing (no guilt, no leaderboards). Total decades, current streak, mysteries prayed. |
-| Resume anywhere | Progress is local only today | Sync in-progress Rosary to the account so a phone and a laptop agree. |
-| Intention answered / archived | Intentions exist | Add a status, a "prayer answered" note, and filters. |
-| Intentions inside the Rosary | Intentions and Rosary are separate | Pick an intention to offer a decade for, and show it during the prayer. |
-| Prayer sharing | Library is private per user | Share a single prayer via link or the native share sheet. |
-| Import / export | Users own their prayers | Export prayers, collections and intentions as JSON or Markdown. |
-| Account deletion | Required for trust and store listings | Delete profile and all rows, with a confirmation. |
-| Larger prayer text, line spacing, font choice | `--prayer-scale` already exists | Surface more reading controls in Appearance. |
-| Night-friendly prayer mode | Ora is often used in the dark | A dimmer, low-contrast-glare theme for the Rosary and reader, with an optional keep-screen-awake toggle. Must still meet WCAG 2.2 AA contrast. |
-| Intention on the completion screen and in history | Builds on "Intentions inside the Rosary" | Record the intention a Rosary was offered for, and show it on completion and in Rosary history ("Prayed for: ..."). |
-| Share a prayer as an image | Extends prayer sharing | Render a prayer as a styled card for the native share sheet, alongside the plain link. |
-
-## Later: new prayer content
-
-Rosary data lives in `data/rosary/` and the engine in `lib/sequence/` is generic, so these should mostly be data work.
-
-- **Other chaplets** **(was out of scope, architecture is ready)**: Divine Mercy Chaplet, Seven Sorrows, St. Michael, Stations of the Cross, Angelus. Each is a new `SequenceDefinition`.
-- **Novenas and multi-day devotions**: a day counter, daily reminder text, resume on the next day.
-- **Examen and Lectio Divina guides**: step-by-step, reusing the sequence player.
-- **Litanies**: call-and-response lists (Loreto, Sacred Heart, St. Joseph).
-- **Expanded starter prayers**: more seeded prayers (Latin and English side by side, Act of Contrition, Prayer to St. Michael, saint-specific prayers).
-
-## Later: daily rhythm
-
-- **Reminders and push notifications** **(was out of scope)**: opt-in daily prayer time, per-user time zone. Needs web push, a subscription table, and a scheduled sender (Supabase cron or an edge function). Respect iOS PWA push limits and keep it off by default.
-- **Liturgical calendar** **(was out of scope beyond the season-color function)**: feast and memorial names, saint of the day, fasting and abstinence days. Season theming already exists in `lib/theme/liturgical-season.ts`, so this extends it.
-- **Daily readings** **(was out of scope)**: Mass readings and Gospel. Requires a licensed or public-domain source, caching for offline, and a clear attribution.
-- **Prayer of the day** on the home screen, chosen from the library by season.
-- **"Today" card**: feast or season, plus the day's suggested mysteries with a one-tap start (the day schedule already lives in `data/rosary/`).
-
-## Later: richer experience
-
-- **Audio** **(was out of scope)**: recorded or synthesized Rosary prayers, with a hands-free mode that advances beads automatically. Needs offline caching of audio files and care with PWA storage limits.
-- **Hands-free and eyes-free mode**: large single-bead view, haptics on bead advance, screen wake lock so the display stays on during a Rosary.
-- **Internationalization** **(was out of scope)**: Spanish, Portuguese, Filipino, Latin. Prayer texts are the real cost; they need approved translations, not machine output.
-- **Widgets and shortcuts**: PWA app shortcuts for "Start Rosary" and "Today's mysteries".
-
-## Maybe: community
-
-Only if it can stay quiet and non-performative.
-
-- **Shared intentions** **(was out of scope)**: a small private group (family, parish prayer group) can post intentions and see that others prayed.
-- **Praying together**: a presence counter for a live Rosary, without chat.
-- Anything social needs moderation, reporting, and privacy review before it ships.
-
-## Platform and quality
-
-- Decide whether to keep the hand-written service worker or move to Serwist as the cache rules grow.
-- Offline queue for more than Rosary completions (intentions, favorites).
-- Background sync where supported, with the current retry as the fallback.
-- Content review process for prayer texts so doctrinal accuracy is checked before release.
-- Backups and a restore drill for the Supabase project.
-
-## Open questions
-
-- Should the library stay Google-sign-in only, or add Apple (required for iOS App Store if the PWA is ever wrapped)?
-- Is a native wrapper (Capacitor) planned, or does Ora stay a PWA? This affects push, audio, and wake lock.
-- Where do licensed texts (readings, translations) come from, and who approves them?
-- Which of the out-of-scope items are worth reopening first? Suggested order: streak and stats, intentions in the Rosary, other chaplets, reminders.
+10. **Daily reminders** via web push. Needs a scheduler; iOS requires the installed PWA.
+11. **Audio / guided voice** for the Rosary.
+12. **Liturgical calendar and daily readings.** Start with a "today" card using the season-color function.
+13. **i18n.** Spanish, Portuguese, Filipino, Latin.
