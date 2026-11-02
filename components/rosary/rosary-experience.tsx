@@ -4,6 +4,8 @@ import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react"
 import { Check } from "lucide-react";
 
 import { AppButton } from "@/components/app-button";
+import { OtherPracticeProgress, otherPracticeProgress } from "@/components/practice/other-practice-progress";
+import { PracticeSwitch } from "@/components/practice/practice-switch";
 import { MysteryArt } from "@/components/rosary/mystery-art";
 import { PageHeader } from "@/components/layout/page-header";
 import { SequencePlayer } from "@/components/sequence/sequence-player";
@@ -37,6 +39,7 @@ export function RosaryExperience() {
   const todaysSet = today === null ? null : mysterySetForDay(today);
   const selected = picked ?? todaysSet ?? "joyful";
   const resumeSet = saved && !saved.completed ? setFromSequenceId(saved.sequenceId) : null;
+  const otherProgress = otherPracticeProgress(saved, "rosary");
   const doneHeading = useRef<HTMLHeadingElement>(null);
   const mysteryGroup = useRef<HTMLDivElement>(null);
   const isDone = view.kind === "done";
@@ -98,6 +101,9 @@ export function RosaryExperience() {
         <AppButton size="lg" className="mt-2 min-w-40" onClick={() => { clearProgress(); setView({ kind: "home" }); }}>
           Return
         </AppButton>
+        <AppButton href="/divine-mercy" variant="outline" size="lg" className="min-w-40">
+          Pray the Divine Mercy Chaplet
+        </AppButton>
       </div>
     );
   }
@@ -108,11 +114,15 @@ export function RosaryExperience() {
       <div className="-mb-7 md:-mb-10">
         <PageHeader title="The Rosary" description="Pray with the mysteries of today." />
       </div>
+      <div className="-mt-4 md:-mt-6">
+        <PracticeSwitch current="rosary" />
+      </div>
+      {otherProgress && <OtherPracticeProgress other={otherProgress} />}
       {resumeSet && saved && (
         <section className="ora-enter rounded-3xl bg-card p-6">
           <h2 className="font-heading text-3xl">Continue where you left off</h2>
           <p className="mt-1 text-base text-muted-foreground">
-            {MYSTERY_SETS[resumeSet].name}, step {saved.index + 1} of 80.
+            {MYSTERY_SETS[resumeSet].name}, step {saved.index + 1} of {buildRosary(resumeSet).steps.length}.
           </p>
           <div className="mt-5 flex gap-3">
             <AppButton className="flex-1 sm:flex-none" onClick={() => setView({ kind: "play", setId: resumeSet, index: saved.index, mode: saved.mode })}>
