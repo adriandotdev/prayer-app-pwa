@@ -1,6 +1,7 @@
 "use client";
 
 import { AppButton } from "@/components/app-button";
+import { ANGELUS_ID, buildAngelus } from "@/data/angelus/sequence";
 import { DIVINE_MERCY_ID, buildDivineMercy } from "@/data/divine-mercy/sequence";
 import { buildRosary } from "@/data/rosary/sequence";
 import { MYSTERY_SETS } from "@/data/rosary/mysteries";
@@ -8,27 +9,37 @@ import { setFromSequenceId } from "@/lib/rosary/resume";
 import type { SavedProgress } from "@/lib/sequence/progress";
 import type { PracticeId } from "@/components/practice/practice-switch";
 
-/** An unfinished prayer belongs to one practice at a time; name the other one's so it is never lost silently. */
-export function otherPracticeProgress(saved: SavedProgress | null | undefined, here: PracticeId) {
+/** The practice an unfinished saved prayer belongs to, with how to name and reach it. */
+export function savedPractice(saved: SavedProgress | null | undefined) {
   if (!saved || saved.completed) return null;
-  if (here === "rosary" && saved.sequenceId === DIVINE_MERCY_ID) {
+  const step = saved.index + 1;
+  if (saved.sequenceId === DIVINE_MERCY_ID) {
     return {
+      id: "divine-mercy" as const,
       name: "the Divine Mercy Chaplet",
       href: "/divine-mercy",
-      detail: `Step ${saved.index + 1} of ${buildDivineMercy().steps.length}`,
+      detail: `Step ${step} of ${buildDivineMercy().steps.length}`,
     };
   }
-  if (here === "divine-mercy") {
-    const setId = setFromSequenceId(saved.sequenceId);
-    if (setId) {
-      return {
-        name: "your Rosary",
-        href: "/rosary",
-        detail: `${MYSTERY_SETS[setId].name}, step ${saved.index + 1} of ${buildRosary(setId).steps.length}`,
-      };
-    }
+  if (saved.sequenceId === ANGELUS_ID) {
+    return { id: "angelus" as const, name: "the Angelus", href: "/angelus", detail: `Step ${step} of ${buildAngelus().steps.length}` };
+  }
+  const setId = setFromSequenceId(saved.sequenceId);
+  if (setId) {
+    return {
+      id: "rosary" as const,
+      name: "your Rosary",
+      href: "/rosary",
+      detail: `${MYSTERY_SETS[setId].name}, step ${step} of ${buildRosary(setId).steps.length}`,
+    };
   }
   return null;
+}
+
+/** An unfinished prayer belongs to one practice at a time; name the other one's so it is never lost silently. */
+export function otherPracticeProgress(saved: SavedProgress | null | undefined, here: PracticeId) {
+  const practice = savedPractice(saved);
+  return practice && practice.id !== here ? practice : null;
 }
 
 export function OtherPracticeProgress({ other }: { other: NonNullable<ReturnType<typeof otherPracticeProgress>> }) {

@@ -11,10 +11,10 @@
  *  - Sign-out: the page asks us to drop cached signed-in pages (see clearPrivatePages).
  *  - Everything else (Supabase, /api, /auth, non-GET): left to the network.
  */
-const VERSION = "v6";
+const VERSION = "v7";
 const STATIC_CACHE = `ora-static-${VERSION}`;
 const PAGE_CACHE = `ora-pages-${VERSION}`;
-const PRECACHE_PAGES = ["/offline", "/rosary", "/divine-mercy", "/"];
+const PRECACHE_PAGES = ["/offline", "/rosary", "/divine-mercy", "/angelus", "/"];
 // Without these the offline promise is broken, so failing to store them fails the install.
 const REQUIRED_PAGES = ["/offline", "/rosary"];
 const NAV_TIMEOUT_MS = 4000;
