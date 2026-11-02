@@ -27,10 +27,12 @@ export function ProfileForm({ displayName }: { displayName: string }) {
         maxLength={60}
         autoComplete="name"
         enterKeyHint="done"
+        aria-invalid={state.status === "error"}
+        aria-describedby={state.status === "error" ? "displayName-error" : undefined}
         className="min-h-14 rounded-2xl border border-input bg-background px-4 text-base outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
       />
       {state.status === "error" && (
-        <p role="alert" className="text-sm text-destructive">
+        <p id="displayName-error" role="alert" className="text-sm text-destructive">
           {state.message}
         </p>
       )}

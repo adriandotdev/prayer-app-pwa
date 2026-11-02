@@ -1,5 +1,7 @@
 "use client";
 
+import { useRef } from "react";
+
 import { beadStates } from "@/lib/sequence/engine";
 import type { Bead, SequenceDefinition } from "@/lib/sequence/types";
 import { cn } from "@/lib/utils";
@@ -17,15 +19,26 @@ export function BeadTracker({ sequence, index, onSelectBead, className }: Props)
   const states = beadStates(sequence, index);
   const step = sequence.steps[index];
   const { width, height } = sequence.viewBox;
+  const svgRef = useRef<SVGSVGElement>(null);
+  // Roving tabindex: one tab stop (the current bead) instead of 61; arrow keys move between beads.
+  const tabbableId = sequence.beads.find((b) => states.get(b.id) === "current")?.id ?? sequence.beads[0]?.id;
+
+  const focusBead = (from: number, delta: number) => {
+    const beads = svgRef.current?.querySelectorAll<SVGGElement>("[data-bead]");
+    if (!beads?.length) return;
+    const target = Math.min(Math.max(from + delta, 0), beads.length - 1);
+    beads[target].focus();
+  };
 
   return (
     <svg
+      ref={svgRef}
       viewBox={`0 0 ${width} ${height}`}
       role="group"
       aria-label={`Bead tracker. Currently on ${step.title}, step ${index + 1} of ${sequence.steps.length}.`}
       className={cn("mx-auto h-auto w-full select-none touch-manipulation", className)}
     >
-      {sequence.beads.map((bead) => {
+      {sequence.beads.map((bead, beadIndex) => {
         const state = states.get(bead.id) ?? "upcoming";
         const r = RADIUS[bead.kind] + (state === "current" && bead.kind !== "anchor" ? 1.5 : 0);
         const label = `${bead.label}, ${state === "current" ? "current" : state}`;
@@ -33,7 +46,8 @@ export function BeadTracker({ sequence, index, onSelectBead, className }: Props)
           <g
             key={bead.id}
             role="button"
-            tabIndex={0}
+            data-bead=""
+            tabIndex={bead.id === tabbableId ? 0 : -1}
             aria-label={label}
             aria-current={state === "current" ? "step" : undefined}
             onClick={() => onSelectBead(bead.id)}
@@ -41,6 +55,20 @@ export function BeadTracker({ sequence, index, onSelectBead, className }: Props)
               if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
                 onSelectBead(bead.id);
+              } else if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+                e.preventDefault();
+                e.stopPropagation();
+                focusBead(beadIndex, 1);
+              } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+                e.preventDefault();
+                e.stopPropagation();
+                focusBead(beadIndex, -1);
+              } else if (e.key === "Home") {
+                e.preventDefault();
+                focusBead(0, 0);
+              } else if (e.key === "End") {
+                e.preventDefault();
+                focusBead(sequence.beads.length - 1, 0);
               }
             }}
             className="cursor-pointer outline-none [&:focus-visible>circle:first-child]:stroke-ring"

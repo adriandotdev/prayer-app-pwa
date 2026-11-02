@@ -97,8 +97,11 @@ export function SequencePlayer({ sequence, initialIndex, initialMode, onFinish, 
           </div>
         </div>
 
+        {/* Announce only where we are, not the whole prayer text, on every step change. */}
+        <p role="status" aria-live="polite" className="sr-only">
+          {step.section}: {step.title}, step {index + 1} of {sequence.steps.length}
+        </p>
         <article
-          aria-live="polite"
           onTouchStart={(e) => {
             const t = e.touches[0];
             touchStart.current = { x: t.clientX, y: t.clientY };
