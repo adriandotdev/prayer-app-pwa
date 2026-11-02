@@ -5,11 +5,12 @@ import { cn } from "@/lib/utils";
 const PRACTICES = [
   { id: "rosary", label: "Rosary", href: "/rosary" },
   { id: "divine-mercy", label: "Divine Mercy", href: "/divine-mercy" },
+  { id: "angelus", label: "Angelus", href: "/angelus" },
 ] as const;
 
 export type PracticeId = (typeof PRACTICES)[number]["id"];
 
-/** Two ways to pray on the same beads. Plain links, so each practice keeps its own URL and works offline. */
+/** The practices a person can switch between. Plain links, so each practice keeps its own URL and works offline. */
 export function PracticeSwitch({ current }: { current: PracticeId }) {
   return (
     <nav aria-label="Prayer" className="flex w-full gap-1 rounded-full bg-secondary p-1 sm:w-fit">
