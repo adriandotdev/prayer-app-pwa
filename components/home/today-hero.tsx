@@ -2,7 +2,9 @@
 
 import { AppButton } from "@/components/app-button";
 import { ChristFigure } from "@/components/home/christ-figure";
+import { buildDivineMercy, DIVINE_MERCY_ID } from "@/data/divine-mercy/sequence";
 import { MYSTERY_SETS } from "@/data/rosary/mysteries";
+import { buildRosary } from "@/data/rosary/sequence";
 import { mysterySetForDay } from "@/data/rosary/schedule";
 import { setFromSequenceId } from "@/lib/rosary/resume";
 import { useSavedProgress } from "@/lib/sequence/progress";
@@ -16,7 +18,12 @@ export function TodayHero() {
   const set = today === null ? null : MYSTERY_SETS[mysterySetForDay(today)];
   const saved = useSavedProgress();
   const resumeSetId = saved && !saved.completed ? setFromSequenceId(saved.sequenceId) : null;
-  const resumeLine = saved && resumeSetId ? `${MYSTERY_SETS[resumeSetId].name} · step ${saved.index + 1} of 80` : null;
+  const resumeMercy = saved && !saved.completed && saved.sequenceId === DIVINE_MERCY_ID;
+  const resumeLine = saved && resumeSetId
+    ? `${MYSTERY_SETS[resumeSetId].name} · step ${saved.index + 1} of ${buildRosary(resumeSetId).steps.length}`
+    : saved && resumeMercy
+      ? `Divine Mercy Chaplet · step ${saved.index + 1} of ${buildDivineMercy().steps.length}`
+      : null;
   const dayLine = today !== null && set ? `${DAY_NAMES[today]} · ${set.name}` : null;
 
   return (
@@ -37,15 +44,15 @@ export function TodayHero() {
         Peace be with you
       </h1>
       <p className="mt-3 max-w-[18rem] text-base opacity-80">
-        {resumeLine ? "Your Rosary is where you left it." : "Take a moment. What would you like to pray?"}
+        {resumeLine ? (resumeMercy ? "Your chaplet is where you left it." : "Your Rosary is where you left it.") : "Take a moment. What would you like to pray?"}
       </p>
 
       <AppButton
-        href="/rosary"
+        href={resumeMercy ? "/divine-mercy" : "/rosary"}
         size="lg"
         className="mt-7 w-full bg-primary-foreground text-primary hover:bg-primary-foreground/90 dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/90"
       >
-        {resumeLine ? "Continue your Rosary" : "Pray the Rosary"}
+        {resumeLine ? (resumeMercy ? "Continue the chaplet" : "Continue your Rosary") : "Pray the Rosary"}
       </AppButton>
     </section>
   );
