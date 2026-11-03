@@ -28,5 +28,5 @@ The files in `public/landing/` are cropped and resized from these works. `empyre
 | assumption | The Death and the Assumption of the Virgin | Fra Angelico | public domain | https://commons.wikimedia.org/wiki/File:The_Death_and_the_Assumption_of_the_Virgin_-_Fra_Angelico_-_Google_Cultural_Institute.jpg |
 | coronation | Coronation of the Virgin | Fra Angelico | public domain | https://commons.wikimedia.org/wiki/File:Fra_Angelico_038.jpg |
 | transfiguration | Transfiguration (Cell 6) | Fra Angelico | public domain | https://commons.wikimedia.org/wiki/File:Transfiguration_by_fra_Angelico_(San_Marco_Cell_6).jpg |
-| annunciation-prado | Polish: Zwiastowanie Annunciation | Fra Angelico | public domain | https://commons.wikimedia.org/wiki/File:La_Anunciaci%C3%B3n,_by_Fra_Angelico,_from_Prado_in_Google_Earth.jpg |
+| annunciation-prado | Annunciation (Museo del Prado, P000015) | Fra Angelico | public domain | https://commons.wikimedia.org/wiki/File:La_Anunciaci%C3%B3n_(Fra_Angelico-Prado).jpg |
 | agony | Christ in the Garden of Gethsemane | Fra Angelico | public domain | https://commons.wikimedia.org/wiki/File:Fra_Angelico_016.jpg |
