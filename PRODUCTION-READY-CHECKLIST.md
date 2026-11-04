@@ -7,8 +7,8 @@ Tick items as they are finished and note the PR next to them. Items marked **(da
 
 Work top to bottom; each step builds on the one before.
 
-1. [ ] **Legal basics:** privacy policy, terms, and a consent decision (section 1).
-2. [ ] **User data rights:** account deletion and data export (section 1).
+1. [x] **Legal basics:** privacy policy, terms, and a consent decision (section 1).
+2. [x] **User data rights:** account deletion and data export (section 1). Built; needs `SUPABASE_SERVICE_ROLE_KEY` set and a manual run on staging.
 3. [ ] **Security hardening:** CSP in report-only mode, HSTS verified, npm advisories fixed (section 2).
 4. [ ] **Operations:** error monitoring, uptime checks, a separate production Supabase project with backups (section 3).
 5. [ ] **Quality gates:** cross-user RLS test and an end-to-end smoke test (section 4).
@@ -30,16 +30,16 @@ Work top to bottom; each step builds on the one before.
 
 Prayer intentions and Rosary history reveal religious belief, a special category of data under GDPR Art. 9 and sensitive personal information under the Philippines Data Privacy Act and several US state laws.
 
-- [ ] Decide which regions you serve and the lawful basis (explicit consent is the safest)
-- [ ] Privacy policy page, linked from the footer, the login page and the sign-in consent text
-- [ ] Terms of service page
-- [ ] Consent mechanism for processing intentions and history, if required by the chosen basis
-- [ ] Account deletion in the app (server action using `auth.admin.deleteUser` with a server-only service-role key); confirm foreign keys cascade so no user rows remain
-- [ ] Data export (JSON of prayers, collections, intentions, favorites and Rosary sessions)
-- [ ] Name Vercel Analytics in the privacy policy; check whether a consent banner is needed for target regions
+- [x] Decide which regions you serve and the lawful basis: Philippines only; lightweight consent at sign-in, withdrawn by account deletion
+- [x] Privacy policy page, linked from the footer, the login page and the sign-in consent text
+- [x] Terms of service page
+- [x] Consent mechanism: login-page consent text (withdrawal path depends on account deletion)
+- [x] Account deletion in the app (server action using `auth.admin.deleteUser` with a server-only service-role key); confirm foreign keys cascade so no user rows remain
+- [x] Data export (JSON of prayers, collections, intentions, favorites and Rosary sessions)
+- [x] Name Vercel Analytics in the privacy policy; check whether a consent banner is needed for target regions (named in the policy; cookieless aggregate stats, Philippines only, so no banner. Confirm this judgment call)
 - [ ] Sign data-processing agreements with Supabase and Vercel
-- [ ] Confirm prayer texts shipped are public domain or licensed
-- [ ] Confirm landing art licenses allow commercial use; add visible attribution where required (`docs/landing-art-credits.md`)
+- [ ] Confirm prayer texts shipped are public domain or licensed (audited in `docs/prayer-sources.md`: ICEL Creed wording and the Divine Mercy texts still need a decision)
+- [x] Confirm landing art licenses allow commercial use; add visible attribution where required (`docs/landing-art-credits.md`; credits page at `/credits`, linked from the landing footer and profile. Still spot-check the photographed Prado, Cleveland and Google Cultural Institute files)
 
 ## 2. Security hardening
 
@@ -62,7 +62,7 @@ Prayer intentions and Rosary history reveal religious belief, a special category
 - [ ] **(dashboard)** Paid Supabase plan with point-in-time backups; free projects pause, and `supabase-keepalive.yml` is a workaround, not a production plan
 - [ ] Documented migration and rollback procedure (`supabase db push` has no automatic undo); test a restore once
 - [ ] Incident and breach-response notes: who is contacted, and the 72-hour GDPR notification window
-- [ ] Support or contact email published in the app
+- [ ] Support or contact email published in the app (links render once `NEXT_PUBLIC_CONTACT_EMAIL` is set in Vercel)
 
 ## 4. Quality gates
 
