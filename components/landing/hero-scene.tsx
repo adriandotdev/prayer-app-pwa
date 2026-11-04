@@ -164,7 +164,10 @@ export function HeroScene() {
     >
       {CHAPTERS.map((chapter) => (
         <a key={chapter.href} href={chapter.href} className="land-swatch">
-          {chapter.label}
+          <span className="land-swatch-label">{chapter.label}</span>
+          <span className="land-swatch-arrow" aria-hidden>
+            ↓
+          </span>
         </a>
       ))}
     </motion.nav>
