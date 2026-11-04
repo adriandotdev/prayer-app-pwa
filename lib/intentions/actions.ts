@@ -5,11 +5,34 @@ import { redirect } from "next/navigation";
 
 import { FAILED, OK, type ActionResult } from "@/lib/action-result";
 import { requireUser } from "@/lib/auth/require-user";
+import { createClient } from "@/lib/supabase/server";
 import { flash } from "@/lib/toast-flash";
 import { formId } from "@/lib/validation";
 import { intentionSchema } from "./schema";
 
 export type IntentionFormState = { status: "idle" | "error"; message?: string };
+
+export type PickerIntention = { id: string; text: string };
+
+/**
+ * Active intentions for the Rosary's "Praying for" picker. The Rosary page is public (and precached),
+ * so this is fetched client-side after mount: `null` when signed out, never rendered into the page shell.
+ */
+export async function listActiveIntentionsForPicker(): Promise<PickerIntention[] | null> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return null;
+  const { data, error } = await supabase
+    .from("intentions")
+    .select("id, text")
+    .eq("is_answered", false)
+    .order("created_at", { ascending: false })
+    .limit(50);
+  if (error) return null;
+  return data ?? [];
+}
 
 const SAVE_ERROR = "We couldn't save that. Your words are still here, so try again.";
 

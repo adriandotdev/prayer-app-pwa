@@ -1,6 +1,13 @@
 import { MYSTERY_SET_ORDER, type MysterySetId } from "@/data/rosary/mysteries";
 
-export type StatsRow = { mystery_set: string; completed_at: string };
+export type StatsRow = {
+  mystery_set: string;
+  completed_at: string;
+  /** Session id, when the row came from the database. */
+  id?: string;
+  /** Text of the intention this Rosary was prayed for, if any. */
+  intention_text?: string | null;
+};
 
 export type RosaryStats = {
   total: number;

@@ -11,6 +11,8 @@ export type RecordResult = "recorded" | "signed-out" | "rejected";
 // A queued Rosary syncs within a week; anything much older is not a real offline session.
 const MAX_AGE_MS = 31 * 24 * 60 * 60 * 1000;
 const UNIQUE_VIOLATION = "23505";
+const FK_VIOLATION = "23503";
+const RLS_VIOLATION = "42501";
 
 /**
  * Records a finished Rosary for a signed-in user. The Rosary is public, so signed-out
@@ -18,9 +20,16 @@ const UNIQUE_VIOLATION = "23505";
  * finished offline keep its real time when it syncs later; it must not be in the future or long past.
  * `clientId` makes a retry safe: recording the same one twice counts once.
  */
-export async function recordRosarySession(setId: string, completedAt?: string, clientId?: string): Promise<RecordResult> {
+export async function recordRosarySession(
+  setId: string,
+  completedAt?: string,
+  clientId?: string,
+  intentionId?: string,
+): Promise<RecordResult> {
   if (!(MYSTERY_SET_ORDER as readonly string[]).includes(setId)) return "rejected";
   if (clientId !== undefined && !isUuid(clientId)) return "rejected";
+  // The link is a bonus: a malformed id just means the session is recorded unlinked.
+  const intention = intentionId !== undefined && isUuid(intentionId) ? intentionId : undefined;
 
   let when: string | undefined;
   if (completedAt !== undefined) {
@@ -35,9 +44,12 @@ export async function recordRosarySession(setId: string, completedAt?: string, c
   } = await supabase.auth.getUser();
   if (!user) return "signed-out";
 
-  const { error } = await supabase
-    .from("rosary_sessions")
-    .insert({ user_id: user.id, mystery_set: setId, client_id: clientId, ...(when && { completed_at: when }) });
+  const row = { user_id: user.id, mystery_set: setId, client_id: clientId, ...(when && { completed_at: when }) };
+  let { error } = await supabase.from("rosary_sessions").insert({ ...row, intention_id: intention });
+  // A deleted or foreign intention must not lose the Rosary: record it unlinked.
+  if (error && intention && (error.code === FK_VIOLATION || error.code === RLS_VIOLATION)) {
+    ({ error } = await supabase.from("rosary_sessions").insert(row));
+  }
   // The same Rosary arriving twice is already on record.
   if (error?.code === UNIQUE_VIOLATION) return "recorded";
   if (error) {

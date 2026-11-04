@@ -86,6 +86,12 @@ export function IntentionItem({ intention, index = 0, highlight = false }: { int
           )}
         </p>
       </div>
+      {intention.prayed_count ? (
+        <p className="mt-3 text-sm text-muted-foreground">
+          Prayed {intention.prayed_count === 1 ? "once" : `${intention.prayed_count} times`}
+          {intention.last_prayed_at ? <LocalDate iso={intention.last_prayed_at} prefix=" · last on " /> : null}
+        </p>
+      ) : null}
 
       <div className="relative mt-4 flex-1">
         <div
