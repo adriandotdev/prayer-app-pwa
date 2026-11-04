@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { Check } from "lucide-react";
 
 import { AppButton } from "@/components/app-button";
@@ -13,7 +13,7 @@ import { clearProgress, saveProgress, useSavedProgress, type PrayerMode } from "
 
 type View = { kind: "home" } | { kind: "play"; index: number; mode: PrayerMode } | { kind: "done" };
 
-export function DivineMercyExperience() {
+export function DivineMercyExperience({ guide }: { guide?: ReactNode }) {
   const saved = useSavedProgress();
   const [view, setView] = useState<View>({ kind: "home" });
   const sequence = useMemo(() => buildDivineMercy(), []);
@@ -111,6 +111,7 @@ export function DivineMercyExperience() {
           <span className="hidden sm:inline">Begin in Pray mode</span>
         </AppButton>
       </div>
+      {guide}
     </div>
   );
 }

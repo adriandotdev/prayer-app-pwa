@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import { Check } from "lucide-react";
 
 import { AppButton } from "@/components/app-button";
@@ -31,7 +31,7 @@ const SET_CARD: Record<MysterySetId, { art: string; days: string }> = {
 
 const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-export function RosaryExperience() {
+export function RosaryExperience({ guide }: { guide?: ReactNode }) {
   const today = useToday();
   const saved = useSavedProgress();
   const [view, setView] = useState<View>({ kind: "home" });
@@ -234,6 +234,7 @@ export function RosaryExperience() {
         </AppButton>
       </div>
       </div>
+      {guide}
     </div>
   );
 }

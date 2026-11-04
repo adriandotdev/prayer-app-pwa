@@ -20,6 +20,9 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL?.trim() || fallbackOri
  */
 export const ALLOW_INDEXING = process.env.ALLOW_INDEXING === "true";
 
+/** When the public prayer guides were last reviewed. Shown on the pages and used as the sitemap lastModified. */
+export const CONTENT_REVIEWED = "2026-11-04";
+
 export const SITE_NAME = "Ora";
 export const SITE_DESCRIPTION =
   "Ora is a Catholic prayer app for a deeper faith: pray the Rosary, keep your own prayers, and come back to God each day.";
