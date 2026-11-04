@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Cormorant_Garamond, Hanken_Grotesk, Source_Serif_4 } from "next/font/google";
 import { MotionProvider } from "@/components/motion/motion-provider";
 import { AppShell } from "@/components/layout/app-shell";
@@ -67,6 +68,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <AppShell>{children}</AppShell>
           </MotionProvider>
         </ThemeProvider>
+        {process.env.VERCEL_ENV === "production" && <Analytics />}
       </body>
     </html>
   );
