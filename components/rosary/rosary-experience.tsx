@@ -6,6 +6,7 @@ import { Check } from "lucide-react";
 import { AppButton } from "@/components/app-button";
 import { OtherPracticeProgress, otherPracticeProgress } from "@/components/practice/other-practice-progress";
 import { PracticeSwitch } from "@/components/practice/practice-switch";
+import { IntentionPicker } from "@/components/rosary/intention-picker";
 import { MysteryArt } from "@/components/rosary/mystery-art";
 import { PageHeader } from "@/components/layout/page-header";
 import { SequencePlayer } from "@/components/sequence/sequence-player";
@@ -35,6 +36,7 @@ export function RosaryExperience() {
   const saved = useSavedProgress();
   const [view, setView] = useState<View>({ kind: "home" });
   const [picked, setPicked] = useState<MysterySetId | null>(null);
+  const [intention, setIntention] = useState<{ id: string; text: string } | null>(null);
 
   const todaysSet = today === null ? null : mysterySetForDay(today);
   const selected = picked ?? todaysSet ?? "joyful";
@@ -74,7 +76,7 @@ export function RosaryExperience() {
         onFinish={() => {
           saveProgress({ sequenceId: sequence.id, index: 0, mode: view.mode, completed: true });
           // Best-effort history for signed-in users; offline it is queued and synced later.
-          void recordOrQueueRosary(view.setId);
+          void recordOrQueueRosary(view.setId, intention?.id);
           setView({ kind: "done", setId: view.setId });
         }}
       />
@@ -98,6 +100,11 @@ export function RosaryExperience() {
         <p className="prayer-text ora-enter text-muted-foreground [animation-delay:350ms] [animation-duration:400ms]">
           You have finished the {MYSTERY_SETS[view.setId].name}. May the peace of Christ keep your heart.
         </p>
+        {intention && (
+          <p className="ora-enter max-w-sm text-sm text-muted-foreground [animation-delay:450ms] [animation-duration:400ms]">
+            Prayed for: <span className="line-clamp-3">{intention.text}</span>
+          </p>
+        )}
         <AppButton size="lg" className="mt-2 min-w-40" onClick={() => { clearProgress(); setView({ kind: "home" }); }}>
           Return
         </AppButton>
@@ -196,6 +203,11 @@ export function RosaryExperience() {
             );
           })}
         </div>
+        <IntentionPicker
+          value={intention?.id ?? null}
+          onChange={(id, text) => setIntention(id && text ? { id, text } : null)}
+          className="lg:col-start-1"
+        />
         <ol key={selected} className="ora-stagger flex flex-col gap-1 rounded-3xl bg-card/60 px-4 py-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:justify-start lg:bg-card lg:p-6">
           {MYSTERY_SETS[selected].mysteries.map((m, i) => (
             <li key={m.name} style={{ ["--i" as string]: i }} className="flex items-center gap-4 rounded-2xl p-2">
