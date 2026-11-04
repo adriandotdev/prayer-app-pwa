@@ -177,10 +177,15 @@ function Calendar({ rows }: { rows: StatsRow[] }) {
           </p>
         ) : (
           <ul className="mt-1 flex flex-col gap-1">
-            {daySessions.map((s) => (
-              <li key={s.completed_at} className="flex items-center justify-between gap-3 text-sm">
-                <span>{MYSTERY_SETS[s.mystery_set].name}</span>
-                <span className="text-muted-foreground">{timeFormat.format(new Date(s.completed_at))}</span>
+            {daySessions.map((s, i) => (
+              <li key={`${s.completed_at}-${s.mystery_set}-${i}`} className="text-sm">
+                <span className="flex items-center justify-between gap-3">
+                  <span>{MYSTERY_SETS[s.mystery_set].name}</span>
+                  <span className="text-muted-foreground">{timeFormat.format(new Date(s.completed_at))}</span>
+                </span>
+                {s.intention_text && (
+                  <span className="line-clamp-2 block text-muted-foreground">For: {s.intention_text}</span>
+                )}
               </li>
             ))}
           </ul>

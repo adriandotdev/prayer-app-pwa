@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addMonths, buildMonthGrid, compareMonths, earliestMonth } from "@/lib/rosary/calendar";
+import { addMonths, buildMonthGrid, compareMonths, earliestMonth, sessionsOnDay } from "@/lib/rosary/calendar";
 import type { StatsRow } from "@/lib/rosary/stats";
 
 const at = (y: number, m: number, d: number, h = 12) => new Date(y, m - 1, d, h);
@@ -73,5 +73,17 @@ describe("month helpers", () => {
   it("finds the earliest month with a session", () => {
     expect(earliestMonth([])).toBeNull();
     expect(earliestMonth([row(at(2026, 3, 10)), row(at(2025, 12, 31)), row(at(2026, 1, 5))])).toEqual({ year: 2025, month: 11 });
+  });
+});
+
+describe("sessionsOnDay", () => {
+  it("carries the intention text and lists the day earliest first", () => {
+    const rows: StatsRow[] = [
+      { ...row(at(2026, 3, 10, 18)), intention_text: "My mother's health" },
+      row(at(2026, 3, 10, 7)),
+      row(at(2026, 3, 11)),
+    ];
+    const day = sessionsOnDay(rows, at(2026, 3, 10));
+    expect(day.map((s) => s.intention_text)).toEqual([null, "My mother's health"]);
   });
 });

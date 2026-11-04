@@ -7,7 +7,7 @@ import { recordRosarySession } from "./actions";
  * so the queue is small, short-lived and dropped as soon as the visitor is found signed out
  * (it must never be credited to someone who signs in later on a shared device).
  */
-type Pending = { setId: string; completedAt: string; clientId?: string };
+type Pending = { setId: string; completedAt: string; clientId?: string; intentionId?: string };
 
 const KEY = "ora:rosary-pending:v1";
 const MAX = 20;
@@ -43,13 +43,13 @@ export function clearPendingRosaries() {
  * Records now; if the server can't be reached, queues for later. The same client id rides along either
  * way, so a request that did reach the server but lost its response is not counted again on retry.
  */
-export async function recordOrQueueRosary(setId: string) {
+export async function recordOrQueueRosary(setId: string, intentionId?: string) {
   const completedAt = new Date().toISOString();
   const clientId = typeof crypto.randomUUID === "function" ? crypto.randomUUID() : undefined;
   try {
-    await recordRosarySession(setId, completedAt, clientId);
+    await recordRosarySession(setId, completedAt, clientId, intentionId);
   } catch {
-    write([...read(), { setId, completedAt, clientId }].slice(-MAX));
+    write([...read(), { setId, completedAt, clientId, intentionId }].slice(-MAX));
   }
 }
 
@@ -65,7 +65,7 @@ export async function flushPendingRosaries() {
       const [next, ...rest] = items;
       let result;
       try {
-        result = await recordRosarySession(next.setId, next.completedAt, next.clientId);
+        result = await recordRosarySession(next.setId, next.completedAt, next.clientId, next.intentionId);
       } catch {
         break; // still unreachable: keep the rest for next time
       }

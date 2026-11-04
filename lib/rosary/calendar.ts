@@ -66,13 +66,17 @@ export function earliestMonth(rows: StatsRow[]): MonthRef | null {
   return min ? { year: min.getFullYear(), month: min.getMonth() } : null;
 }
 
-export type DaySession = { mystery_set: MysterySetId; completed_at: string };
+export type DaySession = { mystery_set: MysterySetId; completed_at: string; intention_text: string | null };
 
 /** Rosaries finished on the local day of `date`, earliest first. */
 export function sessionsOnDay(rows: StatsRow[], date: Date): DaySession[] {
   const key = dayIndex(date);
   return rows
     .filter((r) => MYSTERY_SET_ORDER.includes(r.mystery_set as MysterySetId) && dayIndex(new Date(r.completed_at)) === key)
-    .map((r) => ({ mystery_set: r.mystery_set as MysterySetId, completed_at: r.completed_at }))
+    .map((r) => ({
+      mystery_set: r.mystery_set as MysterySetId,
+      completed_at: r.completed_at,
+      intention_text: r.intention_text ?? null,
+    }))
     .sort((a, b) => a.completed_at.localeCompare(b.completed_at));
 }
