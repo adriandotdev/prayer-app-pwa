@@ -8,7 +8,7 @@ import { safeNext } from "@/lib/auth/paths";
 import { getSupabaseEnv } from "@/lib/env";
 import { createClient } from "@/lib/supabase/server";
 
-export const metadata: Metadata = { title: "Sign in" };
+export const metadata: Metadata = { title: "Sign in", robots: { index: false, follow: true } };
 
 /** The chapel window beside the form on wide screens; on a phone it is a small crest above the title. */
 function Window() {

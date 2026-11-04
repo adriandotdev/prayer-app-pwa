@@ -8,6 +8,7 @@ import { ServiceWorkerRegister } from "@/components/pwa/service-worker-register"
 import { ReaderPrefsSync } from "@/components/reader/reader-prefs-sync";
 import { SeasonSync } from "@/components/theme/season-sync";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { ALLOW_INDEXING, SITE_NAME, SITE_URL } from "@/lib/site";
 import { READER_INIT_SCRIPT } from "@/lib/reader/preferences";
 import { SEASON_INIT_SCRIPT } from "@/lib/theme/season";
 import "./globals.css";
@@ -22,9 +23,14 @@ const display = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: { default: "Ora — Catholic prayer", template: "%s · Ora" },
   description: "A calm place to keep your prayers and pray the Rosary.",
   applicationName: "Ora",
+  // Staging and previews must stay out of search results; only production sets ALLOW_INDEXING.
+  robots: ALLOW_INDEXING ? undefined : { index: false, follow: false },
+  openGraph: { type: "website", siteName: SITE_NAME, locale: "en_US" },
+  twitter: { card: "summary_large_image" },
   appleWebApp: { capable: true, title: "Ora", statusBarStyle: "default" },
   icons: {
     icon: [
