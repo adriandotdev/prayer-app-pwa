@@ -8,7 +8,13 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "db:link": "supabase link",
+    "db:push": "supabase db push",
+    "db:push:seed": "supabase db push --include-seed",
+    "db:status": "supabase migration list",
+    "db:types": "supabase gen types typescript --linked > lib/database.types.ts",
+    "db:migrate": "supabase db push && npm run db:types"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
