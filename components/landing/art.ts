@@ -11,11 +11,11 @@ const art = (name: string, width: number, height: number, alt: string): Art => (
 
 export const EMPYREAN = art(
   "empyrean",
-  1800,
-  2247,
-  "Gustave Doré’s engraving of the Empyrean: countless angels wheel in a vast rose around a point of light, printed here in gold on deep blue.",
+  1400,
+  1748,
+  "Gustave Doré’s engraving of the Empyrean: countless angels wheel in a vast rose around a point of light, in gold on blue.",
 );
-export const EMPYREAN_ROSE = art("empyrean-rose", 1100, 1100, "");
+export const EMPYREAN_ROSE = art("empyrean-rose", 1000, 1000, "");
 
 export const CORONATION_FRESCO = art(
   "coronation",
@@ -25,14 +25,14 @@ export const CORONATION_FRESCO = art(
 );
 export const DOMINIC = art(
   "dominic",
-  1100,
-  1569,
+  1000,
+  1426,
   "Saint Dominic, in Fra Angelico’s fresco, lifting his eyes toward the Cross.",
 );
 export const ANNUNCIATION_ALTARPIECE = art(
   "annunciation-prado",
-  2600,
-  1633,
+  1800,
+  1131,
   "Fra Angelico’s Annunciation: the angel Gabriel bows before Mary beneath a blue vault scattered with gold stars.",
 );
 export const VIRGIN = art(
@@ -43,14 +43,14 @@ export const VIRGIN = art(
 );
 export const FRANCIS = art(
   "francis",
-  1100,
-  1337,
+  1000,
+  1215,
   "Giotto’s Saint Francis on Mount La Verna, kneeling before a seraph against a gold ground.",
 );
 export const CORONATION_PANEL = art(
   "coronation-a",
-  1800,
-  1282,
+  1500,
+  1068,
   "Fra Angelico’s panel of Christ crowning Mary, her blue mantle spread on a gold ground.",
 );
 export const BLESSING = art(
@@ -87,7 +87,7 @@ export const MYSTERY_ART: Record<MysterySetId, [Art, Art, Art, Art, Art]> = {
     art("resurrection", 804, 690, "Giotto: the risen Jesus with Mary Magdalene beside the empty tomb."),
     art("ascension", 632, 576, "Giotto: Jesus rising into a blue heaven above the apostles and Mary."),
     art("pentecost", 673, 592, "Giotto: the apostles gathered under Gothic arches as the Spirit descends."),
-    art("assumption", 1100, 1800, "Fra Angelico: Mary carried into heaven among choirs of angels."),
+    art("assumption", 1000, 1636, "Fra Angelico: Mary carried into heaven among choirs of angels."),
     art("coronation", 1800, 2130, "Fra Angelico: Christ crowning Mary, with saints kneeling below."),
   ],
 };
