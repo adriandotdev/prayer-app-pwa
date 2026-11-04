@@ -325,32 +325,67 @@ html:has(.land) {
   background: var(--paper);
 }
 .land-swatch {
+  --swatch: var(--paper);
   display: flex;
   align-items: center;
-  min-height: 52px;
-  padding: 0 16px;
-  font-size: 18px;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 68px;
+  padding: 0 20px 0 16px;
+  background: var(--swatch);
+  font-family: var(--font-cormorant);
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  transition: background-color 220ms var(--ease-ora);
+}
+.land-swatch-arrow {
+  font-family: var(--font-ui, inherit);
+  font-size: 22px;
+  line-height: 1;
+  transition: transform 260ms var(--ease-ora);
+}
+.land-swatch:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: -6px;
+}
+.land-swatch:active {
+  background: color-mix(in srgb, var(--swatch) 84%, currentColor);
 }
 @media (hover: hover) and (pointer: fine) {
   .land-swatch:hover {
-    opacity: 0.86;
+    background: color-mix(in srgb, var(--swatch) 90%, currentColor);
+  }
+  .land-swatch:hover .land-swatch-arrow {
+    transform: translateY(6px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .land-swatch,
+  .land-swatch-arrow {
+    transition: none;
+  }
+  .land-swatch:hover .land-swatch-arrow {
+    transform: none;
   }
 }
 .land-swatch:nth-child(1) {
-  background: var(--paper);
+  /* One step off the page ground, so the first field reads as a button and not as blank paper. */
+  --swatch: color-mix(in srgb, var(--paper) 62%, var(--wash));
 }
 .land-swatch:nth-child(2) {
-  background: var(--wash);
+  --swatch: var(--wash);
 }
 .land-swatch:nth-child(3) {
-  background: var(--gold);
+  --swatch: var(--gold);
 }
 .land-swatch:nth-child(4) {
-  background: var(--lapis);
+  --swatch: var(--lapis);
   color: var(--paper);
 }
 .land-swatch:nth-child(5) {
-  background: var(--night);
+  --swatch: var(--night);
   color: var(--paper);
 }
 
@@ -1117,9 +1152,22 @@ html:has(.land) {
     grid-auto-rows: 1fr;
   }
   .land-swatch {
-    align-items: flex-start;
-    padding: 20px;
+    /* Arrow top-right, title set low in the field like a chapter plate. */
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    padding: 20px 24px 22px;
     min-height: 0;
+    font-size: clamp(28px, 2.3vw, 36px);
+    line-height: 1.05;
+  }
+  .land-swatch-label {
+    text-wrap: balance;
+  }
+  .land-swatch-arrow {
+    order: -1;
+    align-self: flex-end;
+    font-size: 28px;
   }
 
   .land-why {
