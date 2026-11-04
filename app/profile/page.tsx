@@ -10,7 +10,8 @@ import { AppearanceRow } from "@/components/profile/appearance-row";
 import { LegalRows } from "@/components/profile/legal-rows";
 import { PageHeader } from "@/components/layout/page-header";
 import { createClient } from "@/lib/supabase/server";
-import { signOut } from "./actions";
+import { YourData } from "@/components/profile/your-data";
+import { deleteAccount, signOut } from "./actions";
 
 export const metadata: Metadata = { title: "Profile" };
 
@@ -50,6 +51,9 @@ export default async function ProfilePage() {
             <LegalRows />
           </Reveal>
           <Reveal index={5}>
+            <YourData deleteAction={deleteAccount} />
+          </Reveal>
+          <Reveal index={6}>
             <SignOutForm action={signOut} />
           </Reveal>
         </div>

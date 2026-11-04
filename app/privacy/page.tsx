@@ -33,7 +33,7 @@ export default function PrivacyPage() {
         </ul>
         <p>
           Prayer intentions and Rosary history can reveal religious belief, which is sensitive personal information. We process it only to
-          provide the app to you, and only with your consent given when you sign in.
+          provide the app to you, and only with your consent given when you sign in. You can withdraw that consent at any time by deleting your account, which erases this data.
         </p>
       </LegalSection>
 

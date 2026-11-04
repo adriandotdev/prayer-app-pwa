@@ -22,11 +22,11 @@ export function LoginForm({ next, error }: { next: string; error?: string }) {
         <Link href="/terms" className="underline underline-offset-4">
           Terms
         </Link>{" "}
-        and acknowledge the{" "}
+        and consent to Ora storing your prayer intentions and Rosary history, which can reveal religious belief, as described in the{" "}
         <Link href="/privacy" className="underline underline-offset-4">
           Privacy Policy
         </Link>
-        , including how Ora handles your prayer intentions and Rosary history.
+        . You can withdraw consent at any time by deleting your account.
       </p>
       {message && (
         <p role="alert" className="text-sm text-destructive">

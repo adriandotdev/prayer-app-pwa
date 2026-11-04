@@ -8,6 +8,17 @@ export function getSupabaseEnv() {
   return { url, anonKey };
 }
 
+/**
+ * Server-only service-role key, used solely for account deletion. It bypasses RLS, so it must
+ * never get a NEXT_PUBLIC_ prefix or be imported from client code.
+ */
+export function requireServiceRoleEnv() {
+  const { url } = requireSupabaseEnv();
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!serviceRoleKey) throw new Error("Missing SUPABASE_SERVICE_ROLE_KEY (server-only).");
+  return { url, serviceRoleKey };
+}
+
 export function requireSupabaseEnv() {
   const env = getSupabaseEnv();
   if (!env) {
