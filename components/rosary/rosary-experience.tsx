@@ -1,9 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import { Check } from "lucide-react";
 
 import { AppButton } from "@/components/app-button";
+import { OtherPracticeProgress, otherPracticeProgress } from "@/components/practice/other-practice-progress";
+import { PracticeSwitch } from "@/components/practice/practice-switch";
 import { MysteryArt } from "@/components/rosary/mystery-art";
 import { PageHeader } from "@/components/layout/page-header";
 import { SequencePlayer } from "@/components/sequence/sequence-player";
@@ -37,6 +39,26 @@ export function RosaryExperience() {
   const todaysSet = today === null ? null : mysterySetForDay(today);
   const selected = picked ?? todaysSet ?? "joyful";
   const resumeSet = saved && !saved.completed ? setFromSequenceId(saved.sequenceId) : null;
+  const otherProgress = otherPracticeProgress(saved, "rosary");
+  const doneHeading = useRef<HTMLHeadingElement>(null);
+  const mysteryGroup = useRef<HTMLDivElement>(null);
+  const isDone = view.kind === "done";
+
+  // The player is replaced by the completion view; without this, focus is lost to <body>.
+  useEffect(() => {
+    if (isDone) doneHeading.current?.focus();
+  }, [isDone]);
+
+  // Radio-group keyboard behavior: arrows move and select, and only the selected card is a tab stop.
+  const onMysteryKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    const step = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : e.key === "ArrowLeft" || e.key === "ArrowUp" ? -1 : 0;
+    if (!step) return;
+    e.preventDefault();
+    const count = MYSTERY_SET_ORDER.length;
+    const nextIndex = (MYSTERY_SET_ORDER.indexOf(selected) + step + count) % count;
+    setPicked(MYSTERY_SET_ORDER[nextIndex]);
+    mysteryGroup.current?.querySelectorAll<HTMLButtonElement>('[role="radio"]')[nextIndex]?.focus();
+  };
 
   const playing = view.kind === "play" ? view : null;
   const sequence = useMemo(() => (playing ? buildRosary(playing.setId) : null), [playing]);
@@ -65,7 +87,9 @@ export function RosaryExperience() {
         <span className="ora-arch ora-enter ora-glow flex h-28 w-24 items-end justify-center rounded-b-xl bg-primary pb-6 text-gold dark:bg-card">
           <Check className="size-8" strokeWidth={1.8} />
         </span>
-        <h2 className="ora-enter font-heading text-6xl [animation-delay:150ms] [animation-duration:400ms]">Amen.</h2>
+        <h2 ref={doneHeading} tabIndex={-1} className="ora-enter font-heading text-6xl outline-none [animation-delay:150ms] [animation-duration:400ms]">
+          Amen.
+        </h2>
         <svg aria-hidden viewBox="0 0 100 8" className="h-2 w-24 text-gold">
           {Array.from({ length: 5 }, (_, i) => (
             <circle key={i} cx={10 + i * 20} cy={4} r={3} fill="currentColor" className="ora-enter" style={{ animationDelay: `${350 + i * 120}ms` }} />
@@ -77,6 +101,9 @@ export function RosaryExperience() {
         <AppButton size="lg" className="mt-2 min-w-40" onClick={() => { clearProgress(); setView({ kind: "home" }); }}>
           Return
         </AppButton>
+        <AppButton href="/divine-mercy" variant="outline" size="lg" className="min-w-40">
+          Pray the Divine Mercy Chaplet
+        </AppButton>
       </div>
     );
   }
@@ -87,11 +114,15 @@ export function RosaryExperience() {
       <div className="-mb-7 md:-mb-10">
         <PageHeader title="The Rosary" description="Pray with the mysteries of today." />
       </div>
+      <div className="-mt-4 md:-mt-6">
+        <PracticeSwitch current="rosary" />
+      </div>
+      {otherProgress && <OtherPracticeProgress other={otherProgress} />}
       {resumeSet && saved && (
         <section className="ora-enter rounded-3xl bg-card p-6">
           <h2 className="font-heading text-3xl">Continue where you left off</h2>
           <p className="mt-1 text-base text-muted-foreground">
-            {MYSTERY_SETS[resumeSet].name}, step {saved.index + 1} of 80.
+            {MYSTERY_SETS[resumeSet].name}, step {saved.index + 1} of {buildRosary(resumeSet).steps.length}.
           </p>
           <div className="mt-5 flex gap-3">
             <AppButton className="flex-1 sm:flex-none" onClick={() => setView({ kind: "play", setId: resumeSet, index: saved.index, mode: saved.mode })}>
@@ -116,7 +147,7 @@ export function RosaryExperience() {
             </p>
           )}
         </div>
-        <div role="radiogroup" aria-labelledby="mysteries-heading" className="ora-stagger grid grid-cols-2 gap-3 lg:col-start-1 lg:gap-5">
+        <div ref={mysteryGroup} onKeyDown={onMysteryKeyDown} role="radiogroup" aria-labelledby="mysteries-heading" className="ora-stagger grid grid-cols-2 gap-3 lg:col-start-1 lg:gap-5">
           {MYSTERY_SET_ORDER.map((id, i) => {
             const on = selected === id;
             const [word, ...rest] = MYSTERY_SETS[id].name.split(" ");
@@ -127,6 +158,7 @@ export function RosaryExperience() {
                 type="button"
                 role="radio"
                 aria-checked={on}
+                tabIndex={on ? 0 : -1}
                 onClick={() => setPicked(id)}
                 style={{ ["--i" as string]: i }}
                 className={cn(

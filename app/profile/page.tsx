@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { Reveal } from "@/components/motion/reveal";
 import { ProfileForm } from "@/components/auth/profile-form";
 import { SignOutForm } from "@/components/profile/sign-out-form";
-import { RosaryHistory } from "@/components/rosary/history";
+import { RosaryCalendarCard } from "@/components/rosary/calendar-card";
 import { RosaryStatsCard } from "@/components/rosary/stats-card";
 import { AppearanceRow } from "@/components/profile/appearance-row";
 import { PageHeader } from "@/components/layout/page-header";
@@ -25,30 +25,28 @@ export default async function ProfilePage() {
   return (
     <div className="mx-auto max-w-md lg:max-w-5xl">
       <PageHeader title="Profile" description={user.email ?? undefined} />
-      <div className="flex flex-col gap-4 lg:grid lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] lg:items-start lg:gap-8">
+      <div className="flex flex-col gap-4 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:items-start lg:gap-8">
         <div className="flex flex-col gap-4 lg:gap-8">
           <Reveal index={0}>
+            <div className="rounded-3xl bg-card p-5 md:p-8">
+              <RosaryCalendarCard />
+            </div>
+          </Reveal>
+          <Reveal index={1}>
+            <RosaryStatsCard />
+          </Reveal>
+        </div>
+        <div className="flex flex-col gap-4 lg:gap-8">
+          <Reveal index={2}>
             <section aria-label="Your details" className="rounded-3xl bg-card p-5 md:p-8">
               <ProfileForm displayName={profile?.display_name ?? ""} />
             </section>
           </Reveal>
-          <Reveal index={4}>
-            <SignOutForm action={signOut} />
-          </Reveal>
-        </div>
-        <div className="flex flex-col gap-4 lg:gap-8">
-          <Reveal index={1}>
-            <div className="rounded-3xl bg-card p-5 md:p-8">
-              <RosaryStatsCard />
-            </div>
-          </Reveal>
-          <Reveal index={2}>
-            <div className="rounded-3xl bg-card p-5 md:p-8">
-              <RosaryHistory />
-            </div>
-          </Reveal>
           <Reveal index={3}>
             <AppearanceRow />
+          </Reveal>
+          <Reveal index={4}>
+            <SignOutForm action={signOut} />
           </Reveal>
         </div>
       </div>

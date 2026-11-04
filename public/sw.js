@@ -11,10 +11,10 @@
  *  - Sign-out: the page asks us to drop cached signed-in pages (see clearPrivatePages).
  *  - Everything else (Supabase, /api, /auth, non-GET): left to the network.
  */
-const VERSION = "v5";
+const VERSION = "v7";
 const STATIC_CACHE = `ora-static-${VERSION}`;
 const PAGE_CACHE = `ora-pages-${VERSION}`;
-const PRECACHE_PAGES = ["/offline", "/rosary", "/"];
+const PRECACHE_PAGES = ["/offline", "/rosary", "/divine-mercy", "/angelus", "/"];
 // Without these the offline promise is broken, so failing to store them fails the install.
 const REQUIRED_PAGES = ["/offline", "/rosary"];
 const NAV_TIMEOUT_MS = 4000;
@@ -26,24 +26,28 @@ self.addEventListener("install", (event) => {
 });
 
 async function precache() {
-  const pages = await caches.open(PAGE_CACHE);
-  const statics = await caches.open(STATIC_CACHE);
   const assets = new Set();
 
-  await Promise.all(
+  // Fetch everything first and store only once the required pages are in hand, so a failed
+  // install leaves no half-cached set behind.
+  const fetched = await Promise.all(
     PRECACHE_PAGES.map(async (path) => {
       try {
         const res = await fetch(path, { credentials: "same-origin" });
         if (!res.ok) throw new Error(`${path} returned ${res.status}`);
         const html = await res.clone().text();
-        await pages.put(path, res);
         for (const m of html.matchAll(/(?:src|href)="(\/_next\/static\/[^"]+)"/g)) assets.add(m[1]);
+        return { path, res };
       } catch (error) {
         if (REQUIRED_PAGES.includes(path)) throw error;
-        /* the home page is a nicety: the runtime caches will fill it in later */
+        return null; /* the home page is a nicety: the runtime caches will fill it in later */
       }
     }),
   );
+
+  const pages = await caches.open(PAGE_CACHE);
+  const statics = await caches.open(STATIC_CACHE);
+  for (const item of fetched) if (item) await pages.put(item.path, item.res);
 
   await Promise.all(
     [...assets, "/brand/icon-192.png", "/brand/icon-512.png"].map(async (url) => {
@@ -85,8 +89,11 @@ async function cachePage(path) {
   if (!key) return;
   try {
     const res = await fetch(path, { credentials: "same-origin" });
-    // A redirect (e.g. signed out -> /login) must never be stored under the original URL.
-    if (res.ok && !res.redirected && res.type === "basic") {
+    // A redirect (e.g. signed out -> /login) must never be stored under the original URL. On a
+    // private page it also means the session is gone, so drop what was cached while signed in.
+    if (res.redirected && isPrivatePath(new URL(path, self.location.origin).pathname)) {
+      await clearPrivatePages();
+    } else if (res.ok && !res.redirected && res.type === "basic") {
       await (await caches.open(PAGE_CACHE)).put(key, res);
     }
   } catch {
@@ -159,7 +166,10 @@ async function networkFirstPage(event) {
   let write = Promise.resolve();
   const network = fetch(request).then((res) => {
     const key = pageCacheKey(url);
-    if (key && res.ok && !res.redirected && res.type === "basic") {
+    // Navigations are fetched with redirect: "manual", so a redirect shows up as an opaque response.
+    if ((res.redirected || res.type === "opaqueredirect") && isPrivatePath(url.pathname)) {
+      write = clearPrivatePages().catch(() => {});
+    } else if (key && res.ok && !res.redirected && res.type === "basic") {
       write = cache.put(key, res.clone()).catch(() => {});
     }
     return res;

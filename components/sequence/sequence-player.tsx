@@ -9,6 +9,8 @@ import { AppButton } from "@/components/app-button";
 import { BeadTracker } from "@/components/sequence/bead-tracker";
 import { clampIndex, firstStepForBead, isLastStep, sectionProgress } from "@/lib/sequence/engine";
 import { EASE_ORA } from "@/lib/motion";
+import { useReaderPrefs } from "@/lib/reader/use-reader-prefs";
+import { useWakeLock } from "@/lib/reader/use-wake-lock";
 import { saveProgress, type PrayerMode } from "@/lib/sequence/progress";
 import type { SequenceDefinition } from "@/lib/sequence/types";
 import { useIsDesktop } from "@/lib/use-is-desktop";
@@ -30,6 +32,8 @@ export function SequencePlayer({ sequence, initialIndex, initialMode, onFinish, 
   const touchStart = useRef<{ x: number; y: number } | null>(null);
   const reduceMotion = useReducedMotion();
   const isDesktop = useIsDesktop();
+  const { prefs } = useReaderPrefs();
+  useWakeLock(prefs.keepAwake);
   // Direction of travel, so on a phone the text slides the way the finger swiped. Desktop only cross-fades.
   const [prevIndex, setPrevIndex] = useState(index);
   const [direction, setDirection] = useState<1 | -1>(1);
@@ -70,7 +74,7 @@ export function SequencePlayer({ sequence, initialIndex, initialMode, onFinish, 
         <BeadTracker
           sequence={sequence}
           index={index}
-          className="h-44 w-auto max-md:pointer-events-none sm:h-64 md:h-[30rem] lg:h-[34rem]"
+          className="h-44 w-auto max-w-full max-md:pointer-events-none sm:h-64 md:h-[30rem] lg:h-[34rem]"
           onSelectBead={(beadId) => {
             const target = firstStepForBead(sequence, beadId);
             if (target >= 0) setIndex(target);
@@ -97,8 +101,11 @@ export function SequencePlayer({ sequence, initialIndex, initialMode, onFinish, 
           </div>
         </div>
 
+        {/* Announce only where we are, not the whole prayer text, on every step change. */}
+        <p role="status" aria-live="polite" className="sr-only">
+          {step.section}: {step.title}, step {index + 1} of {sequence.steps.length}
+        </p>
         <article
-          aria-live="polite"
           onTouchStart={(e) => {
             const t = e.touches[0];
             touchStart.current = { x: t.clientX, y: t.clientY };
@@ -115,7 +122,7 @@ export function SequencePlayer({ sequence, initialIndex, initialMode, onFinish, 
               else back();
             }
           }}
-          className="flex min-h-72 flex-col gap-4 rounded-3xl bg-card p-5 sm:p-8 lg:p-12"
+          className="reader-surface flex min-h-72 flex-col gap-4 rounded-3xl bg-card p-5 sm:p-8 lg:p-12"
         >
           <AnimatePresence mode="wait" initial={false} custom={direction}>
             <motion.div

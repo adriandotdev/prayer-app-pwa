@@ -1,11 +1,14 @@
 "use client";
 
-import { Check, Monitor, Moon, Sun } from "lucide-react";
+import { Check, Minus, Monitor, Moon, Plus, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useState, useSyncExternalStore } from "react";
+import { useId, useState, useSyncExternalStore } from "react";
 
 import { AppButton } from "@/components/app-button";
 import { SeasonPreview, type PreviewMode } from "@/components/appearance/season-preview";
+import { LEADING_RANGE, SCALE_RANGE, clampToRange } from "@/lib/reader/preferences";
+import { useReaderPrefs } from "@/lib/reader/use-reader-prefs";
+import { useWakeLockSupported } from "@/lib/reader/use-wake-lock";
 import { toast } from "@/lib/toast";
 import { SEASONS, SEASON_INFO, type SeasonChoice } from "@/lib/theme/season";
 import { useSeason } from "@/lib/theme/use-season";
@@ -51,6 +54,124 @@ function Segmented<T extends string>({
         </button>
       ))}
     </div>
+  );
+}
+
+const READING_THEME_OPTIONS = [
+  { value: "auto", label: "Match app" },
+  { value: "sepia", label: "Sepia" },
+  { value: "night", label: "Night" },
+] as const;
+
+function Stepper({
+  label,
+  display,
+  canDecrease,
+  canIncrease,
+  onDecrease,
+  onIncrease,
+}: {
+  label: string;
+  display: string;
+  canDecrease: boolean;
+  canIncrease: boolean;
+  onDecrease: () => void;
+  onIncrease: () => void;
+}) {
+  const labelId = useId();
+  const button =
+    "ora-press flex size-12 items-center justify-center rounded-full bg-secondary text-foreground transition-colors duration-200 hover:bg-accent disabled:opacity-40";
+  return (
+    <div className="flex items-center justify-between gap-4">
+      <span id={labelId} className="font-medium">
+        {label}
+      </span>
+      <div role="group" aria-labelledby={labelId} className="flex items-center gap-3">
+        <button type="button" className={button} onClick={onDecrease} disabled={!canDecrease} aria-label={`Decrease ${label.toLowerCase()}`}>
+          <Minus className="size-4" aria-hidden />
+        </button>
+        <span aria-live="polite" className="w-12 text-center text-sm tabular-nums">
+          {display}
+        </span>
+        <button type="button" className={button} onClick={onIncrease} disabled={!canIncrease} aria-label={`Increase ${label.toLowerCase()}`}>
+          <Plus className="size-4" aria-hidden />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/** Reading preferences apply as soon as they change; there is no Apply step. */
+function ReadingSettings() {
+  const { prefs, update } = useReaderPrefs();
+  const wakeLockSupported = useWakeLockSupported();
+  const step = (value: number, delta: number, range: typeof SCALE_RANGE | typeof LEADING_RANGE) =>
+    clampToRange(value + delta, range);
+
+  return (
+    <section aria-labelledby="reading-heading" className="mt-10">
+      <h2 id="reading-heading" className="mb-4 font-heading text-3xl">
+        Reading
+      </h2>
+      <div className="flex flex-col gap-5">
+        <Segmented
+          label="Reading theme"
+          options={READING_THEME_OPTIONS}
+          value={prefs.theme}
+          onChange={(theme) => update({ theme })}
+        />
+        <Stepper
+          label="Text size"
+          display={`${Math.round(prefs.scale * 100)}%`}
+          canDecrease={prefs.scale > SCALE_RANGE.min}
+          canIncrease={prefs.scale < SCALE_RANGE.max}
+          onDecrease={() => update({ scale: step(prefs.scale, -SCALE_RANGE.step, SCALE_RANGE) })}
+          onIncrease={() => update({ scale: step(prefs.scale, SCALE_RANGE.step, SCALE_RANGE) })}
+        />
+        <Stepper
+          label="Line spacing"
+          display={prefs.leading.toFixed(2)}
+          canDecrease={prefs.leading > LEADING_RANGE.min}
+          canIncrease={prefs.leading < LEADING_RANGE.max}
+          onDecrease={() => update({ leading: step(prefs.leading, -LEADING_RANGE.step, LEADING_RANGE) })}
+          onIncrease={() => update({ leading: step(prefs.leading, LEADING_RANGE.step, LEADING_RANGE) })}
+        />
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <p id="keep-awake-label" className="font-medium">
+              Keep screen awake
+            </p>
+            <p id="keep-awake-hint" className="text-sm text-muted-foreground">
+              {wakeLockSupported ? "While a prayer is open." : "Not supported by this browser."}
+            </p>
+          </div>
+          <button
+            type="button"
+            role="switch"
+            aria-checked={prefs.keepAwake}
+            aria-labelledby="keep-awake-label"
+            aria-describedby="keep-awake-hint"
+            disabled={!wakeLockSupported}
+            onClick={() => update({ keepAwake: !prefs.keepAwake })}
+            className={cn(
+              "relative h-8 w-14 shrink-0 rounded-full transition-colors duration-200 disabled:opacity-40",
+              prefs.keepAwake ? "bg-primary" : "bg-secondary",
+            )}
+          >
+            <span
+              aria-hidden
+              className={cn(
+                "absolute top-1 left-1 size-6 rounded-full bg-background shadow transition-transform duration-200 motion-reduce:transition-none",
+                prefs.keepAwake && "translate-x-6",
+              )}
+            />
+          </button>
+        </div>
+        <div className="reader-surface rounded-3xl bg-card p-5">
+          <p className="prayer-text">Hail Mary, full of grace, the Lord is with thee.</p>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -185,6 +306,8 @@ export function AppearanceScreen() {
             {selected === saved ? "Applied" : "Apply"}
           </AppButton>
         </div>
+
+        <ReadingSettings />
       </div>
     </div>
   );

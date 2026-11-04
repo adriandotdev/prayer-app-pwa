@@ -1,10 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Hanken_Grotesk, Source_Serif_4 } from "next/font/google";
+import { MotionProvider } from "@/components/motion/motion-provider";
 import { AppShell } from "@/components/layout/app-shell";
 import { RosarySync } from "@/components/pwa/rosary-sync";
 import { ServiceWorkerRegister } from "@/components/pwa/service-worker-register";
+import { ReaderPrefsSync } from "@/components/reader/reader-prefs-sync";
 import { SeasonSync } from "@/components/theme/season-sync";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { READER_INIT_SCRIPT } from "@/lib/reader/preferences";
 import { SEASON_INIT_SCRIPT } from "@/lib/theme/season";
 import "./globals.css";
 
@@ -51,13 +54,18 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         {/* Sets data-season before first paint, like next-themes does for .dark. */}
         <script dangerouslySetInnerHTML={{ __html: SEASON_INIT_SCRIPT }} />
+        {/* Same for the reader's text size, line height and reading theme. */}
+        <script dangerouslySetInnerHTML={{ __html: READER_INIT_SCRIPT }} />
       </head>
       <body className="min-h-dvh">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <ServiceWorkerRegister />
           <SeasonSync />
+          <ReaderPrefsSync />
           <RosarySync />
-          <AppShell>{children}</AppShell>
+          <MotionProvider>
+            <AppShell>{children}</AppShell>
+          </MotionProvider>
         </ThemeProvider>
       </body>
     </html>

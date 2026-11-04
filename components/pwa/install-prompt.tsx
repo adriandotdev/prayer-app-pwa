@@ -24,7 +24,13 @@ export function InstallPrompt() {
       (navigator as Navigator & { standalone?: boolean }).standalone === true,
     true,
   );
-  const ios = useClientValue(() => /iPad|iPhone|iPod/.test(navigator.userAgent), false);
+  // iPadOS 13+ reports a Macintosh user agent, so a touch screen on "MacIntel" is an iPad.
+  const ios = useClientValue(
+    () =>
+      /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1),
+    false,
+  );
   const wasDismissed = useClientValue(() => {
     try {
       return window.localStorage.getItem(DISMISS_KEY) === "1";

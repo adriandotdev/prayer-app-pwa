@@ -1,0 +1,1514 @@
+/*
+ * The landing page. Its chapters are fixed fields of colour chosen to sit with the paintings, so it
+ * sets literal tokens here and ignores the light/dark theme and the liturgical season on purpose.
+ */
+.land {
+  color-scheme: light;
+  --paper: #f8f4ea;
+  --wash: #efdcab;
+  --gold: #c9a24b;
+  --gold-pale: #ecd08a;
+  --lapis: #1f3f80;
+  --night: #0c1430;
+  --ink: #16213f;
+  --edge: clamp(16px, 2.4vw, 32px);
+  --ease-ora: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* AppButton reads these; seasons must not recolour the page. */
+  --primary: #16213f;
+  --primary-foreground: #f8f4ea;
+  --secondary: #f8f4ea;
+  --secondary-foreground: #16213f;
+  --accent: #ffffff;
+  --accent-foreground: #16213f;
+  --ring: #16213f;
+
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-prayer);
+  font-size: 18px;
+  line-height: 1.55;
+  overflow-x: clip;
+}
+
+/* The inner layer of a painting that opens on scroll (Unveil). */
+.land-unveil {
+  position: absolute;
+  inset: 0;
+}
+
+/* Written here, not as Tailwind utilities, so the page never depends on what the global sheet generated. */
+.land img {
+  object-fit: cover;
+}
+.land-why-large img {
+  object-position: top;
+}
+
+html:has(.land) {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html:has(.land) {
+    scroll-behavior: auto;
+  }
+}
+
+.land a,
+.land button {
+  transition:
+    opacity 200ms var(--ease-ora),
+    transform 200ms var(--ease-ora),
+    background-color 200ms var(--ease-ora),
+    color 200ms var(--ease-ora);
+}
+.land .font-medium {
+  font-weight: 500;
+}
+
+/* Type: five steps */
+.land-h1,
+.land-h2,
+.land-h3 {
+  font-family: var(--font-cormorant);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.land-h1 {
+  font-size: clamp(66px, 8.8vw, 136px);
+  line-height: 0.94;
+}
+.land-h2 {
+  font-size: clamp(42px, 5.6vw, 88px);
+  line-height: 1.02;
+}
+.land-h3 {
+  font-size: clamp(30px, 3vw, 44px);
+  line-height: 1.08;
+}
+.land-statement {
+  font-size: clamp(22px, 1.9vw, 26px);
+  line-height: 1.38;
+  max-width: 34rem;
+}
+.land-body {
+  font-size: 18px;
+  line-height: 1.55;
+  max-width: 34rem;
+}
+.land-gutter {
+  padding-inline: var(--edge);
+}
+
+/* Hero: one held screen. Scrolling carries the visitor into the rose (see HeroScene). */
+.land-hero {
+  position: relative;
+  background: var(--paper);
+  --land-pad: 8px;
+  --land-column: 0%;
+  --land-shift: 0px;
+}
+.land-scene {
+  position: relative;
+}
+.land-stage {
+  position: relative;
+  height: 100svh;
+  min-height: 560px;
+  overflow: hidden;
+  background: var(--paper);
+}
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .land-scene {
+    height: 300svh;
+  }
+  .land-stage {
+    position: sticky;
+    top: 0;
+  }
+}
+.land-panel {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  container-type: size;
+  clip-path: inset(var(--land-pad) calc(var(--land-column) + var(--land-pad)) var(--land-pad) var(--land-pad));
+  background: var(--night);
+  color: var(--paper);
+  display: flex;
+  flex-direction: column;
+  --primary: var(--gold-pale);
+  --primary-foreground: var(--night);
+  --ring: var(--gold-pale);
+  --centre-y: 56cqh;
+}
+.land-camera {
+  position: absolute;
+  inset: 0;
+}
+.land-ascend {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% var(--centre-y);
+}
+.land-art {
+  --art-w: max(106cqw, 135cqh * 0.801);
+  --art-h: calc(var(--art-w) / 0.801);
+  position: absolute;
+  width: var(--art-w);
+  height: var(--art-h);
+  /* The engraving's disc of light (measured: 48.7%, 43.6%) sits exactly where the camera is heading. */
+  left: calc(50cqw - var(--art-w) * 0.487);
+  top: calc(var(--centre-y) - var(--art-h) * 0.436);
+}
+/* Scroll turns the wheel, the ambient spin turns the rose inside it; each has its own element so they never fight. */
+.land-wheel {
+  position: absolute;
+  left: 8.01%;
+  width: 83.98%;
+  aspect-ratio: 1;
+  top: 7.85%;
+  transform-origin: 48.36% 53.27%;
+}
+.land-wheel-back {
+  display: none;
+}
+.land-rose {
+  position: absolute;
+  inset: 0;
+  /* The disc's place in this image: everything turns about it, so the rays never wander off their centre. */
+  transform-origin: 48.36% 53.27%;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .land-rose {
+    animation: land-turn 360s linear infinite;
+  }
+  .land-rose-back {
+    animation: land-turn-back 520s linear infinite;
+  }
+}
+@media (min-width: 48rem) and (prefers-reduced-motion: no-preference) {
+  .land-wheel-back {
+    display: block;
+    opacity: 0.5;
+    mix-blend-mode: lighten;
+  }
+}
+@keyframes land-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes land-turn-back {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+/* The rose's point of light. Its solid middle becomes the paper of the chapter below. */
+.land-light {
+  position: absolute;
+  left: calc(50cqw - 50vmax);
+  top: calc(var(--centre-y) - 50vmax);
+  width: 100vmax;
+  height: 100vmax;
+  /*
+   * No will-change here. This layer scales from 0.06 to 5, and with the hint the browser keeps the texture from the
+   * largest size it reached: on the way back up, the small light holds so much GPU memory that the hero loses tiles.
+   */
+  pointer-events: none;
+}
+.land-light-glow {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    var(--paper) 0 38%,
+    var(--gold-pale) 54%,
+    rgb(236 208 138 / 0.28) 70%,
+    rgb(236 208 138 / 0) 100%
+  ); /* taste-skill-ignore: a light source, not a decorative gradient */
+}
+.land-verse {
+  position: absolute;
+  left: 50%;
+  top: var(--centre-y);
+  width: min(86cqw, 44rem);
+  margin-left: calc(min(86cqw, 44rem) / -2);
+  translate: 0 -50%;
+  color: var(--ink);
+  font-family: var(--font-cormorant);
+  font-size: clamp(34px, 4.4vw, 68px);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  text-align: center;
+  text-wrap: balance;
+  pointer-events: none;
+}
+.land-verse span {
+  display: block;
+  margin-top: 18px;
+  font-family: var(--font-prayer);
+  font-size: 18px;
+  letter-spacing: 0;
+}
+
+.land-camera,
+.land-camera-words {
+  /* Centres everything in the frame beside the chapter column; HeroScene takes this back as the frame opens. */
+  translate: calc(var(--land-shift) * -1) 0;
+}
+.land-camera-words {
+  position: relative;
+}
+.land-panel-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: calc(10px + var(--land-pad) + env(safe-area-inset-top)) 16px 10px calc(16px + var(--land-pad) + var(--land-shift));
+}
+.land-wordmark {
+  font-family: var(--font-cormorant);
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.land-title-block {
+  padding: 0 16px;
+  margin-top: clamp(0px, 6svh, 56px);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.land-title-block::before {
+  /* The one neutral scrim: under the words, so the engraving can stay bright around them. */
+  content: "";
+  position: absolute;
+  inset: -18% -12% -18%;
+  background: radial-gradient(closest-side, rgb(9 14 36 / 0.92), rgb(9 14 36 / 0.8) 62%, rgb(9 14 36 / 0)); /* taste-skill-ignore: neutral scrim over the engraving */
+}
+.land-h1,
+.land-lede {
+  position: relative;
+}
+.land-lede {
+  margin-top: 16px;
+  font-size: 18px;
+  line-height: 1.42;
+  max-width: 33rem;
+}
+.land-panel-action {
+  margin-top: auto;
+  padding-bottom: calc(16px + var(--land-pad) + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.land-cue {
+  padding: 2px 14px;
+  border-radius: 999px;
+  background: rgb(9 14 36 / 0.8);
+  color: var(--paper);
+  font-size: 16px;
+  line-height: 1.4;
+}
+.land-swatches {
+  display: grid;
+  background: var(--paper);
+}
+.land-swatch {
+  --swatch: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 68px;
+  padding: 0 20px 0 16px;
+  background: var(--swatch);
+  font-family: var(--font-cormorant);
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  transition: background-color 220ms var(--ease-ora);
+}
+.land-swatch-arrow {
+  font-family: var(--font-ui, inherit);
+  font-size: 22px;
+  line-height: 1;
+  transition: transform 260ms var(--ease-ora);
+}
+.land-swatch:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: -6px;
+}
+.land-swatch:active {
+  background: color-mix(in srgb, var(--swatch) 84%, currentColor);
+}
+@media (hover: hover) and (pointer: fine) {
+  .land-swatch:hover {
+    background: color-mix(in srgb, var(--swatch) 90%, currentColor);
+  }
+  .land-swatch:hover .land-swatch-arrow {
+    transform: translateY(6px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .land-swatch,
+  .land-swatch-arrow {
+    transition: none;
+  }
+  .land-swatch:hover .land-swatch-arrow {
+    transform: none;
+  }
+}
+.land-swatch:nth-child(1) {
+  /* One step off the page ground, so the first field reads as a button and not as blank paper. */
+  --swatch: color-mix(in srgb, var(--paper) 62%, var(--wash));
+}
+.land-swatch:nth-child(2) {
+  --swatch: var(--wash);
+}
+.land-swatch:nth-child(3) {
+  --swatch: var(--gold);
+}
+.land-swatch:nth-child(4) {
+  --swatch: var(--lapis);
+  color: var(--paper);
+}
+.land-swatch:nth-child(5) {
+  --swatch: var(--night);
+  color: var(--paper);
+}
+
+/* Why pray: the heading crosses onto the fresco's pale corner. */
+.land-why {
+  position: relative;
+  padding: 72px var(--edge) 96px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 32px;
+  background: var(--paper);
+}
+.land-why-text {
+  display: contents;
+}
+.land-why-title {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  order: 1;
+}
+.land-why-line {
+  padding-left: 12vw;
+}
+.land-why-large {
+  order: 2;
+  position: relative;
+  width: 80%;
+  margin: -36px calc(var(--edge) * -1) 0 auto;
+  aspect-ratio: 1800 / 2130;
+  mix-blend-mode: multiply;
+}
+.land-why .land-statement {
+  order: 3;
+}
+.land-why-small {
+  order: 4;
+  position: relative;
+  width: 56%;
+  aspect-ratio: 9 / 10;
+}
+
+/* Mysteries: the drag row, with the paintings rising and falling. */
+.land-mysteries {
+  background: var(--wash);
+  padding: 80px 0;
+}
+.land-mysteries-head {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.land-days {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+@media (min-width: 24.375rem) {
+  .land-days {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+}
+.land-day {
+  position: relative;
+  min-height: 48px;
+  border-radius: 999px;
+  background: var(--paper);
+  font-size: 16px;
+  cursor: pointer;
+}
+@media (hover: hover) and (pointer: fine) {
+  .land-day:hover {
+    background: #ffffff;
+  }
+}
+.land-day:active {
+  transform: scale(0.96);
+}
+.land-day[aria-pressed="true"] {
+  color: var(--paper);
+}
+/* One ink pill that slides between the days instead of two colours swapping. */
+.land-day-pill {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--ink);
+}
+.land-day-name {
+  position: relative;
+}
+.land-mysteries-name {
+  display: block;
+}
+.land-track-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 28px;
+}
+.land-track {
+  flex: 1;
+  height: 6px;
+  background: color-mix(in srgb, var(--ink) 18%, transparent);
+  overflow: hidden;
+}
+.land-track-fill {
+  display: block;
+  height: 100%;
+  width: 50%;
+  background: var(--ink);
+}
+.land-steps {
+  display: none;
+  gap: 8px;
+}
+.land-row {
+  display: flex;
+  gap: 16px;
+  margin-top: 28px;
+  padding-inline: var(--edge);
+  scroll-padding-inline: var(--edge);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.land-row::-webkit-scrollbar,
+.land-slips::-webkit-scrollbar,
+.land-wall::-webkit-scrollbar {
+  display: none;
+}
+.land-moment {
+  flex: none;
+  width: 76vw;
+  display: flex;
+  flex-direction: column;
+  scroll-snap-align: start;
+}
+.land-moment-title {
+  font-family: var(--font-cormorant);
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+}
+.land-moment-text {
+  margin-top: 10px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.land-moment-note {
+  margin-top: 8px;
+  font-size: 16px;
+}
+.land-moment-art {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  width: 100%;
+  background: var(--paper);
+}
+.land-moment:has(.land-drop-a) .land-moment-note {
+  margin-bottom: 32px;
+}
+.land-moment:has(.land-drop-b) .land-moment-note {
+  margin-bottom: 44px;
+}
+.land-moment:has(.land-drop-c) .land-moment-note {
+  margin-bottom: 56px;
+}
+.land-moment:has(.land-drop-d) .land-moment-note {
+  margin-bottom: 64px;
+}
+.land-mysteries-foot {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  margin-top: 40px;
+}
+
+/* The walk: the whole Rosary held on screen while scrolling names each part. Without motion it is a figure and a list. */
+.land-walk {
+  background: var(--night);
+  color: var(--paper);
+}
+.land-walk-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 72px var(--edge) 0;
+}
+.land-walk-title {
+  font-family: var(--font-cormorant), serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--gold-pale);
+  text-align: center;
+}
+.land-walk-figure {
+  width: 100%;
+  max-width: 28rem;
+  margin-top: 24px;
+}
+.land-walk-rosary {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.land-walk-part {
+  transition: opacity 600ms var(--ease-ora);
+}
+.land-walk-part[data-state="ahead"] {
+  opacity: 0.58;
+}
+.land-walk-part[data-state="prayed"] {
+  opacity: 0.86;
+}
+.land-walk-lit {
+  transition: opacity 600ms var(--ease-ora);
+}
+.land-walk-bead[data-state="ahead"] .land-walk-lit {
+  opacity: 0;
+}
+.land-walk-bead[data-state="prayed"] .land-walk-lit {
+  opacity: 0.8;
+}
+.land-walk-halo {
+  opacity: 0;
+  transition: opacity 600ms var(--ease-ora);
+}
+.land-walk-halo[data-on="true"] {
+  opacity: 1;
+}
+.land-walk-caption {
+  display: none;
+}
+.land-walk-where {
+  font-size: 16px;
+  color: var(--gold-pale);
+}
+.land-walk-prayers {
+  margin-top: 6px;
+  font-family: var(--font-cormorant), serif;
+  font-size: clamp(28px, 3vw, 44px);
+  font-weight: 500;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.land-walk-detail {
+  margin-top: 10px;
+  max-width: 30rem;
+  font-size: 17px;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+.land-walk-list {
+  display: grid;
+  gap: 32px;
+  max-width: 38rem;
+  margin-inline: auto;
+  padding: 48px var(--edge) 88px;
+}
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .land-walk-track {
+    height: 640svh;
+  }
+  .land-walk-stage {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    overflow: hidden;
+    padding: calc(20px + env(safe-area-inset-top)) var(--edge) calc(28px + env(safe-area-inset-bottom));
+  }
+  .land-walk-figure {
+    flex: 1;
+    min-height: 0;
+    max-width: none;
+    margin-top: 8px;
+  }
+  /* Parts share one cell, so the old words fade while the new ones arrive and nothing blinks in between. */
+  .land-walk-caption {
+    display: grid;
+    width: 100%;
+    /* Tall enough for the longest part, so the rosary above never shifts between parts. */
+    min-height: 196px;
+    padding-top: 12px;
+    text-align: center;
+  }
+  .land-walk-words {
+    grid-area: 1 / 1;
+  }
+  .land-walk-detail {
+    margin-inline: auto;
+  }
+  /* Kept for assistive tech; the caption shows the same words one part at a time. */
+  .land-walk-list {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  @media (min-width: 48rem) {
+    .land-walk-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+      column-gap: clamp(32px, 5vw, 96px);
+      padding-block: 32px;
+    }
+    .land-walk-title {
+      grid-column: 2;
+      grid-row: 1;
+      align-self: end;
+      margin-bottom: 28px;
+      text-align: left;
+    }
+    .land-walk-figure {
+      grid-column: 1;
+      grid-row: 1 / -1;
+      height: 100%;
+      margin-top: 0;
+    }
+    .land-walk-caption {
+      grid-column: 2;
+      grid-row: 2;
+      align-self: start;
+      padding-top: 0;
+      text-align: left;
+    }
+    .land-walk-detail {
+      margin-inline: 0;
+    }
+  }
+}
+
+/* The decade: a dark room that warms a little with each bead. */
+.land-decade {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 88px var(--edge);
+  background: var(--night);
+  color: var(--paper);
+  text-align: center;
+  overflow: hidden;
+  isolation: isolate;
+  --primary: var(--gold-pale);
+  --primary-foreground: var(--night);
+  --ring: var(--gold-pale);
+}
+.land-decade-glow {
+  position: absolute;
+  z-index: -1;
+  left: calc(50% - 75vmin);
+  top: calc(44% - 75vmin);
+  width: 150vmin;
+  height: 150vmin;
+  /* Amber, because paler gold greys out over navy. Peaks at 42%: paper text over it stays above 7:1. */
+  background: radial-gradient(closest-side, rgb(205 140 48 / 0.42), rgb(205 140 48 / 0.18) 55%, rgb(205 140 48 / 0)); /* taste-skill-ignore: candlelight, driven by the count */
+  pointer-events: none;
+}
+.land-decade-head .land-statement {
+  margin: 16px auto 0;
+  text-wrap: balance;
+}
+.land-strand {
+  width: 100%;
+  max-width: 44rem;
+  margin-top: 40px;
+  overflow: visible;
+}
+.land-thread,
+.land-thread-lit {
+  fill: none;
+  stroke-width: 1.5;
+}
+.land-thread {
+  stroke: rgb(248 244 234 / 0.42);
+}
+.land-thread-lit {
+  stroke: var(--gold-pale);
+  stroke-width: 2;
+}
+.land-thread-glint {
+  fill: none;
+  stroke: var(--gold-pale);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+.land-bead {
+  fill: var(--night);
+  stroke: rgb(248 244 234 / 0.72);
+  stroke-width: 1.5;
+  transition: fill 240ms var(--ease-ora), stroke 240ms var(--ease-ora);
+}
+.land-bead-prayed {
+  fill: var(--gold-pale);
+  stroke: var(--gold-pale);
+}
+.land-bead-next {
+  fill: rgb(236 208 138 / 0.2);
+  stroke: var(--gold-pale);
+  stroke-width: 1.5;
+}
+.land-bead-ring {
+  fill: none;
+  stroke: var(--gold-pale);
+  stroke-width: 1.5;
+}
+.land-decade-count {
+  margin-top: 28px;
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+  color: var(--gold-pale);
+}
+.land-decade-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.land-decade-prayer {
+  margin-top: 16px;
+  max-width: 38rem;
+  font-size: clamp(20px, 1.7vw, 24px);
+  line-height: 1.5;
+}
+.land-decade-prayer p + p {
+  margin-top: 12px;
+}
+.land-decade-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  margin-top: 32px;
+  width: min(100%, 22rem);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .land-decade-invite > :first-child {
+    animation: land-invite 1.6s var(--ease-ora) 400ms 2;
+  }
+}
+@keyframes land-invite {
+  from {
+    box-shadow: 0 0 0 0 rgb(236 208 138 / 0.6);
+  }
+  to {
+    box-shadow: 0 0 0 16px rgb(236 208 138 / 0);
+  }
+}
+
+/* The prayers: paper slips standing on the Annunciation. */
+.land-prayers {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--night);
+  color: var(--paper);
+  overflow: hidden;
+  isolation: isolate;
+}
+.land-prayers-back {
+  position: absolute;
+  inset: -6% 0;
+  z-index: -1;
+}
+.land-prayers-art {
+  object-position: 72% 40%;
+}
+.land-prayers-text {
+  margin: 24px var(--edge) 56px;
+  padding: 24px;
+  background: rgb(9 14 36 / 0.86);
+  max-width: 44rem;
+}
+.land-prayers-text .land-statement {
+  margin-top: 14px;
+}
+.land-slips {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  padding-inline: var(--edge);
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+.land-slip {
+  flex: none;
+  width: 72vw;
+  padding: 20px 18px 32px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.5;
+  scroll-snap-align: center;
+}
+.land-slip-title {
+  font-family: var(--font-cormorant);
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.1;
+  margin-bottom: 10px;
+}
+.land-slip p + p {
+  margin-top: 8px;
+}
+
+/* The notebook: on a phone a single column; from a laptop up, a spread with paintings and entries interlocked. */
+.land-notebook {
+  background: var(--lapis);
+  color: var(--paper);
+  padding: 96px var(--edge);
+  --primary: var(--gold-pale);
+  --primary-foreground: var(--night);
+  --ring: var(--gold-pale);
+}
+.land-notebook-title {
+  max-width: 14em;
+}
+.land-rows {
+  display: grid;
+  gap: 64px;
+  margin-top: 64px;
+}
+.land-row-item {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.land-row-item .land-body {
+  margin-top: 12px;
+}
+.land-margin {
+  position: relative;
+}
+.land-row-item:nth-child(3n + 1) .land-margin {
+  width: 100%;
+}
+.land-row-item:nth-child(3n + 2) .land-margin {
+  width: 72%;
+  margin-left: auto;
+}
+.land-row-item:nth-child(3n) .land-margin {
+  width: 56%;
+}
+.land-margin-tall {
+  aspect-ratio: 4 / 5;
+}
+.land-margin-wide {
+  aspect-ratio: 3 / 2;
+}
+.land-margin-square {
+  aspect-ratio: 1;
+}
+.land-notebook-action {
+  margin-top: 64px;
+}
+
+/* The saints: Giotto's vault, then the wall of windows. */
+.land-saints {
+  position: relative;
+  background: var(--night);
+  color: var(--paper);
+  padding: 96px 0 72px;
+  overflow: hidden;
+  isolation: isolate;
+}
+.land-vault {
+  position: absolute;
+  inset: -48px 0;
+  z-index: -1;
+  color: var(--gold-pale);
+}
+.land-star {
+  position: absolute;
+  display: block;
+  opacity: 0.5;
+}
+.land-saints-head {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.land-wall {
+  display: flex;
+  gap: 14px;
+  margin-top: 48px;
+  padding-inline: var(--edge);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--edge);
+  scrollbar-width: none;
+}
+.land-saint {
+  flex: none;
+  width: 58vw;
+  scroll-snap-align: start;
+  text-align: center;
+}
+.land-window-frame {
+  position: relative;
+}
+.land-window {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.land-window-veil {
+  position: absolute;
+  inset: 0;
+  background: var(--night);
+  pointer-events: none;
+}
+.land-saint-latin {
+  margin-top: 14px;
+  font-family: var(--font-cormorant);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.15;
+}
+.land-saint-response {
+  font-size: 16px;
+  color: var(--gold-pale);
+  font-style: italic;
+}
+
+/* The close: three paintings, then a field of gold. */
+.land-strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.land-strip-item {
+  position: relative;
+  aspect-ratio: 4 / 3;
+}
+.land-strip-item:first-child {
+  grid-column: 1 / -1;
+}
+.land-band {
+  position: relative;
+  background: var(--gold);
+  padding: 56px var(--edge) 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.land-band .land-statement {
+  margin-top: 16px;
+}
+.land-band .land-statement a {
+  text-decoration: underline;
+  text-decoration-thickness: 4px;
+  text-underline-offset: 6px;
+}
+.land-band .land-statement a:hover {
+  opacity: 0.76;
+}
+.land-band .land-body {
+  margin-top: 24px;
+}
+.land-band-portrait {
+  position: relative;
+  align-self: flex-end;
+  width: 112px;
+  aspect-ratio: 1;
+}
+
+/* The footer: the foot of the same engraving, with the name returned at full width. */
+.land-footer {
+  position: relative;
+  min-height: 92svh;
+  display: flex;
+  flex-direction: column;
+  background: var(--night);
+  color: var(--paper);
+  padding: 32px var(--edge) 20px;
+  overflow: hidden;
+  isolation: isolate;
+  --ring: var(--gold-pale);
+}
+.land-footer-art {
+  z-index: -1;
+  object-fit: cover;
+  object-position: 50% 100%;
+  filter: brightness(0.46);
+}
+.land-footer-top {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.land-footer-top a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.land-footer-top a:hover {
+  opacity: 0.8;
+}
+.land-footer-verse {
+  font-family: var(--font-cormorant);
+  font-size: 22px;
+  line-height: 1.2;
+  max-width: 20em;
+}
+.land-footer-name {
+  margin-top: auto;
+  font-family: var(--font-cormorant);
+  font-size: 56vw;
+  font-weight: 500;
+  line-height: 0.74;
+  letter-spacing: -0.03em;
+  text-align: center;
+}
+.land-footer-credit {
+  margin-top: 28px;
+  font-size: 16px;
+  line-height: 1.4;
+  max-width: 62rem;
+}
+
+/* Desktop composition */
+@media (min-width: 48rem) {
+  .land-hero {
+    --land-pad: 10px;
+    --land-column: 16.66%;
+    --land-shift: 8.33cqw;
+  }
+  .land-stage {
+    min-height: 620px;
+  }
+  .land-panel {
+    --centre-y: 68cqh;
+  }
+  .land-art {
+    --art-w: max(106cqw, 132cqh);
+  }
+  .land-title-block {
+    margin-top: clamp(0px, 3svh, 40px);
+  }
+  .land-lede {
+    margin-top: 32px;
+    font-size: 22px;
+  }
+  /* The chapters scroll away while the frame opens under them. */
+  .land-swatches {
+    position: absolute;
+    z-index: 1;
+    top: var(--land-pad);
+    right: var(--land-pad);
+    width: calc(var(--land-column) - var(--land-pad));
+    height: max(calc(100svh - var(--land-pad) * 2), 600px);
+    grid-auto-rows: 1fr;
+  }
+  .land-swatch {
+    /* Arrow top-right, title set low in the field like a chapter plate. */
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    padding: 20px 24px 22px;
+    min-height: 0;
+    font-size: clamp(28px, 2.3vw, 36px);
+    line-height: 1.05;
+  }
+  .land-swatch-label {
+    text-wrap: balance;
+  }
+  .land-swatch-arrow {
+    order: -1;
+    align-self: flex-end;
+    font-size: 28px;
+  }
+
+  .land-why {
+    grid-template-columns: minmax(0, 1fr) 50vw;
+    gap: 0;
+    padding: 0 0 180px var(--edge);
+    align-items: start;
+  }
+  .land-why-text {
+    display: block;
+    padding-top: 30svh;
+    position: relative;
+    z-index: 1;
+  }
+  .land-why-title {
+    width: calc(100% + 24vw);
+  }
+  .land-why-line {
+    padding-left: clamp(120px, 26vw, 460px);
+    margin-top: 0.02em;
+  }
+  .land-why .land-statement {
+    margin-top: 48px;
+    max-width: 28rem;
+    padding-right: 24px;
+  }
+  .land-why-small {
+    width: 360px;
+    margin-top: 96px;
+  }
+  .land-why-large {
+    width: 100%;
+    margin: 36svh 0 0;
+  }
+
+  .land-decade {
+    padding: 140px var(--edge);
+  }
+  .land-decade-actions {
+    flex-direction: row;
+    justify-content: center;
+    width: auto;
+  }
+
+  .land-mysteries {
+    padding: 160px 0 140px;
+  }
+  .land-days {
+    display: flex;
+    gap: 8px;
+  }
+  .land-day {
+    min-width: 56px;
+  }
+  .land-steps {
+    display: flex;
+  }
+  .land-row {
+    gap: 32px;
+    margin-top: 40px;
+  }
+  .land-moment {
+    width: 340px;
+  }
+  .land-moment:has(.land-drop-a) .land-moment-note {
+    margin-bottom: 40px;
+  }
+  .land-moment:has(.land-drop-b) .land-moment-note {
+    margin-bottom: 84px;
+  }
+  .land-moment:has(.land-drop-c) .land-moment-note {
+    margin-bottom: 120px;
+  }
+  .land-moment:has(.land-drop-d) .land-moment-note {
+    margin-bottom: 150px;
+  }
+  .land-mysteries-foot {
+    margin-top: 64px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 48px;
+  }
+
+  .land-prayers-text {
+    margin: 64px 0 96px 12%;
+    padding: 32px 36px;
+  }
+
+  .land-notebook {
+    padding: 120px var(--edge);
+  }
+  .land-notebook-title {
+    max-width: 12em;
+  }
+  .land-rows {
+    gap: 56px;
+    margin-top: 56px;
+  }
+  .land-row-item {
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    gap: 32px;
+    align-items: start;
+  }
+  .land-row-item:nth-child(n) .land-margin {
+    width: 100%;
+    margin-left: 0;
+    aspect-ratio: 1;
+  }
+  .land-row-item:nth-child(even) {
+    grid-template-columns: 5fr 7fr;
+  }
+  .land-row-item:nth-child(even) .land-margin {
+    order: -1;
+  }
+  .land-notebook-action {
+    margin-top: 56px;
+  }
+
+  .land-saints {
+    padding: 140px 0 140px;
+  }
+
+  .land-strip {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .land-strip-item,
+  .land-strip-item:first-child {
+    grid-column: auto;
+    aspect-ratio: auto;
+    height: 40svh;
+  }
+  .land-band {
+    min-height: 56svh;
+    padding: 72px var(--edge);
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .land-band-portrait {
+    width: 190px;
+    align-self: flex-end;
+    flex: none;
+  }
+  .land-footer {
+    min-height: 100svh;
+    padding: 32px var(--edge) 24px;
+  }
+  .land-footer-top {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .land-footer-verse {
+    font-size: 28px;
+    text-align: right;
+  }
+  .land-footer-name {
+    font-size: 40vw;
+    line-height: 0.72;
+  }
+}
+
+/* From a small laptop up, the walls fit whole and the heads go side by side. */
+@media (min-width: 48rem) and (max-width: 63.99rem) {
+  .land-slips {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+    overflow: visible;
+  }
+  .land-slip {
+    width: auto;
+  }
+  .land-saint {
+    width: 240px;
+  }
+  .land-mysteries-foot {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+@media (min-width: 64rem) {
+  .land-mysteries-head {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 48px;
+  }
+  .land-mysteries-head .land-h2 {
+    max-width: 12em;
+  }
+  .land-saints-head {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 64px;
+  }
+  .land-saints-head .land-h2 {
+    max-width: 9em;
+  }
+  .land-slips {
+    overflow: visible;
+  }
+  .land-slip {
+    flex: 1 1 0;
+    width: auto;
+    padding: 24px 20px 40px;
+  }
+  .land-slip:nth-child(1) {
+    padding-bottom: 160px;
+  }
+  .land-slip:nth-child(2) {
+    padding-bottom: 96px;
+    rotate: -1.2deg;
+    transform-origin: bottom;
+  }
+  .land-slip:nth-child(4) {
+    padding-bottom: 72px;
+  }
+  .land-slip:nth-child(5) {
+    rotate: 1.4deg;
+    transform-origin: bottom;
+  }
+  .land-wall {
+    gap: 18px;
+    margin-top: 72px;
+    overflow: visible;
+  }
+  .land-saint {
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+  }
+}
+
+/* From a laptop up the notebook opens into a spread: two large paintings on the diagonal, the rest interlocked. */
+@media (min-width: 72rem) {
+  .land-notebook {
+    --gap: clamp(24px, 2.2vw, 32px);
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-rows: auto 1fr auto;
+    column-gap: var(--gap);
+    row-gap: 72px;
+    align-items: start;
+  }
+  .land-rows {
+    display: contents;
+  }
+  /* No upper caps: the paintings scale with the screen, so the words must keep pace or wide monitors read as empty. */
+  .land-row-item .land-h3 {
+    font-size: 3vw;
+  }
+  .land-row-item .land-body {
+    font-size: max(18px, 1.25vw);
+    max-width: none;
+  }
+  .land-notebook-title {
+    grid-area: 1 / 1 / 2 / 7;
+    max-width: none;
+    font-size: 5.6vw;
+  }
+  .land-row-item:nth-child(n) {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  /* Your own prayers: painting beside the words, with the sign-in at their foot. */
+  .land-row-item:nth-child(1) {
+    grid-area: 2 / 1 / 3 / 7;
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: var(--gap);
+    align-self: stretch;
+    align-items: stretch;
+  }
+  /* Takes the row's height so painting, button and the paragraph opposite all end on one line. */
+  .land-row-item:nth-child(1) .land-margin {
+    order: -1;
+    aspect-ratio: auto;
+  }
+  .land-notebook-action {
+    grid-area: 2 / 1 / 3 / 7;
+    align-self: end;
+    margin: 0 0 0 calc((100% - var(--gap)) * 5 / 12 + var(--gap));
+  }
+  .land-notebook-action a {
+    min-height: max(56px, 3.9vw);
+    padding-inline: max(24px, 1.67vw);
+    font-size: max(18px, 1.25vw);
+  }
+  /* The people you carry: a large painting beside the title, running off the right edge. */
+  .land-row-item:nth-child(2) {
+    grid-area: 1 / 7 / 3 / 13;
+  }
+  .land-row-item:nth-child(2) .land-margin {
+    order: -1;
+    width: calc(100% + var(--edge));
+    aspect-ratio: 3 / 2;
+  }
+  /* Ready in the quiet places: the words above, the fresco's foot below, its arch cropped away. */
+  .land-row-item:nth-child(3) {
+    grid-area: 3 / 1 / 4 / 7;
+  }
+  .land-row-item:nth-child(3) .land-margin {
+    aspect-ratio: 3 / 2;
+  }
+  .land-row-item:nth-child(3) img {
+    object-position: 50% 78%;
+  }
+  /* The last two share a line, one picture high and one low, so they read as a pair and not as cards. */
+  .land-row-item:nth-child(4) {
+    grid-area: 3 / 7 / 4 / 10;
+  }
+  .land-row-item:nth-child(4) .land-margin {
+    order: -1;
+  }
+  .land-row-item:nth-child(5) {
+    grid-area: 3 / 10 / 4 / 13;
+  }
+  .land-row-item:nth-child(5) .land-margin {
+    aspect-ratio: 4 / 5;
+  }
+}
+
+@media (min-width: 48rem) {
+  .land-prayers-art {
+    object-position: 50% 0;
+  }
+}
+
+/* The landing page owns the whole screen at "/": hide the app shell's chrome and its content column. */
+body:has(.land) [data-shell-chrome] {
+  display: none;
+}
+body:has(.land) [data-shell-frame] {
+  max-width: none;
+  padding-left: 0;
+}
+body:has(.land) [data-shell-main] {
+  max-width: none;
+  padding: 0;
+}

@@ -9,7 +9,7 @@ import { withToast } from "@/lib/with-toast";
 
 const toggle = withToast(toggleFavorite, (fd) => (fd.get("favorite") === "true" ? "Added to favorites" : "Removed from favorites"));
 
-export function FavoriteButton({ id, isFavorite, className }: { id: string; isFavorite: boolean; className?: string }) {
+export function FavoriteButton({ id, title, isFavorite, className }: { id: string; title: string; isFavorite: boolean; className?: string }) {
   // Flips instantly; React reverts to the server value if the action fails.
   const [optimistic, setOptimistic] = useOptimistic(isFavorite, (_, next: boolean) => next);
 
@@ -26,7 +26,7 @@ export function FavoriteButton({ id, isFavorite, className }: { id: string; isFa
         type="submit"
         variant="ghost"
         size="icon"
-        aria-label="Favorite"
+        aria-label={`Favorite ${title}`}
         aria-pressed={optimistic}
       >
         <FavoriteHeart isFavorite={optimistic} />
