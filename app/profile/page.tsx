@@ -7,6 +7,7 @@ import { SignOutForm } from "@/components/profile/sign-out-form";
 import { RosaryCalendarCard } from "@/components/rosary/calendar-card";
 import { RosaryStatsCard } from "@/components/rosary/stats-card";
 import { AppearanceRow } from "@/components/profile/appearance-row";
+import { LegalRows } from "@/components/profile/legal-rows";
 import { PageHeader } from "@/components/layout/page-header";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "./actions";
@@ -46,6 +47,9 @@ export default async function ProfilePage() {
             <AppearanceRow />
           </Reveal>
           <Reveal index={4}>
+            <LegalRows />
+          </Reveal>
+          <Reveal index={5}>
             <SignOutForm action={signOut} />
           </Reveal>
         </div>

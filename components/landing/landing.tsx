@@ -230,6 +230,12 @@ export function Landing() {
             <li>
               <Link href="/login">Sign in</Link>
             </li>
+            <li>
+              <Link href="/privacy">Privacy</Link>
+            </li>
+            <li>
+              <Link href="/terms">Terms</Link>
+            </li>
           </ul>
           <p className="land-footer-verse">
             “Draw near to God and he will draw near to you.”
