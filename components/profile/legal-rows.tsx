@@ -1,10 +1,16 @@
-import { ChevronRight, FileText, ShieldCheck } from "lucide-react";
+import { ChevronRight, FileText, Image as ImageIcon, LifeBuoy, ShieldCheck } from "lucide-react";
 import Link from "next/link";
+
+import { CONTACT_EMAIL } from "@/lib/site";
 
 const ROWS = [
   { href: "/privacy", label: "Privacy policy", hint: "What Ora keeps and how to control it", Icon: ShieldCheck },
   { href: "/terms", label: "Terms of service", hint: "The terms for using Ora", Icon: FileText },
-] as const;
+  { href: "/credits", label: "Artwork credits", hint: "Where the images come from", Icon: ImageIcon },
+  ...(CONTACT_EMAIL
+    ? [{ href: `mailto:${CONTACT_EMAIL}`, label: "Contact support", hint: CONTACT_EMAIL, Icon: LifeBuoy }]
+    : []),
+];
 
 export function LegalRows() {
   return (

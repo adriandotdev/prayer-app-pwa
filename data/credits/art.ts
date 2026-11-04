@@ -1,0 +1,31 @@
+/** Artwork behind the landing and Rosary imagery. Mirrors docs/landing-art-credits.md; update both together. */
+export type ArtCredit = { file: string; work: string; artist: string; source: string };
+
+export const ART_CREDITS: ArtCredit[] = [
+  { file: "dore-empyrean", work: "Paradiso Canto 31 (no caption)", artist: "Gustave Doré", source: "https://commons.wikimedia.org/wiki/File:Paradiso_Canto_31_(no_caption).jpg" },
+  { file: "coronation-a", work: "Coronation of the Virgin", artist: "Fra Angelico", source: "https://commons.wikimedia.org/wiki/File:Fra_Angelico_-_Coronation_of_the_Virgin_-_1944.79_-_Cleveland_Museum_of_Art.tiff" },
+  { file: "francis", work: "Giotto - Saint Francis Receiving the Stigmata", artist: "Giotto", source: "https://commons.wikimedia.org/wiki/File:Giotto_-_Saint_Francis_Receiving_the_Stigmata.jpg" },
+  { file: "dominic", work: "Saint Dominic adoring the Crucifixion", artist: "Fra Angelico", source: "https://commons.wikimedia.org/wiki/File:Fra_Angelico_-Saint_Dominic_adoring_the_Crucifixion_-_San_Antonino_cloister_-_close_up_Saint_Dominic.jpeg" },
+  { file: "blessing", work: "Blessing Christ", artist: "Giotto", source: "https://commons.wikimedia.org/wiki/File:Giotto_-_Vault_(detail),_1303-06,_1vault1.jpg" },
+  { file: "annunciation", work: "The Virgin Receiving the Message", artist: "Giotto", source: "https://commons.wikimedia.org/wiki/File:Giotto_-_Scrovegni_-_-15-_-_The_Virgin_Receiving_the_Message.jpg" },
+  { file: "visitation", work: "Visitation", artist: "Giotto", source: "https://commons.wikimedia.org/wiki/File:Giotto_-_Scrovegni_-_-16-_-_Visitation.jpg" },
+  { file: "nativity", work: "Nativity", artist: "Giotto", source: "https://commons.wikimedia.org/wiki/File:Giotto_-_Scrovegni_-_-17-_-_Nativity,_Birth_of_Jesus.jpg" },
+  { file: "presentation", work: "Presentation of Jesus at the Temple", artist: "Giotto", source: "https://commons.wikimedia.org/wiki/File:Giotto_-_Scrovegni_-_-19-_-_Presentation_at_the_Temple.jpg" },
+  { file: "finding", work: "Jesus among the Doctors", artist: "Giotto", source: "https://commons.wikimedia.org/wiki/File:Giotto_-_Scrovegni_-_-22-_-_Christ_among_the_Doctors.jpg" },
+  { file: "baptism", work: "The Baptism of Christ", artist: "Giotto", source: "https://commons.wikimedia.org/wiki/File:Giotto_-_Scrovegni_-_-23-_-_Baptism_of_Christ.jpg" },
+  { file: "cana", work: "Marriage at Cana", artist: "Giotto", source: "https://commons.wikimedia.org/wiki/File:Giotto_-_Scrovegni_-_-24-_-_Marriage_at_Cana.jpg" },
+  { file: "proclamation", work: "Sermon on the Mount", artist: "Fra Angelico", source: "https://commons.wikimedia.org/wiki/File:Fra_Angelico_-_Die_Bergpredigt.jpeg" },
+  { file: "supper", work: "Last Supper", artist: "Giotto", source: "https://commons.wikimedia.org/wiki/File:Giotto_-_Scrovegni_-_-29-_-_Last_Supper.jpg" },
+  { file: "scourging", work: "Flagellation", artist: "Giotto", source: "https://commons.wikimedia.org/wiki/File:Giotto_-_Scrovegni_-_-33-_-_Flagellation.jpg" },
+  { file: "thorns", work: "Mocking of Christ", artist: "Fra Angelico", source: "https://commons.wikimedia.org/wiki/File:Fra_Angelico_-_Mocking_of_Christ_(Cell_7)_-_WGA00541.jpg" },
+  { file: "carrying", work: "Road to Calvary", artist: "Giotto", source: "https://commons.wikimedia.org/wiki/File:Giotto_-_Scrovegni_-_-34-_-_Road_to_Calvary.jpg" },
+  { file: "crucifixion", work: "Crucifixion", artist: "Giotto", source: "https://commons.wikimedia.org/wiki/File:Giotto_-_Scrovegni_-_-35-_-_Crucifixion.jpg" },
+  { file: "resurrection", work: "Resurrection (Noli me tangere)", artist: "Giotto", source: "https://commons.wikimedia.org/wiki/File:Giotto_-_Scrovegni_-_-37-_-_Resurrection_(Noli_me_tangere).jpg" },
+  { file: "ascension", work: "The Ascension", artist: "Giotto", source: "https://commons.wikimedia.org/wiki/File:Giotto_-_Scrovegni_-_-38-_-_Ascension.jpg" },
+  { file: "pentecost", work: "Pentecost", artist: "Giotto", source: "https://commons.wikimedia.org/wiki/File:Giotto_-_Scrovegni_-_-39-_-_Pentecost.jpg" },
+  { file: "assumption", work: "The Death and the Assumption of the Virgin", artist: "Fra Angelico", source: "https://commons.wikimedia.org/wiki/File:The_Death_and_the_Assumption_of_the_Virgin_-_Fra_Angelico_-_Google_Cultural_Institute.jpg" },
+  { file: "coronation", work: "Coronation of the Virgin", artist: "Fra Angelico", source: "https://commons.wikimedia.org/wiki/File:Fra_Angelico_038.jpg" },
+  { file: "transfiguration", work: "Transfiguration (Cell 6)", artist: "Fra Angelico", source: "https://commons.wikimedia.org/wiki/File:Transfiguration_by_fra_Angelico_(San_Marco_Cell_6).jpg" },
+  { file: "annunciation-prado", work: "Annunciation (Museo del Prado, P000015)", artist: "Fra Angelico", source: "https://commons.wikimedia.org/wiki/File:La_Anunciaci%C3%B3n_(Fra_Angelico-Prado).jpg" },
+  { file: "agony", work: "Christ in the Garden of Gethsemane", artist: "Fra Angelico", source: "https://commons.wikimedia.org/wiki/File:Fra_Angelico_016.jpg" },
+];

@@ -14,6 +14,7 @@ import {
   MYSTERY_ART,
   VIRGIN,
 } from "./art";
+import { CONTACT_EMAIL } from "@/lib/site";
 import { Decade } from "./decade";
 import { HeroScene } from "./hero-scene";
 import { MysteriesRow } from "./mysteries-row";
@@ -236,6 +237,14 @@ export function Landing() {
             <li>
               <Link href="/terms">Terms</Link>
             </li>
+            <li>
+              <Link href="/credits">Artwork credits</Link>
+            </li>
+            {CONTACT_EMAIL ? (
+              <li>
+                <a href={`mailto:${CONTACT_EMAIL}`}>Contact</a>
+              </li>
+            ) : null}
           </ul>
           <p className="land-footer-verse">
             “Draw near to God and he will draw near to you.”
