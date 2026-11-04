@@ -214,6 +214,7 @@ export type Database = {
           client_id: string | null
           completed_at: string
           id: string
+          intention_id: string | null
           mystery_set: string
           user_id: string
         }
@@ -221,6 +222,7 @@ export type Database = {
           client_id?: string | null
           completed_at?: string
           id?: string
+          intention_id?: string | null
           mystery_set: string
           user_id: string
         }
@@ -228,10 +230,19 @@ export type Database = {
           client_id?: string | null
           completed_at?: string
           id?: string
+          intention_id?: string | null
           mystery_set?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "rosary_sessions_intention_id_fkey"
+            columns: ["intention_id"]
+            isOneToOne: false
+            referencedRelation: "intentions"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
