@@ -40,7 +40,8 @@ export default async function HomePage() {
     const jsonLd = {
       "@context": "https://schema.org",
       "@graph": [
-        { "@type": "WebSite", name: SITE_NAME, url: SITE_URL, description: SITE_DESCRIPTION, inLanguage: "en" },
+        { "@type": "Organization", "@id": `${SITE_URL}/#org`, name: SITE_NAME, url: SITE_URL, logo: `${SITE_URL}/brand/icon-512.png` },
+        { "@type": "WebSite", name: SITE_NAME, url: SITE_URL, description: SITE_DESCRIPTION, inLanguage: "en", publisher: { "@id": `${SITE_URL}/#org` } },
         {
           "@type": "SoftwareApplication",
           name: SITE_NAME,

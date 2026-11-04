@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
+import { PracticeGuide } from "@/components/seo/practice-guide";
 import { AngelusExperience } from "@/components/angelus/angelus-experience";
 
 export const metadata: Metadata = pageMetadata({
@@ -9,5 +10,5 @@ export const metadata: Metadata = pageMetadata({
 });
 
 export default function AngelusPage() {
-  return <AngelusExperience />;
+  return <AngelusExperience guide={<PracticeGuide practice="angelus" />} />;
 }

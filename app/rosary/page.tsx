@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
+import { PracticeGuide } from "@/components/seo/practice-guide";
 import { RosaryExperience } from "@/components/rosary/rosary-experience";
 
 export const metadata: Metadata = pageMetadata({
@@ -10,7 +11,5 @@ export const metadata: Metadata = pageMetadata({
 });
 
 export default function RosaryPage() {
-  return (
-    <RosaryExperience />
-  );
+  return <RosaryExperience guide={<PracticeGuide practice="rosary" />} />;
 }
