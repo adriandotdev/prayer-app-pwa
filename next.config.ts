@@ -5,6 +5,13 @@ const nextConfig: NextConfig = {
     agentUpgrade: "security",
   },
   poweredByHeader: false,
+  images: {
+    formats: ["image/avif", "image/webp"],
+    // Landing art filenames never change, so let optimized copies live for 31 days.
+    minimumCacheTTL: 2678400,
+    // 60 is the hero engraving; 75 is the default for everything else.
+    qualities: [60, 75],
+  },
   async headers() {
     return [
       {
