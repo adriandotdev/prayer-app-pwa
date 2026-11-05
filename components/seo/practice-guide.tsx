@@ -57,9 +57,9 @@ const GUIDES: Record<Practice, Guide> = {
     steps: [
       { name: "Opening", text: "Make the Sign of the Cross, then pray an Our Father, a Hail Mary and the Apostles’ Creed." },
       { name: "Large bead of each decade", text: "Pray the Eternal Father prayer: offer the Body and Blood, Soul and Divinity of Jesus for our sins and those of the whole world." },
-      { name: "Small beads of each decade", text: "Ten times, pray: For the sake of his sorrowful Passion, have mercy on us and on the whole world." },
+      { name: "Small beads of each decade", text: "Ten times, pray: Because of his suffering and death, be merciful to us and to the whole world." },
       { name: "Repeat for five decades", text: "Pray the large bead and the ten small beads again for each of the five decades." },
-      { name: "Closing", text: "Pray three times: Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world." },
+      { name: "Closing", text: "Pray three times: Holy God, holy and strong, holy and deathless, be merciful to us and to the whole world." },
     ],
   },
 };
