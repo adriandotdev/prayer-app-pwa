@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-import { FAILED, OK, type ActionResult } from "@/lib/action-result";
+import { FAILED, OK, saveErrorMessage, type ActionResult } from "@/lib/action-result";
 import { requireUser } from "@/lib/auth/require-user";
 import { createClient } from "@/lib/supabase/server";
 import { flash } from "@/lib/toast-flash";
@@ -50,7 +50,7 @@ export async function createIntention(_prev: IntentionFormState, formData: FormD
     .insert({ user_id: user.id, text: parsed.data.text })
     .select("id")
     .single();
-  if (error || !data) return { status: "error", message: SAVE_ERROR };
+  if (error || !data) return { status: "error", message: saveErrorMessage(error, "intentions", SAVE_ERROR) };
 
   revalidatePath("/intentions");
   await flash("Intention added");
