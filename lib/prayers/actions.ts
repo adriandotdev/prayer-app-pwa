@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-import { FAILED, OK, type ActionResult } from "@/lib/action-result";
+import { FAILED, OK, saveErrorMessage, type ActionResult } from "@/lib/action-result";
 import { requireUser } from "@/lib/auth/require-user";
 import { flash } from "@/lib/toast-flash";
 import { formId } from "@/lib/validation";
@@ -44,7 +44,7 @@ export async function createPrayer(_prev: PrayerFormState, formData: FormData): 
     .insert({ user_id: user.id, title: parsed.data.title, body: parsed.data.body, source: parsed.data.source || null })
     .select("id")
     .single();
-  if (error || !data) return { status: "error", message: SAVE_ERROR };
+  if (error || !data) return { status: "error", message: saveErrorMessage(error, "saved prayers", SAVE_ERROR) };
 
   revalidatePath("/prayers");
   await flash("Prayer added");
@@ -105,7 +105,7 @@ export async function copyPrayer(formData: FormData) {
     .select("id")
     .single();
   if (error || !copy) {
-    await flash("We couldn't copy that prayer. Please try again.", "error");
+    await flash(saveErrorMessage(error, "saved prayers", "We couldn't copy that prayer. Please try again."), "error");
     redirect(`/prayers/${id}`);
   }
 

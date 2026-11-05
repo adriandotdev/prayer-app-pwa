@@ -10,7 +10,7 @@ export const DIVINE_MERCY_PRAYERS: Record<string, Prayer> = {
     id: "opening-prayer",
     name: "Opening Prayer",
     text: [
-      "You expired, Jesus, but the source of life gushed forth for souls, and the ocean of mercy opened up for the whole world. O Fount of Life, unfathomable Divine Mercy, envelop the whole world and empty Yourself out upon us.",
+      "Jesus, you died, yet from your death flowed a spring of life for souls, and a sea of mercy opened for the whole world. Fountain of life, mercy beyond understanding, cover the whole world and pour yourself out on us.",
     ],
     learn: "An optional prayer from St. Faustina’s Diary that opens the chaplet at the foot of the Cross.",
   },
@@ -18,7 +18,7 @@ export const DIVINE_MERCY_PRAYERS: Record<string, Prayer> = {
     id: "blood-and-water",
     name: "O Blood and Water",
     text: [
-      "O Blood and Water, which gushed forth from the Heart of Jesus as a fount of mercy for us, I trust in You!",
+      "Blood and water that poured from the Heart of Jesus as a spring of mercy for us, I trust in you.",
     ],
     learn: "Said three times. It looks to the blood and water that flowed from Christ’s pierced side (John 19:34).",
   },
@@ -26,27 +26,27 @@ export const DIVINE_MERCY_PRAYERS: Record<string, Prayer> = {
     id: "eternal-father",
     name: "Eternal Father",
     text: [
-      "Eternal Father, I offer You the Body and Blood, Soul and Divinity of Your dearly beloved Son, Our Lord, Jesus Christ, in atonement for our sins and those of the whole world.",
+      "Eternal Father, I offer you the Body and Blood, the Soul and Divinity, of your beloved Son, our Lord Jesus Christ, to make amends for our sins and the sins of the whole world.",
     ],
     learn: "Said once on each large bead. It offers Christ’s sacrifice to the Father for the whole world.",
   },
   "sorrowful-passion": {
     id: "sorrowful-passion",
     name: "For the Sake of His Sorrowful Passion",
-    text: ["For the sake of His sorrowful Passion, have mercy on us and on the whole world."],
+    text: ["Because of his suffering and death, be merciful to us and to the whole world."],
     learn: "Said ten times on the small beads of each decade, in place of the Hail Marys of the Rosary.",
   },
   "holy-god": {
     id: "holy-god",
     name: "Holy God",
-    text: ["Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world."],
+    text: ["Holy God, holy and strong, holy and deathless, be merciful to us and to the whole world."],
     learn: "Said three times after the five decades. It echoes the ancient Trisagion.",
   },
   "closing-prayer": {
     id: "closing-prayer",
     name: "Closing Prayer",
     text: [
-      "Eternal God, in whom mercy is endless and the treasury of compassion inexhaustible, look kindly upon us and increase Your mercy in us, that in difficult moments we might not despair nor become despondent, but with great confidence submit ourselves to Your holy will, which is Love and Mercy itself. Amen.",
+      "Eternal God, whose mercy has no end and whose compassion never runs dry, look kindly on us and grow your mercy within us. In hard times, keep us from despair and discouragement, and help us trust you and place ourselves in your holy will, which is love and mercy itself. Amen.",
     ],
     learn: "An optional prayer of trust that closes the chaplet.",
   },

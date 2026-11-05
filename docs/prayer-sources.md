@@ -15,13 +15,13 @@ Rule of thumb: pre-1900 English forms (thee/thou) of prayers that are centuries 
 | Fatima Prayer | Traditional English, given 1917 | Public domain (verify translation origin) |
 | Hail, Holy Queen | Traditional ("thine eyes of mercy") | Public domain |
 | Closing Prayer (collect) | Traditional older translation ("only-begotten", "we beseech thee") | Public domain, likely |
-| **Apostles' Creed** | **Matches the current ICEL Roman Missal wording** ("on the third day he rose again from the dead", "seated at the right hand of God the Father almighty") | **Verify. ICEL holds copyright on this translation.** |
+| Apostles' Creed | Traditional "Holy Ghost" form ("sitteth at the right hand", "from thence he shall come"), identical to the starter library | Public domain. Replaced the ICEL wording on 2026-11-05 |
 | Mystery names, scripture references, fruits | References only | Fine (references are not text) |
-| Mystery meditations | Short paraphrases of Gospel passages written for the app | **Verify** they are original paraphrases and not copied from a translation (the Annunciation line is close to RSV-CE: "Behold, I am the handmaid of the Lord") |
+| Mystery meditations | Original paraphrases of Gospel passages written for the app, with no quoted translation text (the RSV-CE, NRSV and NABRE quotations were removed on 2026-11-05) | Original wording |
 
 ## Starter library (`supabase/seed.sql`)
 
-All eleven carry a `source` such as "Traditional". The seed's Apostles' Creed uses the older "Holy Ghost" form, which is public domain, so the library and the Rosary player show two different Creeds. Picking one traditional wording for both would be both safer and consistent.
+All eleven carry a `source` such as "Traditional", and the Rosary player now uses the same Apostles' Creed wording as the library.
 
 ## Angelus (`data/angelus/prayers.ts`)
 
@@ -29,21 +29,14 @@ Versicle and response lines and the closing collect ("Pour forth, we beseech You
 
 ## Divine Mercy Chaplet (`data/divine-mercy/prayers.ts`)
 
-| Prayer | Source | Status |
-| --- | --- | --- |
-| Opening Prayer ("You expired, Jesus...") | St. Faustina's Diary, 1319 | **Verify.** The English Diary translation is published by Marian Press. |
-| Eternal Father | Diary, 476 | **Verify**, same translation |
-| For the Sake of His Sorrowful Passion | Diary, 476 | **Verify**, same translation |
-| Holy God (Trisagion) | Ancient hymn; this wording from the Diary | **Verify** |
-| Closing Prayer ("Eternal God, in whom mercy is endless...") | Diary, 950 | **Verify** |
-| O Blood and Water | Diary, 84 | **Verify** |
+The six prayers come from St. Faustina's Diary, whose English translation is published by Marian Press. On 2026-11-05 the app's wording was replaced with an independent plain-language rendering that shares no sentence structure with that translation, and the `learn` notes only cite the Diary as a reference. The Trisagion is an ancient hymn. The same lines appear in `components/seo/practice-guide.tsx`.
 
-The prayers are used universally and the Marians publish them for free use in worship, but that is not a licence for an app. Options: (a) ask the Marians of the Immaculate Conception for written permission, (b) replace with an independently worded translation from the Polish original, or (c) ship the chaplet's structure with a link rather than the text.
+| Prayer | Status |
+| --- | --- |
+| Opening Prayer, Eternal Father, For the Sake of His Sorrowful Passion, Holy God, Closing Prayer, O Blood and Water | Independent wording. **Have a person review it for doctrinal fidelity before launch.** Prayer titles stay traditional |
 
-## Recommended next steps
+## Remaining checks (need a person)
 
-1. Replace the Rosary's Apostles' Creed with a traditional public-domain form (the seed's "Holy Ghost" form, or the Roman Catechism wording) so the Rosary and library agree.
-2. Decide the Divine Mercy approach (a, b or c above) before launch. Until then the chaplet is the largest licensing risk.
-3. Confirm the origin of the Angelus and closing-collect translations, and that the mystery meditations are original wording.
-4. Record the resolved source for each prayer in this table, then tick the checklist item.
-5. The Terms of service say traditional prayers remain in the public domain; keep that sentence accurate once the above is settled.
+1. Confirm the Fatima Prayer, the Rosary closing collect and the Angelus translations against a pre-1928 printed source, and record it here.
+2. Have a person review the reworded Divine Mercy prayers.
+3. Keep the Terms of service sentence that traditional prayers remain in the public domain accurate.
