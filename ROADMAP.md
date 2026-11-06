@@ -2,22 +2,23 @@
 
 Feature backlog for Ora after Phase 6 (polish). Items are numbered so they can be referred to in conversation and PRs.
 
-**Suggested next phase:** items 1, 2 and 5 together (no new backend), then 6 and 8 to harden the foundation before reminders (10).
+**Suggested next phase:** items 6 (offline library) and 7 (sharing); the e2e suite from item 8 now protects what is built. Item 9's remaining chaplets are small data-only additions that can slot in anywhere. Harden before reminders (10).
 
-## High value, in scope
+## Done
 
-1. **Prayer streak and Rosary stats.** Built from the existing `rosary_sessions`: streak, count by mystery set, history calendar on the profile page.
-2. **Intentions linked to prayers.** Attach an intention to a Rosary or Chaplet session and show it in the history.
-3. **Resume for all sequences.** "Continue where you left off" for every sequence, including Divine Mercy and future chaplets, through the generic engine.
-4. **Data export and account deletion.** JSON export of prayers, collections, intentions and history, plus delete account.
-5. **Prayer reader preferences.** Line-height option, sepia/night theme, and keep-screen-awake (Wake Lock API) while praying.
+1. **Prayer streak and Rosary stats.** Streak, count by mystery set and practice calendar on the profile page (#26, #39).
+2. **Intentions linked to sessions.** Intention picker in the Rosary, shown in history (#46).
+3. **Resume for all sequences.** Home resume state (#28), plus Divine Mercy and Angelus resume.
+4. **Data export and account deletion.** (#53)
+5. **Prayer reader preferences.** Reading themes and keep-screen-awake via Wake Lock (#41).
+8. **Tests.** Playwright e2e (Rosary flow, signed-out redirects, offline fallback) and jsdom component tests for the bead tracker and sequence player. Real Google sign-in is not automated.
+9. **Chaplets (partial).** Divine Mercy (#38) and Angelus (#40) are built.
 
-## Medium value
+## Remaining, in scope
 
-6. **Offline-first library.** Cache a signed-in user's prayers and favorites in IndexedDB and sync on reconnect (the biggest PWA gap).
-7. **Sharing.** Read-only public link for a prayer or collection, plus the Web Share API.
-8. **Tests.** Playwright e2e (Rosary flow, sign-in, offline fallback) and component tests.
-9. **More chaplets and devotions.** Seven Sorrows, Stations of the Cross, Angelus. Data only, thanks to the sequence engine.
+6. **Offline-first library.** Cache a signed-in user's prayers and favorites in IndexedDB and sync on reconnect (the biggest PWA gap). No IndexedDB code yet.
+7. **Sharing.** Read-only public link for a prayer or collection, plus the Web Share API. Needs a schema change; nothing built yet.
+9. **More chaplets (remainder).** Seven Sorrows and Stations of the Cross. Data only, thanks to the sequence engine.
 
 ## Outside the current scope (needs an explicit go-ahead)
 
