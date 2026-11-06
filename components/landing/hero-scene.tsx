@@ -84,7 +84,7 @@ export function HeroScene() {
             <motion.div className="land-camera" style={full ? { x: shift } : undefined}>
               <motion.div className="land-ascend" style={full ? { scale: zoom, visibility: artVisibility } : undefined}>
                 <motion.div className="land-art" style={full ? { x: driftX, y: driftY } : undefined}>
-                  <Image src={EMPYREAN.src} alt={EMPYREAN.alt} fill priority sizes="(min-width: 48rem) 90vw, 130vw" />
+                  <Image src={EMPYREAN.src} alt={EMPYREAN.alt} fill priority fetchPriority="high" quality={60} sizes="(min-width: 48rem) 90vw, 130vw" />
                   <motion.div className="land-wheel" style={full ? { rotate: turn } : undefined}>
                     <div className="land-rose">
                       <Image src={EMPYREAN_ROSE.src} alt="" fill sizes="(min-width: 48rem) 80vw, 110vw" />

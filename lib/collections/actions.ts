@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-import { FAILED, OK, type ActionResult } from "@/lib/action-result";
+import { FAILED, OK, saveErrorMessage, type ActionResult } from "@/lib/action-result";
 import { requireUser } from "@/lib/auth/require-user";
 import { flash } from "@/lib/toast-flash";
 import { formId } from "@/lib/validation";
@@ -28,7 +28,7 @@ export async function createCollection(_prev: CollectionFormState, formData: For
     .insert({ user_id: user.id, name: parsed.data.name })
     .select("id")
     .single();
-  if (error || !data) return { status: "error", message: SAVE_ERROR };
+  if (error || !data) return { status: "error", message: saveErrorMessage(error, "collections", SAVE_ERROR) };
 
   revalidatePath("/collections", "layout");
   await flash("Collection created");

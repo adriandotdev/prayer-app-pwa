@@ -22,7 +22,7 @@ export const MYSTERY_SETS: Record<MysterySetId, MysterySet> = {
         name: "The Annunciation",
         scripture: "Luke 1:26–38",
         meditation:
-          "The angel Gabriel greets Mary, and she answers, “Behold, I am the handmaid of the Lord; be it done to me according to your word.”",
+          "The angel Gabriel greets Mary with God’s message. She accepts it freely, calling herself the Lord’s servant and trusting his word.",
         fruit: "Humility",
       },
       {
@@ -63,28 +63,28 @@ export const MYSTERY_SETS: Record<MysterySetId, MysterySet> = {
         name: "The Baptism of Jesus",
         scripture: "Matthew 3:13–17",
         meditation:
-          "In the Jordan the heavens open, the Spirit descends, and the Father declares, “This is my beloved Son.”",
+          "In the Jordan the heavens open, the Spirit descends, and the Father’s voice names Jesus as his beloved Son.",
         fruit: "Openness to the Holy Spirit",
       },
       {
         name: "The Wedding at Cana",
         scripture: "John 2:1–12",
         meditation:
-          "Mary notices the need and tells the servants, “Do whatever he tells you.” Jesus changes water into wine.",
+          "Mary notices the need and tells the servants to do whatever Jesus asks of them. He changes water into wine.",
         fruit: "To Jesus through Mary",
       },
       {
         name: "The Proclamation of the Kingdom",
         scripture: "Mark 1:14–15",
         meditation:
-          "Jesus proclaims, “The kingdom of God is at hand; repent and believe in the gospel,” and forgives sins.",
+          "Jesus announces that God’s kingdom is near, calls people to turn back and believe the good news, and forgives sins.",
         fruit: "Repentance and trust in God",
       },
       {
         name: "The Transfiguration",
         scripture: "Luke 9:28–36",
         meditation:
-          "On the mountain Jesus’ face shines like the sun, and the Father says, “This is my Son, my Chosen; listen to him.”",
+          "On the mountain Jesus’ face shines like the sun, and the Father’s voice tells the disciples to listen to his chosen Son.",
         fruit: "Desire for holiness",
       },
       {
@@ -104,7 +104,7 @@ export const MYSTERY_SETS: Record<MysterySetId, MysterySet> = {
         name: "The Agony in the Garden",
         scripture: "Matthew 26:36–46",
         meditation:
-          "In Gethsemane Jesus prays in anguish, “Not as I will, but as you will,” and entrusts himself to the Father.",
+          "In Gethsemane Jesus prays in anguish, asks that the Father’s will be done rather than his own, and entrusts himself to him.",
         fruit: "Sorrow for sin",
       },
       {
@@ -132,7 +132,7 @@ export const MYSTERY_SETS: Record<MysterySetId, MysterySet> = {
         name: "The Crucifixion",
         scripture: "Luke 23:33–46",
         meditation:
-          "Jesus forgives his executors, promises paradise to the thief, and says, “Father, into your hands I commit my spirit.”",
+          "Jesus forgives those who crucify him, promises paradise to the repentant thief, and commits his spirit into the Father’s hands.",
         fruit: "Perseverance and the salvation of souls",
       },
     ],
@@ -145,7 +145,7 @@ export const MYSTERY_SETS: Record<MysterySetId, MysterySet> = {
         name: "The Resurrection",
         scripture: "Matthew 28:1–10",
         meditation:
-          "The tomb is empty. Christ is risen, and tells the women, “Do not be afraid.”",
+          "The tomb is empty. Christ is risen, and he tells the women not to be afraid.",
         fruit: "Faith",
       },
       {
