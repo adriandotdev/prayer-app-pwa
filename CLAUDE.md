@@ -18,7 +18,7 @@ npm run lint         # eslint
 npx tsc --noEmit     # type-check; if `PageProps<"/x">` is unknown run `npx next typegen` first
 ```
 
-`npm test` runs vitest (pure logic plus theme contrast; no component or e2e tests yet), and CI runs typecheck, lint, test and build. Use Node 22 (CI's version; older Node 20 breaks vitest). Also verify with `curl` against `next start`. See `docs/performance-budget.md` and `docs/accessibility-checklist.md`.
+`npm test` runs vitest (pure logic, theme contrast, and jsdom component tests in `tests/components/` that opt in with `// @vitest-environment jsdom`). `npm run test:e2e` runs Playwright (`e2e/`, chromium, desktop and phone viewports) against a production build on port 3100 with Supabase env deliberately unset, so it needs no secrets; first run `npx playwright install chromium`. CI runs typecheck, lint, test and build in `check`, and the e2e suite in a separate `e2e` job. Use Node 22 (CI's version; older Node 20 breaks vitest). Also verify with `curl` against `next start`. See `docs/performance-budget.md` and `docs/accessibility-checklist.md`.
 
 Supabase (CLI, project ref `ltgjhevwtfxlhhurxrdx`): `supabase db push --include-seed` applies `supabase/migrations/` and `seed.sql`; `supabase gen types typescript --linked > lib/database.types.ts` regenerates types after schema changes.
 
