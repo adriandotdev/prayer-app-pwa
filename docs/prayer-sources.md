@@ -35,8 +35,16 @@ The six prayers come from St. Faustina's Diary, whose English translation is pub
 | --- | --- |
 | Opening Prayer, Eternal Father, For the Sake of His Sorrowful Passion, Holy God, Closing Prayer, O Blood and Water | Independent wording. **Have a person review it for doctrinal fidelity before launch.** Prayer titles stay traditional |
 
+## Seven Sorrows (`data/seven-sorrows/prayers.ts`)
+
+The seven sorrows and their Gospel references are traditional (Servite devotion). The opening prayer, closing prayer, versicle response, meditations and fruits are original wording written for the app, with no quoted translation. The Hail Mary is the traditional public-domain form. **Have a person review the original prayers for doctrinal fidelity before launch.**
+
+## Stations of the Cross (`data/stations-of-the-cross/prayers.ts`)
+
+The fourteen stations are traditional; Gospel references are given as references only, and stations from tradition (the three falls, Veronica) are marked "Tradition". The versicle "We adore you, O Christ, and we praise you" is the traditional response in wide circulation. The opening, closing and per-station prayers, scenes and fruits are original wording. **Have a person review the original prayers for doctrinal fidelity before launch, and confirm the versicle translation against a pre-1928 source.**
+
 ## Remaining checks (need a person)
 
 1. Confirm the Fatima Prayer, the Rosary closing collect and the Angelus translations against a pre-1928 printed source, and record it here.
-2. Have a person review the reworded Divine Mercy prayers.
+2. Have a person review the reworded Divine Mercy prayers, and the original Seven Sorrows and Stations of the Cross prayers.
 3. Keep the Terms of service sentence that traditional prayers remain in the public domain accurate.

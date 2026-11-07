@@ -3,6 +3,8 @@
 import { AppButton } from "@/components/app-button";
 import { ANGELUS_ID, buildAngelus } from "@/data/angelus/sequence";
 import { DIVINE_MERCY_ID, buildDivineMercy } from "@/data/divine-mercy/sequence";
+import { SEVEN_SORROWS_ID, buildSevenSorrows } from "@/data/seven-sorrows/sequence";
+import { STATIONS_OF_THE_CROSS_ID, buildStationsOfTheCross } from "@/data/stations-of-the-cross/sequence";
 import { buildRosary } from "@/data/rosary/sequence";
 import { MYSTERY_SETS } from "@/data/rosary/mysteries";
 import { setFromSequenceId } from "@/lib/rosary/resume";
@@ -23,6 +25,22 @@ export function savedPractice(saved: SavedProgress | null | undefined) {
   }
   if (saved.sequenceId === ANGELUS_ID) {
     return { id: "angelus" as const, name: "the Angelus", href: "/angelus", detail: `Step ${step} of ${buildAngelus().steps.length}` };
+  }
+  if (saved.sequenceId === SEVEN_SORROWS_ID) {
+    return {
+      id: "seven-sorrows" as const,
+      name: "the Seven Sorrows",
+      href: "/seven-sorrows",
+      detail: `Step ${step} of ${buildSevenSorrows().steps.length}`,
+    };
+  }
+  if (saved.sequenceId === STATIONS_OF_THE_CROSS_ID) {
+    return {
+      id: "stations-of-the-cross" as const,
+      name: "the Stations of the Cross",
+      href: "/stations-of-the-cross",
+      detail: `Step ${step} of ${buildStationsOfTheCross().steps.length}`,
+    };
   }
   const setId = setFromSequenceId(saved.sequenceId);
   if (setId) {

@@ -35,4 +35,4 @@ export const LEGAL_UPDATED = "7 November 2026";
 export const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || "";
 
 /** Public, signed-out pages that belong in the sitemap. */
-export const PUBLIC_PATHS = ["/", "/rosary", "/angelus", "/divine-mercy", "/privacy", "/terms", "/credits"] as const;
+export const PUBLIC_PATHS = ["/", "/rosary", "/angelus", "/divine-mercy", "/seven-sorrows", "/stations-of-the-cross", "/privacy", "/terms", "/credits"] as const;

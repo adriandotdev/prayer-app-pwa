@@ -405,7 +405,7 @@ html[data-reading] .reader-surface {
 @keyframes ora-rise-soft {
   from {
     opacity: 0;
-    transform: translateY(18px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -413,8 +413,8 @@ html[data-reading] .reader-surface {
   }
 }
 .ora-stagger > * {
-  animation: ora-rise-soft 520ms var(--ease-ora) backwards;
-  animation-delay: calc(min(var(--i, 0), 8) * 70ms + 80ms);
+  animation: ora-rise-soft 320ms var(--ease-ora) backwards;
+  animation-delay: calc(min(var(--i, 0), 8) * 55ms);
 }
 
 /* The arch: the one shape the app repeats, from the windows of a chapel. */
@@ -482,6 +482,14 @@ html[data-reading] .reader-surface {
   }
 }
 
+/* List rows: a small press, no hover background and no lift (a moving row fights its divider). */
+.ora-row {
+  transition: transform 160ms var(--ease-ora);
+}
+.ora-row:active {
+  transform: scale(0.99);
+}
+
 /* No animation at all, so nothing waits out an animation delay hidden or in its start state. */
 @media (prefers-reduced-motion: reduce) {
   .ora-enter,
@@ -497,7 +505,8 @@ html[data-reading] .reader-surface {
   }
   .ora-press,
   .ora-press:hover,
-  .ora-press:active {
+  .ora-press:active,
+  .ora-row:active {
     transform: none;
   }
 }
