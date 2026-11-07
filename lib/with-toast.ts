@@ -1,4 +1,5 @@
 import type { ActionResult } from "@/lib/action-result";
+import { markLibraryStale } from "@/lib/library/stale";
 import { toast } from "@/lib/toast";
 
 /**
@@ -13,6 +14,9 @@ export function withToast(
   return async (formData: FormData) => {
     const result = await action(formData);
     if (!result.ok) toast.error(result.message);
-    else toast.success(typeof message === "function" ? message(formData) : message);
+    else {
+      toast.success(typeof message === "function" ? message(formData) : message);
+      markLibraryStale(); // favorites, collections or intentions changed: refresh the offline copy
+    }
   };
 }

@@ -1,6 +1,7 @@
 import "server-only";
 
 import { createClient } from "@/lib/supabase/server";
+import { fetchAllPages } from "@/lib/supabase/paginate";
 import type { Tables } from "@/lib/database.types";
 import type { Prayer } from "@/lib/prayers/queries";
 import { isUuid } from "@/lib/validation";
@@ -18,6 +19,26 @@ export async function listCollections(): Promise<CollectionWithCount[]> {
     .order("created_at");
   if (error) throw new Error("Could not load collections.");
   return (data ?? []).map((c) => ({ id: c.id, name: c.name, count: c.collection_prayers[0]?.count ?? 0 }));
+}
+
+/** All of the user's collections and which prayers they hold, for the offline copy. */
+export async function listAllForSync() {
+  const supabase = await createClient();
+  const [collections, membership] = await Promise.all([
+    fetchAllPages<{ id: string; name: string; sort_order: number }>((from, to) =>
+      supabase.from("collections").select("id, name, sort_order").order("sort_order").order("id").range(from, to),
+    ),
+    // RLS only returns rows of the user's own collections. No row cap exists on this table.
+    fetchAllPages<{ collection_id: string; prayer_id: string }>((from, to) =>
+      supabase
+        .from("collection_prayers")
+        .select("collection_id, prayer_id")
+        .order("collection_id")
+        .order("prayer_id")
+        .range(from, to),
+    ),
+  ]);
+  return { collections, collectionPrayers: membership };
 }
 
 export async function getCollection(id: string): Promise<Collection | null> {
