@@ -7,9 +7,9 @@ Built with Next.js 16 (App Router), React 19, TypeScript, Tailwind v4 and Supaba
 ## Getting started
 
 ```bash
-npm install
+pnpm install
 cp .env.example .env     # then fill in the two Supabase values
-npm run dev
+pnpm dev
 ```
 
 The Rosary works without Supabase. Sign-in and the library need `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, and Google enabled as an auth provider in the Supabase project.
@@ -18,11 +18,11 @@ The Rosary works without Supabase. Sign-in and the library need `NEXT_PUBLIC_SUP
 
 | Command | What it does |
 | --- | --- |
-| `npm run dev` | Dev server. The service worker is not registered in dev. |
-| `npm run build` / `npm run start` | Production build and server. Test the PWA here (`-p 3100` if dev is on 3000). |
-| `npm run typecheck` | `tsc --noEmit`. Run `npx next typegen` first if route types are missing. |
-| `npm run lint` | ESLint. |
-| `npm test` | Vitest, for the pure code (liturgical season, Rosary engine, validation). |
+| `pnpm dev` | Dev server. The service worker is not registered in dev. |
+| `pnpm build` / `pnpm start` | Production build and server. Test the PWA here (`-p 3100` if dev is on 3000). |
+| `pnpm typecheck` | `tsc --noEmit`. Run `pnpm exec next typegen` first if route types are missing. |
+| `pnpm lint` | ESLint. |
+| `pnpm test` | Vitest, for the pure code (liturgical season, Rosary engine, validation). |
 
 CI runs typecheck, lint, tests and a production build on every pull request.
 
