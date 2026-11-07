@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ArrowLeft, ArrowRight, BookOpen, HandHeart } from "lucide-react";
 import { MysteryArt } from "@/components/rosary/mystery-art";
 
@@ -22,11 +22,13 @@ type Props = {
   initialMode: PrayerMode;
   onFinish: () => void;
   onExit: () => void;
+  /** Replaces the bead tracker, e.g. artwork for devotions that are not a string of beads. */
+  renderTracker?: (props: { index: number; onSelectBead: (beadId: string) => void; className: string }) => ReactNode;
 };
 
 const SWIPE_THRESHOLD = 50;
 
-export function SequencePlayer({ sequence, initialIndex, initialMode, onFinish, onExit }: Props) {
+export function SequencePlayer({ sequence, initialIndex, initialMode, onFinish, onExit, renderTracker }: Props) {
   const [index, setIndex] = useState(() => clampIndex(sequence, initialIndex));
   const [mode, setMode] = useState<PrayerMode>(initialMode);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
@@ -71,15 +73,22 @@ export function SequencePlayer({ sequence, initialIndex, initialMode, onFinish, 
   return (
     <div className="mx-auto flex w-full max-w-5xl flex-col gap-3 md:flex-row md:items-start md:gap-10 lg:max-w-none lg:gap-16">
       <div className="md:sticky md:top-6 md:w-72 md:shrink-0 lg:top-10 lg:w-80">
-        <BeadTracker
-          sequence={sequence}
-          index={index}
-          className="h-44 w-auto max-w-full max-md:pointer-events-none sm:h-64 md:h-[30rem] lg:h-[34rem]"
-          onSelectBead={(beadId) => {
+        {(() => {
+          const onSelectBead = (beadId: string) => {
             const target = firstStepForBead(sequence, beadId);
             if (target >= 0) setIndex(target);
-          }}
-        />
+          };
+          return renderTracker ? (
+            renderTracker({ index, onSelectBead, className: "max-md:pointer-events-none" })
+          ) : (
+            <BeadTracker
+              sequence={sequence}
+              index={index}
+              className="h-44 w-auto max-w-full max-md:pointer-events-none sm:h-64 md:h-[30rem] lg:h-[34rem]"
+              onSelectBead={onSelectBead}
+            />
+          );
+        })()}
       </div>
 
       <div className="flex min-w-0 flex-1 flex-col gap-5">
