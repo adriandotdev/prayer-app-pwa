@@ -1,7 +1,8 @@
 "use client";
 
-import { Copy, Link2, Share2 } from "lucide-react";
-import { useRef, useState, useTransition } from "react";
+import { Check, Copy, Link2, Share2 } from "lucide-react";
+import { Dialog } from "radix-ui";
+import { useEffect, useRef, useState, useTransition } from "react";
 
 import { AppButton } from "@/components/app-button";
 import { ConfirmationSheet } from "@/components/confirmation-sheet";
@@ -25,6 +26,7 @@ export function ShareButton({ kind, id, title, token: initialToken, className }:
   const [open, setOpen] = useState(false);
   const [pending, startTransition] = useTransition();
   const inputRef = useRef<HTMLInputElement>(null);
+  const [copied, setCopied] = useState(false);
   const { choice: season } = useSeason();
   const noun = kind === "prayer" ? "prayer" : "collection";
 
@@ -32,6 +34,12 @@ export function ShareButton({ kind, id, title, token: initialToken, className }:
   const [origin, setOrigin] = useState("");
   const url = token ? `${origin}/s/${token}` : "";
   const canNativeShare = typeof navigator !== "undefined" && typeof navigator.share === "function";
+
+  useEffect(() => {
+    if (!copied) return;
+    const t = setTimeout(() => setCopied(false), 2000);
+    return () => clearTimeout(t);
+  }, [copied]);
 
   function formData() {
     const fd = new FormData();
@@ -60,6 +68,7 @@ export function ShareButton({ kind, id, title, token: initialToken, className }:
   async function copy() {
     try {
       await navigator.clipboard.writeText(url);
+      setCopied(true);
       toast.success("Link copied");
     } catch {
       // Clipboard blocked (insecure context, denied permission): select it so the user can copy by hand.
@@ -107,12 +116,44 @@ export function ShareButton({ kind, id, title, token: initialToken, className }:
           kind === "collection" ? "" : " or see your other prayers"
         }.`}
         confirmLabel="Stop sharing"
-        pendingLabel="Stopping…"
-        cancelLabel="Done"
-        variant="destructive"
         isPending={pending}
         onConfirm={stopSharing}
+        footer={
+          <div className="mt-6 flex flex-col gap-3">
+            {/* The main action here is sending the link, so it leads; stopping is a quiet last resort. */}
+            {canNativeShare ? (
+              <AppButton size="lg" onClick={nativeShare} className="w-full">
+                <Share2 aria-hidden /> Share…
+              </AppButton>
+            ) : null}
+            <AppButton
+              size={canNativeShare ? "md" : "lg"}
+              variant={canNativeShare ? "outline" : "primary"}
+              onClick={copy}
+              className="w-full"
+            >
+              {copied ? <Check aria-hidden /> : <Copy aria-hidden />} {copied ? "Copied" : "Copy link"}
+            </AppButton>
+            <div className="mt-1 flex items-center justify-between gap-3">
+              <AppButton
+                variant="ghost"
+                onClick={stopSharing}
+                pending={pending}
+                pendingLabel="Stopping…"
+                className="text-destructive"
+              >
+                Stop sharing
+              </AppButton>
+              <Dialog.Close asChild>
+                <AppButton variant="ghost" disabled={pending}>
+                  Done
+                </AppButton>
+              </Dialog.Close>
+            </div>
+          </div>
+        }
       >
+        <p className="mb-3 truncate font-heading text-lg text-foreground">{title}</p>
         <label htmlFor={`share-link-${id}`} className="sr-only">
           Link to this {noun}
         </label>
@@ -126,16 +167,6 @@ export function ShareButton({ kind, id, title, token: initialToken, className }:
             onFocus={(e) => e.currentTarget.select()}
             className="min-h-12 w-full min-w-0 bg-transparent text-base outline-none"
           />
-        </div>
-        <div className="mt-3 flex flex-col gap-3 sm:flex-row">
-          {canNativeShare ? (
-            <AppButton onClick={nativeShare} className="w-full sm:flex-1">
-              <Share2 aria-hidden /> Share…
-            </AppButton>
-          ) : null}
-          <AppButton variant={canNativeShare ? "outline" : "primary"} onClick={copy} className="w-full sm:flex-1">
-            <Copy aria-hidden /> Copy link
-          </AppButton>
         </div>
       </ConfirmationSheet>
     </>
