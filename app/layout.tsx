@@ -3,6 +3,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { Cormorant_Garamond, Hanken_Grotesk, Source_Serif_4 } from "next/font/google";
 import { MotionProvider } from "@/components/motion/motion-provider";
 import { AppShell } from "@/components/layout/app-shell";
+import { LibrarySync } from "@/components/pwa/library-sync";
 import { RosarySync } from "@/components/pwa/rosary-sync";
 import { ServiceWorkerRegister } from "@/components/pwa/service-worker-register";
 import { ReaderPrefsSync } from "@/components/reader/reader-prefs-sync";
@@ -70,6 +71,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <SeasonSync />
           <ReaderPrefsSync />
           <RosarySync />
+          <LibrarySync />
           <MotionProvider>
             <AppShell>{children}</AppShell>
           </MotionProvider>
