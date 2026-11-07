@@ -2,7 +2,7 @@
 
 Feature backlog for Ora after Phase 6 (polish). Items are numbered so they can be referred to in conversation and PRs.
 
-**Suggested next phase:** items 6 (offline library) and 7 (sharing); the e2e suite from item 8 now protects what is built. Item 9's remaining chaplets are small data-only additions that can slot in anywhere. Harden before reminders (10).
+**Suggested next phase:** item 9's remaining chaplets (small, data-only), then a hardening pass on the offline library and sharing before reminders (10).
 
 ## Done
 
@@ -11,13 +11,13 @@ Feature backlog for Ora after Phase 6 (polish). Items are numbered so they can b
 3. **Resume for all sequences.** Home resume state (#28), plus Divine Mercy and Angelus resume.
 4. **Data export and account deletion.** (#53)
 5. **Prayer reader preferences.** Reading themes and keep-screen-awake via Wake Lock (#41).
+6. **Offline-first library.** Signed-in prayers, favorites and collections are copied to IndexedDB and synced on reconnect (#60).
+7. **Sharing.** Read-only public link (`/s/[token]`) for an own prayer or collection, with the Web Share API and copy-link fallback; stopping a share kills the link. Anonymous reads go through security-definer functions, so the `shares` table is never exposed. Migration `20261107000000_shares.sql` still has to be pushed (`pnpm db:migrate`).
 8. **Tests.** Playwright e2e (Rosary flow, signed-out redirects, offline fallback) and jsdom component tests for the bead tracker and sequence player. Real Google sign-in is not automated.
 9. **Chaplets (partial).** Divine Mercy (#38) and Angelus (#40) are built.
 
 ## Remaining, in scope
 
-6. **Offline-first library.** Cache a signed-in user's prayers and favorites in IndexedDB and sync on reconnect (the biggest PWA gap). No IndexedDB code yet.
-7. **Sharing.** Read-only public link for a prayer or collection, plus the Web Share API. Needs a schema change; nothing built yet.
 9. **More chaplets (remainder).** Seven Sorrows and Stations of the Cross. Data only, thanks to the sequence engine.
 
 ## Outside the current scope (needs an explicit go-ahead)
