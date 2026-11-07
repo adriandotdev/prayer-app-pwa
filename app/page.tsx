@@ -5,6 +5,7 @@ import { Landing } from "@/components/landing/landing";
 import "@/components/landing/landing.css";
 import { MoreWaysToPray } from "@/components/home/more-ways-to-pray";
 import { LibraryLinks } from "@/components/home/library-links";
+import { LiturgicalDayCard } from "@/components/home/liturgical-day-card";
 import { TodayDecades } from "@/components/home/today-decades";
 import { TodayHero } from "@/components/home/today-hero";
 import { pageMetadata } from "@/lib/seo";
@@ -69,6 +70,7 @@ export default async function HomePage() {
           <TodayHero />
         </div>
         <div className="flex flex-col gap-4 lg:gap-8" style={{ ["--i" as string]: 1 }}>
+          <LiturgicalDayCard />
           <TodayDecades />
           <LibraryLinks signedIn={signedIn} />
           <MoreWaysToPray />
