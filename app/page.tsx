@@ -3,6 +3,7 @@ import { cache } from "react";
 
 import { Landing } from "@/components/landing/landing";
 import "@/components/landing/landing.css";
+import { MoreWaysToPray } from "@/components/home/more-ways-to-pray";
 import { LibraryLinks } from "@/components/home/library-links";
 import { TodayDecades } from "@/components/home/today-decades";
 import { TodayHero } from "@/components/home/today-hero";
@@ -64,12 +65,13 @@ export default async function HomePage() {
   return (
     <div className="mx-auto grid max-w-3xl gap-4 lg:max-w-none lg:grid-cols-[22rem_1fr] lg:gap-8">
       <div className="ora-stagger contents">
-        <div className="lg:h-full" style={{ ["--i" as string]: 0 }}>
+        <div className="lg:sticky lg:top-8 lg:self-start" style={{ ["--i" as string]: 0 }}>
           <TodayHero />
         </div>
         <div className="flex flex-col gap-4 lg:gap-8" style={{ ["--i" as string]: 1 }}>
           <TodayDecades />
           <LibraryLinks signedIn={signedIn} />
+          <MoreWaysToPray />
         </div>
       </div>
     </div>

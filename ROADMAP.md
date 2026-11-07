@@ -2,7 +2,7 @@
 
 Feature backlog for Ora after Phase 6 (polish). Items are numbered so they can be referred to in conversation and PRs.
 
-**Suggested next phase:** item 9's remaining chaplets (small, data-only), then a hardening pass on the offline library and sharing before reminders (10).
+**Suggested next phase:** a hardening pass on the offline library and sharing before reminders (10).
 
 ## Done
 
@@ -14,11 +14,11 @@ Feature backlog for Ora after Phase 6 (polish). Items are numbered so they can b
 6. **Offline-first library.** Signed-in prayers, favorites and collections are copied to IndexedDB and synced on reconnect (#60).
 7. **Sharing.** Read-only public link (`/s/[token]`) for an own prayer or collection, with the Web Share API and copy-link fallback; stopping a share kills the link. Anonymous reads go through security-definer functions, so the `shares` table is never exposed. Migration `20261107000000_shares.sql` still has to be pushed (`pnpm db:migrate`).
 8. **Tests.** Playwright e2e (Rosary flow, signed-out redirects, offline fallback) and jsdom component tests for the bead tracker and sequence player. Real Google sign-in is not automated.
-9. **Chaplets (partial).** Divine Mercy (#38) and Angelus (#40) are built.
+9. **Chaplets.** Divine Mercy (#38), Angelus (#40), Seven Sorrows and Stations of the Cross.
 
 ## Remaining, in scope
 
-9. **More chaplets (remainder).** Seven Sorrows and Stations of the Cross. Data only, thanks to the sequence engine.
+Nothing.
 
 ## Outside the current scope (needs an explicit go-ahead)
 

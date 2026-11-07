@@ -27,17 +27,17 @@ export function LibraryLinks({ signedIn }: { signedIn: boolean }) {
   const online = useOnline();
 
   return (
-    <ul className="grid flex-1 grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8">
+    <ul className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8">
       {SECTIONS.map(({ href, title, body, signedOutBody }) => (
         <li key={href} className="flex">
           <Link
             href={href}
-            className="ora-press group flex min-h-32 w-full flex-col justify-between gap-6 rounded-3xl bg-card p-6 lg:min-h-48 lg:p-8"
+            className="ora-press group flex min-h-32 w-full flex-col justify-between gap-6 rounded-3xl bg-card p-6 lg:min-h-40 lg:p-8"
           >
             <span className="flex items-start justify-between gap-4">
               <span className="font-display text-3xl leading-none lg:text-4xl">{title}</span>
               <ArrowRight
-                className="size-6 shrink-0 text-primary transition-transform duration-200 ease-ora group-hover:translate-x-0.5"
+                className="size-6 shrink-0 text-primary transition-transform duration-200 ease-ora group-hover:translate-x-1"
                 aria-hidden
               />
             </span>

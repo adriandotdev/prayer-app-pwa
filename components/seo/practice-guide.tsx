@@ -1,6 +1,6 @@
 import { CONTENT_REVIEWED } from "@/lib/site";
 
-type Practice = "rosary" | "angelus" | "divine-mercy";
+type Practice = "rosary" | "angelus" | "divine-mercy" | "seven-sorrows" | "stations-of-the-cross";
 
 type Guide = {
   title: string;
@@ -60,6 +60,38 @@ const GUIDES: Record<Practice, Guide> = {
       { name: "Small beads of each decade", text: "Ten times, pray: Because of his suffering and death, be merciful to us and to the whole world." },
       { name: "Repeat for five decades", text: "Pray the large bead and the ten small beads again for each of the five decades." },
       { name: "Closing", text: "Pray three times: Holy God, holy and strong, holy and deathless, be merciful to us and to the whole world." },
+    ],
+  },
+  "seven-sorrows": {
+    title: "What is the Chaplet of the Seven Sorrows?",
+    definition:
+      "The Chaplet of the Seven Sorrows is a Catholic devotion, kept especially by the Servite order, that remembers seven sorrows in the life of Mary. You pray seven Hail Marys for each sorrow while reflecting on it, then three more Hail Marys at the end. It takes about 20 minutes.",
+    stepsHeading: "How to pray the Seven Sorrows",
+    steps: [
+      { name: "Begin", text: "Make the Sign of the Cross and pray a short opening prayer to Mary, Mother of Sorrows." },
+      { name: "Announce the sorrow", text: "Name the sorrow and pause to think about it: Simeon’s prophecy, the flight into Egypt, the loss of Jesus in the Temple, meeting Jesus on the way of the cross, the crucifixion, the taking down from the cross, and the burial." },
+      { name: "Pray seven Hail Marys", text: "Pray a Hail Mary on each of the seven beads for that sorrow, keeping it in mind." },
+      { name: "Repeat for the seven sorrows", text: "Move on to the next sorrow and pray its seven Hail Marys the same way." },
+      { name: "Close", text: "Pray three more Hail Marys, the versicle asking for Mary’s prayers, a closing prayer and the Sign of the Cross." },
+    ],
+  },
+  "stations-of-the-cross": {
+    title: "What are the Stations of the Cross?",
+    definition:
+      "The Stations of the Cross are a Catholic devotion that follows Jesus along the way of the cross in fourteen stations, from his condemnation by Pilate to his burial in the tomb. They are especially prayed during Lent and on Fridays. A full round takes about 30 minutes.",
+    stepsHeading: "How to pray the Stations of the Cross",
+    steps: [
+      { name: "Begin", text: "Make the Sign of the Cross and pray an opening prayer." },
+      { name: "Say the versicle", text: "At each station, say: We adore you, O Christ, and we praise you. Because by your holy Cross you have redeemed the world." },
+      { name: "Reflect and pray", text: "Pause to think about what happens at the station, and pray a short prayer on it." },
+      { name: "Pray three prayers", text: "Pray an Our Father, a Hail Mary and a Glory Be, then move on to the next station." },
+      { name: "Finish at the fourteenth station", text: "After the burial, pray a closing prayer and make the Sign of the Cross." },
+    ],
+    notes: [
+      {
+        heading: "What are the fourteen stations?",
+        text: "Jesus is condemned to death, takes up his cross, falls the first time, meets his mother, is helped by Simon of Cyrene, has his face wiped by Veronica, falls the second time, speaks to the women of Jerusalem, falls the third time, is stripped of his garments, is nailed to the cross, dies on the cross, is taken down from the cross, and is laid in the tomb. Some stations come from tradition rather than the Gospels.",
+      },
     ],
   },
 };
