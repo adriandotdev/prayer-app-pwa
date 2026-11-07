@@ -508,3 +508,15 @@ html[data-reading] .reader-surface {
   animation-duration: 400ms;
   animation-timing-function: var(--ease-ora);
 }
+
+/* A shared link is read by people who may not have an account: hide the app's navigation and sidebar offset. */
+body:has([data-shared-view]) [data-shell-chrome] {
+  display: none;
+}
+body:has([data-shared-view]) [data-shell-frame] {
+  max-width: none;
+  padding-left: 0;
+}
+body:has([data-shared-view]) [data-shell-main] {
+  padding-bottom: 3rem;
+}

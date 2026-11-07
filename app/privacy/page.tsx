@@ -40,7 +40,12 @@ export default function PrivacyPage() {
       <LegalSection title="Why we use it">
         <p>
           To sign you in, save and sync your content across devices, and keep the app secure. We do not sell your data, show ads or use your
-          intentions for any other purpose. Only you can read your content.
+          intentions for any other purpose. Only you can read your content, unless you choose to share a prayer or collection.
+        </p>
+        <p>
+          Sharing creates a link that anyone who has it can open and read without an account. It shows the title, text and source of that
+          prayer or collection (and the prayers inside it), never your name, email or anything else. Stop sharing at any time and the link
+          stops working immediately.
         </p>
       </LegalSection>
 

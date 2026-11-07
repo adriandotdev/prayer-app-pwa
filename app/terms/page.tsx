@@ -23,7 +23,8 @@ export default function TermsPage() {
       <LegalSection title="Your content">
         <p>
           What you write is yours. You give us permission only to store and show it back to you. Do not store anything unlawful or that
-          infringes someone else&apos;s rights.
+          infringes someone else&apos;s rights. If you share a prayer or collection by link, anyone with the link can read it until you stop
+          sharing, so share only what you are happy for others to see.
         </p>
       </LegalSection>
 

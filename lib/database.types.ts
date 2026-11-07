@@ -244,12 +244,76 @@ export type Database = {
           },
         ]
       }
+      shares: {
+        Row: {
+          collection_id: string | null
+          created_at: string
+          id: string
+          prayer_id: string | null
+          season: string
+          token: string
+          user_id: string
+        }
+        Insert: {
+          collection_id?: string | null
+          created_at?: string
+          id?: string
+          prayer_id?: string | null
+          season?: string
+          token?: string
+          user_id: string
+        }
+        Update: {
+          collection_id?: string | null
+          created_at?: string
+          id?: string
+          prayer_id?: string | null
+          season?: string
+          token?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shares_collection_id_fkey"
+            columns: ["collection_id"]
+            isOneToOne: true
+            referencedRelation: "collections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "shares_prayer_id_fkey"
+            columns: ["prayer_id"]
+            isOneToOne: true
+            referencedRelation: "prayers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_shared_collection: {
+        Args: { p_token: string }
+        Returns: {
+          body: string
+          collection_name: string
+          prayer_id: string
+          season: string
+          source: string
+          title: string
+        }[]
+      }
+      get_shared_prayer: {
+        Args: { p_token: string }
+        Returns: {
+          body: string
+          season: string
+          source: string
+          title: string
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
