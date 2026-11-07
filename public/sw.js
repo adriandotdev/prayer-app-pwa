@@ -11,7 +11,7 @@
  *  - Sign-out: the page asks us to drop cached signed-in pages (see clearPrivatePages).
  *  - Everything else (Supabase, /api, /auth, non-GET): left to the network.
  */
-const VERSION = "v7";
+const VERSION = "v8";
 const STATIC_CACHE = `ora-static-${VERSION}`;
 const PAGE_CACHE = `ora-pages-${VERSION}`;
 const PRECACHE_PAGES = ["/offline", "/rosary", "/divine-mercy", "/angelus", "/"];
@@ -108,6 +108,8 @@ function isPrivatePath(path) {
 // Where a page is stored, or null to skip it. Signed-in pages are keyed by path alone and a query
 // (a library search, say) is never stored, so one person's searches don't pile up in the cache.
 function pageCacheKey(url) {
+  // Shared links are never stored: a link the owner has stopped sharing must stop working at once.
+  if (url.pathname.startsWith("/s/")) return null;
   if (!isPrivatePath(url.pathname)) return url.href;
   return url.search ? null : url.pathname;
 }
