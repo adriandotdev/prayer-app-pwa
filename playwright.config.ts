@@ -22,7 +22,7 @@ export default defineConfig({
     { name: "phone", use: { ...devices["Pixel 7"] } },
   ],
   webServer: {
-    command: `npm run build && npm run start -- -p ${PORT}`,
+    command: `pnpm build && pnpm start -p ${PORT}`,
     url: `http://localhost:${PORT}`,
     reuseExistingServer: !CI,
     timeout: 240_000,
