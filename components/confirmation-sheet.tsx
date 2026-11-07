@@ -39,6 +39,8 @@ type ConfirmationSheetProps = {
   onConfirm?: () => void;
   /** Optional extra content between the description and the actions. */
   children?: ReactNode;
+  /** Replaces the default Cancel/Confirm row, for sheets whose main action isn't a confirmation. */
+  footer?: ReactNode;
 };
 
 /** Reports the enclosing form's pending state upward and renders the confirm button. */
@@ -91,6 +93,7 @@ export function ConfirmationSheet({
   fields,
   onConfirm,
   children,
+  footer,
 }: ConfirmationSheetProps) {
   const [formPending, setFormPending] = useState(false);
   const busy = isPending || formPending;
@@ -234,7 +237,9 @@ export function ConfirmationSheet({
                   </Dialog.Description>
                   {children ? <div className="mt-4">{children}</div> : null}
 
-                  {action ? (
+                  {footer ? (
+                    footer
+                  ) : action ? (
                     <form action={action}>
                       {fields
                         ? Object.entries(fields).map(([name, value]) => (
