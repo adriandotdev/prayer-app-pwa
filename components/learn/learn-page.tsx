@@ -3,61 +3,52 @@ import type { ReactNode } from "react";
 
 import { AppButton } from "@/components/app-button";
 import { PageHeader } from "@/components/layout/page-header";
-import { CONTENT_REVIEWED, SITE_NAME, SITE_URL } from "@/lib/site";
+import { JsonLd } from "@/components/seo/json-ld";
+import { articleJsonLd } from "@/lib/seo-jsonld";
+import { CONTENT_REVIEWED, SITE_AUTHOR } from "@/lib/site";
 
 export const LEARN_GUIDES = [
   { path: "/learn/how-to-pray-the-rosary", title: "How to pray the Rosary" },
   { path: "/learn/rosary-mysteries-by-day", title: "Rosary mysteries by day of the week" },
   { path: "/learn/rosary-prayers", title: "Rosary prayers: full text" },
+  { path: "/learn/how-to-pray-the-divine-mercy-chaplet", title: "How to pray the Divine Mercy Chaplet" },
+  { path: "/learn/how-to-pray-the-angelus", title: "How to pray the Angelus" },
+  { path: "/learn/how-to-pray-the-stations-of-the-cross", title: "How to pray the Stations of the Cross" },
 ] as const;
-
-/** Article structured data for a guide. Escaped with the same `<` rule as the landing page. */
-function articleJsonLd(title: string, description: string, path: string) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: title,
-    description,
-    mainEntityOfPage: `${SITE_URL}${path}`,
-    dateModified: CONTENT_REVIEWED,
-    author: { "@type": "Organization", name: SITE_NAME },
-    publisher: { "@type": "Organization", name: SITE_NAME },
-  };
-}
 
 export function LearnPage({
   title,
   intro,
   path,
+  cta = { href: "/rosary", label: "Open the guided Rosary", text: "Ora guides you through the Rosary bead by bead." },
   children,
 }: {
   title: string;
   intro: string;
   path: string;
+  /** The "Pray it now" call to action. Defaults to the guided Rosary. */
+  cta?: { href: string; label: string; text: string };
   children: ReactNode;
 }) {
   const others = LEARN_GUIDES.filter((g) => g.path !== path);
   return (
     <article className="mx-auto max-w-3xl">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd(title, intro, path)).replace(/</g, "\\u003c") }}
-      />
+      <JsonLd data={articleJsonLd({ title, description: intro, path, reviewed: CONTENT_REVIEWED })} />
       <PageHeader title={title} description={intro} />
       <div className="space-y-10 text-base leading-relaxed">{children}</div>
 
       <aside className="mt-12 rounded-3xl bg-card px-5 py-7 sm:px-8">
         <h2 className="font-heading text-2xl leading-snug">Pray it now</h2>
         <p className="mt-2 text-muted-foreground">
-          Ora guides you through the Rosary bead by bead. It is free, needs no account and works offline.
+          {cta.text} It is free, needs no account and works offline.
         </p>
-        <AppButton href="/rosary" size="lg" className="mt-5 w-full sm:w-auto">
-          Open the guided Rosary
+        <AppButton href={cta.href} size="lg" className="mt-5 w-full sm:w-auto">
+          {cta.label}
         </AppButton>
       </aside>
 
-      <nav aria-label="More Rosary guides" className="mt-10">
-        <h2 className="text-sm font-medium text-muted-foreground">More Rosary guides</h2>
+      <nav aria-label="More guides" className="mt-10">
+        <h2 className="text-sm font-medium text-muted-foreground">More guides</h2>
         <ul className="mt-2">
           {others.map((g) => (
             <li key={g.path}>
@@ -70,7 +61,7 @@ export function LearnPage({
       </nav>
 
       <p className="mt-10 border-t border-border pt-4 text-sm text-muted-foreground">
-        Written by the Ora team. Last reviewed <time dateTime={CONTENT_REVIEWED}>7 November 2026</time>.
+        Written by <a href={SITE_AUTHOR.url} rel="author" className="underline underline-offset-4">{SITE_AUTHOR.name}</a>, creator of Ora. Last reviewed <time dateTime={CONTENT_REVIEWED}>7 November 2026</time>.
       </p>
     </article>
   );
