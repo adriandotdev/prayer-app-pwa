@@ -138,6 +138,9 @@ export function IntentionForm({ title, action, submitLabel, intention }: Props) 
       <form id={formId} action={formAction} onSubmit={submit} noValidate className="flex flex-col gap-3 pb-24 md:pb-0">
         {intention ? <input type="hidden" name="id" value={intention.id} /> : null}
 
+        <label htmlFor={EDITOR_ID} onClick={() => document.getElementById(EDITOR_ID)?.focus()} className="text-sm font-medium text-muted-foreground">
+          Your intention
+        </label>
         <div onKeyDownCapture={keyDown}>
           {draftChecked ? (
             <MarkdownEditor
@@ -151,6 +154,8 @@ export function IntentionForm({ title, action, submitLabel, intention }: Props) 
               describedBy={cn(hintId, message && errorId)}
               invalid={Boolean(message)}
               className="min-h-40"
+              bare
+              placeholder="Who or what are you praying for?"
             />
           ) : (
             <div className="h-56 animate-pulse rounded-2xl bg-muted" aria-hidden />
