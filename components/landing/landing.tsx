@@ -235,6 +235,15 @@ export function Landing() {
               <Link href="/stations-of-the-cross">Stations of the Cross</Link>
             </li>
             <li>
+              <Link href="/learn/how-to-pray-the-rosary">How to pray the Rosary</Link>
+            </li>
+            <li>
+              <Link href="/learn/rosary-mysteries-by-day">Mysteries by day</Link>
+            </li>
+            <li>
+              <Link href="/learn/rosary-prayers">Rosary prayers</Link>
+            </li>
+            <li>
               <Link href="/login">Sign in</Link>
             </li>
             <li>
