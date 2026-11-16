@@ -1,8 +1,10 @@
+import { JsonLd } from "@/components/seo/json-ld";
+import { practicePageJsonLd } from "@/lib/seo-jsonld";
 import { CONTENT_REVIEWED } from "@/lib/site";
 
-type Practice = "rosary" | "angelus" | "divine-mercy" | "seven-sorrows" | "stations-of-the-cross";
+export type Practice = "rosary" | "angelus" | "divine-mercy" | "seven-sorrows" | "stations-of-the-cross";
 
-type Guide = {
+export type Guide = {
   title: string;
   /** Direct definition, first thing in the section. */
   definition: string;
@@ -12,7 +14,7 @@ type Guide = {
   notes?: { heading: string; text: string }[];
 };
 
-const GUIDES: Record<Practice, Guide> = {
+export const GUIDES: Record<Practice, Guide> = {
   rosary: {
     title: "What is the Rosary?",
     definition:
@@ -96,16 +98,29 @@ const GUIDES: Record<Practice, Guide> = {
   },
 };
 
+const PATHS: Record<Practice, string> = {
+  rosary: "/rosary",
+  angelus: "/angelus",
+  "divine-mercy": "/divine-mercy",
+  "seven-sorrows": "/seven-sorrows",
+  "stations-of-the-cross": "/stations-of-the-cross",
+};
+
 /** Server-rendered text that explains the practice, so it is readable without running the player. */
 export function PracticeGuide({ practice }: { practice: Practice }) {
   const g = GUIDES[practice];
   const id = `guide-${practice}`;
+  // The definition and any question-headed notes are visible Q&A, so they are also the page's FAQ.
+  const faq = [{ q: g.title, a: g.definition }, ...(g.notes ?? []).map((n) => ({ q: n.heading, a: n.text }))];
 
   return (
     <article
       aria-labelledby={`${id}-title`}
       className="flex flex-col rounded-3xl bg-card px-5 py-7 sm:px-8 sm:py-9"
     >
+      <JsonLd
+        data={practicePageJsonLd({ name: g.title, description: g.definition, path: PATHS[practice], reviewed: CONTENT_REVIEWED, faq })}
+      />
       <header className="max-w-[38rem]">
         <h2 id={`${id}-title`} className="font-heading text-balance text-3xl leading-tight sm:text-4xl">
           {g.title}
@@ -154,7 +169,7 @@ export function PracticeGuide({ practice }: { practice: Practice }) {
       )}
 
       <p className="mt-10 border-t border-border pt-4 text-sm text-muted-foreground">
-        Written by the Ora team. Last reviewed <time dateTime={CONTENT_REVIEWED}>4 November 2026</time>.
+        Written by the Ora team. Last reviewed <time dateTime={CONTENT_REVIEWED}>7 November 2026</time>.
       </p>
     </article>
   );

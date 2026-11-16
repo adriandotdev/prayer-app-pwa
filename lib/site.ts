@@ -35,8 +35,20 @@ export const HOME_DESCRIPTION =
 export const POLICY_VERSION = "2026-11-07";
 export const LEGAL_UPDATED = "7 November 2026";
 
+/** Who writes the public guides. Shown as a byline and used as the Person author in Article structured data. */
+export const SITE_AUTHOR = { name: "Adrian Marcelo", url: "https://adrianmarcelo.dev" } as const;
+
+/**
+ * Other profiles that belong to Ora (comma-separated URLs in NEXT_PUBLIC_SITE_SAME_AS), used as `sameAs` in
+ * the Organization structured data. Empty until Ora has public profiles; never add a URL that is not Ora's.
+ */
+export const SITE_SAME_AS = (process.env.NEXT_PUBLIC_SITE_SAME_AS ?? "")
+  .split(",")
+  .map((u) => u.trim())
+  .filter((u) => /^https:\/\//.test(u));
+
 /** Where privacy requests and support messages go. Set NEXT_PUBLIC_CONTACT_EMAIL before launch. */
 export const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || "";
 
 /** Public, signed-out pages that belong in the sitemap. */
-export const PUBLIC_PATHS = ["/", "/rosary", "/angelus", "/divine-mercy", "/seven-sorrows", "/stations-of-the-cross", "/learn/how-to-pray-the-rosary", "/learn/rosary-mysteries-by-day", "/learn/rosary-prayers", "/privacy", "/terms", "/credits"] as const;
+export const PUBLIC_PATHS = ["/", "/rosary", "/angelus", "/divine-mercy", "/seven-sorrows", "/stations-of-the-cross", "/learn/how-to-pray-the-rosary", "/learn/rosary-mysteries-by-day", "/learn/rosary-prayers", "/learn/how-to-pray-the-divine-mercy-chaplet", "/learn/how-to-pray-the-angelus", "/learn/how-to-pray-the-stations-of-the-cross", "/privacy", "/terms", "/credits"] as const;
