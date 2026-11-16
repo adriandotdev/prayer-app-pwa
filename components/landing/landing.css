@@ -295,8 +295,16 @@ html:has(.land) {
   background: radial-gradient(closest-side, rgb(9 14 36 / 0.92), rgb(9 14 36 / 0.8) 62%, rgb(9 14 36 / 0)); /* taste-skill-ignore: neutral scrim over the engraving */
 }
 .land-h1,
-.land-lede {
+.land-lede,
+.land-eyebrow {
   position: relative;
+}
+.land-eyebrow {
+  margin-bottom: 12px;
+  font-size: 16px;
+  line-height: 1.4;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 .land-lede {
   margin-top: 16px;

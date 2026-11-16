@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { SITE_NAME } from "@/lib/site";
 
 // A page that sets its own openGraph drops the root opengraph-image, so repeat it here.
-const OG_IMAGE = "/opengraph-image";
+const OG_IMAGE = { url: "/opengraph-image", width: 1200, height: 630, alt: "Ora: Draw near to God" };
 
 /** Title, description, canonical and social tags for one public page. `title` gets the " · Ora" suffix. */
 export function pageMetadata({
