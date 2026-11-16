@@ -231,6 +231,36 @@ html[data-reading] .reader-surface {
 }
 
 /* Tiptap editor surface: Tailwind's preflight strips these, so restore them to match PrayerBody. */
+/* Borderless writing surface: no box, a gold underline marks where you are. */
+.prayer-bare {
+  border-radius: 0.75rem;
+  background: transparent;
+  padding-inline: 0.25rem;
+  outline: none;
+  box-shadow: inset 0 -2px 0 0 transparent;
+  transition: background-color 0.15s, box-shadow 0.15s;
+}
+.prayer-bare:hover {
+  background: color-mix(in oklab, var(--muted) 45%, transparent);
+}
+.prayer-bare:focus,
+.prayer-bare:focus-visible {
+  background: color-mix(in oklab, var(--muted) 45%, transparent);
+  box-shadow: inset 0 -2px 0 0 var(--gold);
+}
+.prayer-bare[aria-invalid="true"] {
+  box-shadow: inset 0 -2px 0 0 var(--destructive);
+}
+.prayer-bare::placeholder,
+.prayer-placeholder::before {
+  color: var(--muted-foreground);
+}
+.prayer-placeholder::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
 .prayer-editor > * + * {
   margin-top: 1rem;
 }
