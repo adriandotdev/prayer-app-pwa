@@ -70,9 +70,9 @@ The viewport uses `viewportFit: "cover"` (`app/layout.tsx`), so content can sit 
 
 There is no test runner, so check by hand:
 
-1. Run `npm run build && npm run start -p 3100` and open it in a browser with device emulation at 360×640 and 390×844, then at a desktop width.
+1. Run `pnpm build && pnpm start -p 3100` and open it in a browser with device emulation at 360×640 and 390×844, then at a desktop width.
 2. Confirm: no horizontal scroll, last item clears the bottom nav/sticky bar, tap targets feel comfortable, sticky bars sit above the nav, and light and dark both look right.
-3. Run `npx tsc --noEmit` and `npm run lint`.
+3. Run `pnpm exec tsc --noEmit` and `pnpm lint`.
 4. If you can't view it in a browser, say so plainly instead of claiming the layout works.
 
 ## Out of scope

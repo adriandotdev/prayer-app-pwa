@@ -40,7 +40,7 @@ const NOTEBOOK = [
   },
   {
     title: "Ready in the quiet places",
-    text: "The Rosary, the Divine Mercy Chaplet and the Angelus keep working offline, at the bedside or in the back pew.",
+    text: "The Rosary, the chaplets, the Stations of the Cross and the Angelus keep working offline, at the bedside or in the back pew.",
     art: MYSTERY_ART.sorrowful[0],
     shape: "land-margin-square",
     sizes: "(min-width: 72rem) 50vw, (min-width: 48rem) 42vw, 56vw",
@@ -227,6 +227,12 @@ export function Landing() {
             </li>
             <li>
               <Link href="/angelus">The Angelus</Link>
+            </li>
+            <li>
+              <Link href="/seven-sorrows">Seven Sorrows</Link>
+            </li>
+            <li>
+              <Link href="/stations-of-the-cross">Stations of the Cross</Link>
             </li>
             <li>
               <Link href="/login">Sign in</Link>

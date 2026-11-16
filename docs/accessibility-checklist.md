@@ -1,6 +1,6 @@
 # Accessibility checklist (WCAG 2.2 AA)
 
-Automated: `npm test` runs `tests/contrast.test.ts`, which checks text (4.5:1) and focus ring / gold (3:1) contrast for the default theme and all seven liturgical seasons, day and night. Run the manual checks below before a release that touches UI.
+Automated: `pnpm test` runs `tests/contrast.test.ts`, which checks text (4.5:1) and focus ring / gold (3:1) contrast for the default theme and all seven liturgical seasons, day and night. Run the manual checks below before a release that touches UI.
 
 ## Keyboard
 - [ ] Tab reaches every control in a sensible order; the skip link jumps to `#main`.

@@ -13,6 +13,8 @@ const RESUME_COPY: Record<PracticeId, { line: string; message: string; button: s
   rosary: { line: "", message: "Your Rosary is where you left it.", button: "Continue your Rosary" },
   "divine-mercy": { line: "Divine Mercy Chaplet", message: "Your chaplet is where you left it.", button: "Continue the chaplet" },
   angelus: { line: "The Angelus", message: "Your Angelus is where you left it.", button: "Continue the Angelus" },
+  "seven-sorrows": { line: "Seven Sorrows", message: "Your chaplet is where you left it.", button: "Continue the chaplet" },
+  "stations-of-the-cross": { line: "Stations of the Cross", message: "Your Stations are where you left them.", button: "Continue the Stations" },
 };
 
 const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -30,9 +32,9 @@ export function TodayHero() {
   return (
     <section
       aria-labelledby="home-title"
-      className="ora-arch relative isolate flex h-full flex-col items-center lg:justify-center overflow-hidden rounded-b-[1.75rem] bg-primary px-6 pt-10 pb-8 text-center text-primary-foreground dark:bg-secondary dark:text-secondary-foreground"
+      className="ora-arch relative isolate flex flex-col items-center overflow-hidden rounded-b-[1.75rem] bg-primary px-6 pt-10 pb-8 text-center lg:pt-24 lg:pb-10 text-primary-foreground dark:bg-secondary dark:text-secondary-foreground"
     >
-      <ChristFigure className="size-40 text-primary-foreground dark:text-secondary-foreground" />
+      <ChristFigure className="size-40 text-primary-foreground lg:size-44 dark:text-secondary-foreground" />
 
       <svg aria-hidden viewBox="0 0 100 8" className="mt-4 h-2 w-24 text-primary-foreground dark:text-gold">
         {Array.from({ length: 10 }, (_, i) => (
@@ -40,11 +42,13 @@ export function TodayHero() {
         ))}
       </svg>
 
-      <p className="mt-5 min-h-5 text-sm font-medium text-primary-foreground/85 dark:text-gold">{resumeLine ?? dayLine}</p>
+      <p key={resumeLine ?? dayLine ?? ""} className="ora-fade mt-5 min-h-5 text-sm font-medium text-primary-foreground/85 dark:text-gold">
+        {resumeLine ?? dayLine}
+      </p>
       <h1 id="home-title" className="mt-3 text-[2.5rem] leading-[1] font-medium tracking-[-0.02em]">
         Peace be with you
       </h1>
-      <p className="mt-3 max-w-[18rem] text-base opacity-80">
+      <p key={copy ? "resume" : "idle"} className="ora-fade mt-3 max-w-[18rem] text-base opacity-80">
         {copy ? copy.message : "Take a moment. What would you like to pray?"}
       </p>
 
@@ -53,7 +57,9 @@ export function TodayHero() {
         size="lg"
         className="mt-7 w-full bg-primary-foreground text-primary hover:bg-primary-foreground/90 dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/90"
       >
-        {copy ? copy.button : "Pray the Rosary"}
+        <span key={copy ? "resume" : "idle"} className="ora-fade">
+          {copy ? copy.button : "Pray the Rosary"}
+        </span>
       </AppButton>
     </section>
   );

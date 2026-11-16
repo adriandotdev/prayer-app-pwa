@@ -661,10 +661,18 @@ html:has(.land) {
     padding: calc(20px + env(safe-area-inset-top)) var(--edge) calc(28px + env(safe-area-inset-bottom));
   }
   .land-walk-figure {
+    position: relative;
+    overflow: hidden;
     flex: 1;
     min-height: 0;
     max-width: none;
     margin-top: 8px;
+  }
+  /* Sized and centred inline (LAYER_BOX in RosaryWalk): as large as the closest zoom, then scaled down by the camera. */
+  .land-walk-rosary-live {
+    position: absolute;
+    transform-origin: 50% 50%;
+    will-change: transform;
   }
   /* Parts share one cell, so the old words fade while the new ones arrive and nothing blinks in between. */
   .land-walk-caption {

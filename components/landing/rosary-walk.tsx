@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, easeInOut, motion, useMotionValueEvent, useScroll, useSpring, useTransform } from "motion/react";
+import { AnimatePresence, easeInOut, motion, useMotionValue, useMotionValueEvent, useScroll, useSpring, useTransform } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
 import { useFullMotion } from "./scrub";
@@ -11,7 +11,7 @@ const WHOLE = `0 0 ${WIDTH} ${HEIGHT}`;
 const SMALL = 4.7;
 const LARGE = 6.8;
 const MEDAL = { x: 150, y: 288 };
-const CRUCIFIX = { x: 150, y: 414 };
+const CRUCIFIX = { x: 150, y: 428 };
 
 type Point = { x: number; y: number };
 type Bead = Point & { id: string; r: number };
@@ -33,7 +33,8 @@ function loopBeads(): Bead[] {
 
   const slots: { id: string; gap: number }[] = [];
   for (let d = 0; d < 5; d++) {
-    for (let b = 0; b <= 10; b++) slots.push({ id: `d${d}-${b}`, gap: b === 0 ? 2.1 : b === 1 ? 1.9 : 1 });
+    // The first mystery bead hangs on the tail below the medal, so the loop starts with that decade's first small bead.
+    for (let b = d === 0 ? 1 : 0; b <= 10; b++) slots.push({ id: `d${d}-${b}`, gap: b === 0 ? 2.1 : b === 1 ? 1.9 : 1 });
   }
   const total = slots.reduce((sum, slot) => sum + slot.gap, 0) + 2.1;
 
@@ -49,11 +50,13 @@ function loopBeads(): Bead[] {
 }
 
 const LOOP = loopBeads();
+// From the medal down: the first mystery's large bead, the three Hail Marys, then the large bead by the crucifix.
 const TAIL: Bead[] = [
-  { id: "tail-3", x: MEDAL.x, y: 322, r: SMALL },
-  { id: "tail-2", x: MEDAL.x, y: 333, r: SMALL },
-  { id: "tail-1", x: MEDAL.x, y: 344, r: SMALL },
-  { id: "tail-0", x: MEDAL.x, y: 366, r: LARGE },
+  { id: "d0-0", x: MEDAL.x, y: 314, r: LARGE },
+  { id: "tail-3", x: MEDAL.x, y: 336, r: SMALL },
+  { id: "tail-2", x: MEDAL.x, y: 347, r: SMALL },
+  { id: "tail-1", x: MEDAL.x, y: 358, r: SMALL },
+  { id: "tail-0", x: MEDAL.x, y: 380, r: LARGE },
 ];
 const BEADS = [...TAIL, ...LOOP];
 const at = (id: string) => BEADS.find((bead) => bead.id === id)!;
@@ -130,7 +133,7 @@ const PARTS: Part[] = [
     detail: "The prayer Jesus taught his disciples.",
     beads: ["tail-0"],
     reach: "tail-0",
-    camera: { x: 150, y: 372, width: 110 },
+    camera: { x: 150, y: 386, width: 110 },
   },
   {
     title: "The three small beads",
@@ -138,7 +141,7 @@ const PARTS: Part[] = [
     detail: "One each for faith, hope and charity.",
     beads: ["tail-1", "tail-2", "tail-3"],
     reach: "tail-3",
-    camera: { x: 150, y: 333, width: 82 },
+    camera: { x: 150, y: 347, width: 82 },
   },
   {
     title: "The chain above them",
@@ -146,7 +149,7 @@ const PARTS: Part[] = [
     detail: "Praise of the Trinity closes the opening prayers.",
     beads: ["chain-opening"],
     reach: "tail-3",
-    camera: { x: 150, y: 306, width: 82 },
+    camera: { x: 150, y: 325, width: 82 },
   },
   {
     title: "The next large bead",
@@ -203,11 +206,14 @@ const HALOS = [
   ...BEADS.map((bead) => ({ id: bead.id, x: bead.x, y: bead.y, r: bead.r * 2.6, strength: 1 })),
   { id: "crucifix", ...CRUCIFIX, r: 38, strength: 0.5 },
   { id: "medal", ...MEDAL, r: 24, strength: 1 },
-  { id: "chain-opening", ...midpoint(at("tail-3"), MEDAL), r: 11, strength: 1 },
+  { id: "chain-opening", ...midpoint(at("tail-3"), at("d0-0")), r: 11, strength: 1 },
   { id: "chain-decade", ...AFTER_TENTH, r: 11, strength: 1 },
 ];
 
 const COUNT = PARTS.length;
+/** The layer is drawn as large as the closest camera zoom (narrowest view of WIDTH), so it is only ever scaled down. */
+const LAYER_SCALE = WIDTH / Math.min(...PARTS.map((part) => part.camera.width));
+const LAYER_BOX = { left: `${((1 - LAYER_SCALE) / 2) * 100}%`, top: `${((1 - LAYER_SCALE) / 2) * 100}%`, width: `${LAYER_SCALE * 100}%`, height: `${LAYER_SCALE * 100}%` };
 // Each part rests briefly, and the camera spends the rest of its stretch of scroll easing to the next.
 const STOPS = PARTS.flatMap((_, i) => [(i + 0.36) / COUNT, (i + 0.64) / COUNT]);
 const track = (read: (camera: Part["camera"]) => number) => PARTS.flatMap(({ camera }) => [read(camera), read(camera)]);
@@ -276,7 +282,6 @@ export function RosaryWalk() {
   const part = PARTS[index];
 
   const trackRef = useRef<HTMLDivElement>(null);
-  const svg = useRef<SVGSVGElement>(null);
   const { scrollYProgress } = useScroll({ target: trackRef, offset: ["start start", "end end"] });
   useMotionValueEvent(scrollYProgress, "change", (value) => {
     setIndex(Math.min(COUNT - 1, Math.floor(value * COUNT)));
@@ -287,19 +292,25 @@ export function RosaryWalk() {
   const cameraY = useTransform(progress, STOPS, track((c) => c.y), { ease: easeInOut });
   // Zoom is eased as a ratio, so pulling back from the medal feels the same speed all the way out.
   const cameraZoom = useTransform(progress, STOPS, track((c) => Math.log(c.width)), { ease: easeInOut });
-  const view = useTransform([cameraX, cameraY, cameraZoom], ([x, y, zoom]: number[]) => {
-    const width = Math.exp(zoom);
-    const height = (width * HEIGHT) / WIDTH;
-    return `${x - width / 2} ${y - height / 2} ${width} ${height}`;
-  });
 
-  // Written straight to the element, so moving the camera never re-renders sixty beads.
-  useMotionValueEvent(view, "change", (value) => {
-    if (full) svg.current?.setAttribute("viewBox", value);
-  });
+  // The camera is a transform on a compositor layer, not a viewBox: changing the viewBox repaints all ~120 gradient
+  // circles on the main thread every frame, which a phone cannot keep up with. The SVG is drawn at its closest zoom
+  // (LAYER_SCALE x the figure) and only ever scaled down from there, so it stays sharp without being re-rastered.
+  const figure = useRef<HTMLDivElement>(null);
+  const fit = useMotionValue(1); // px per user unit when the whole rosary fits the figure
   useEffect(() => {
-    svg.current?.setAttribute("viewBox", full ? view.get() : WHOLE);
-  }, [full, view]);
+    const el = figure.current;
+    if (!el) return;
+    const measure = () => fit.set(Math.min(el.clientWidth, (el.clientHeight * WIDTH) / HEIGHT) / WIDTH);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [fit]);
+  const zoom = useTransform(cameraZoom, (z) => WIDTH / Math.exp(z)); // 1 = whole rosary, 3 = closest
+  const scale = useTransform(zoom, (k) => k / LAYER_SCALE);
+  const x = useTransform([zoom, fit, cameraX], ([k, f, cx]: number[]) => k * f * (WIDTH / 2 - cx));
+  const y = useTransform([zoom, fit, cameraY], ([k, f, cy]: number[]) => k * f * (HEIGHT / 2 - cy));
 
   const reached = WALK.indexOf(part.reach);
   const stateOf = (id: string) => {
@@ -322,8 +333,12 @@ export function RosaryWalk() {
             The Rosary, bead by bead
           </h2>
 
-          <div className="land-walk-figure" aria-hidden>
-            <svg ref={svg} viewBox={WHOLE} className="land-walk-rosary">
+          <div ref={figure} className="land-walk-figure" aria-hidden>
+            <motion.svg
+              viewBox={WHOLE}
+              className={full ? "land-walk-rosary land-walk-rosary-live" : "land-walk-rosary"}
+              style={full ? { ...LAYER_BOX, x, y, scale } : undefined}
+            >
               <defs>
                 {/* Pearl: lit from the upper left, with a warm core and a darker edge so each bead reads as round. */}
                 <radialGradient id="walk-pearl" cx="50%" cy="50%" r="55%" fx="34%" fy="28%">
@@ -393,7 +408,7 @@ export function RosaryWalk() {
               <g className="land-walk-part" data-state={stateOf("crucifix")}>
                 <Crucifix />
               </g>
-            </svg>
+            </motion.svg>
           </div>
 
           {/* Read by eye only: the list below carries the same words for assistive tech, in one piece. */}

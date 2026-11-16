@@ -10,3 +10,10 @@ export function formId(formData: FormData, key = "id") {
   const value = formData.get(key);
   return typeof value === "string" && isUuid(value) ? value : null;
 }
+
+const SHARE_TOKEN = /^[0-9a-f]{32}$/;
+
+/** A share-link token is 32 lowercase hex characters. Anything else cannot match a row. */
+export function isShareToken(value: string) {
+  return SHARE_TOKEN.test(value);
+}

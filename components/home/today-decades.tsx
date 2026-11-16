@@ -23,7 +23,7 @@ export function TodayDecades() {
           className="ora-press group inline-flex min-h-11 items-center gap-1.5 rounded-full bg-secondary px-5 text-base font-medium hover:bg-accent"
         >
           Begin
-          <ArrowRight className="size-4 text-primary transition-transform duration-200 ease-ora group-hover:translate-x-0.5" aria-hidden />
+          <ArrowRight className="size-4 text-primary transition-transform duration-200 ease-ora group-hover:translate-x-1" aria-hidden />
         </Link>
       </div>
       {set ? (

@@ -13,10 +13,10 @@ Gzipped size of the `/_next/static/**/*.js` files referenced by each route's HTM
 | `/appearance` | ~125 KB |
 | `/offline` | ~122 KB |
 
-Next 16 no longer prints "First Load JS" in `npm run build`, so measure like this:
+Next 16 no longer prints "First Load JS" in `pnpm build`, so measure like this:
 
 ```bash
-npm run build && npx next start -p 3100 &
+pnpm build && pnpm exec next start -p 3100 &
 for r in / /rosary /appearance /offline; do
   curl -s localhost:3100$r | grep -o '/_next/static/[^"]*\.js' | sort -u |
     while read f; do curl -s localhost:3100$f | gzip -c | wc -c; done | paste -sd+ | bc
@@ -37,7 +37,7 @@ The Rosary route stays client-rendered from local data and must keep working off
 
 ## Not yet measured
 
-Lighthouse (mobile) scores and Core Web Vitals on a real device have not been recorded. Run Lighthouse against `npm run start` for `/`, `/rosary` and `/prayers` and add the numbers here before the next release.
+Lighthouse (mobile) scores and Core Web Vitals on a real device have not been recorded. Run Lighthouse against `pnpm start` for `/`, `/rosary` and `/prayers` and add the numbers here before the next release.
 
 ## Candidates if the budget is tight
 

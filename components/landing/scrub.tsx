@@ -50,7 +50,7 @@ export function Unveil({
 
   return (
     <motion.div ref={frame} className={className} style={full ? { clipPath } : undefined}>
-      <motion.div className="land-unveil" style={full ? { scale } : undefined}>
+      <motion.div className="land-unveil" style={full ? { scale, willChange: "transform" } : undefined}>
         {children}
       </motion.div>
     </motion.div>
@@ -84,7 +84,7 @@ export function Depth({
     <Tag
       ref={ref as RefObject<HTMLDivElement & HTMLSpanElement>}
       className={className}
-      style={full ? { x: tx, y: ty } : undefined}
+      style={full ? { x: tx, y: ty, willChange: "transform" } : undefined}
     >
       {children}
     </Tag>

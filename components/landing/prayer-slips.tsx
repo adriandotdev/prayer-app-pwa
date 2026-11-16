@@ -18,7 +18,7 @@ function Slip({ id, index, progress, laid }: { id: string; index: number; progre
   const rotate = useTransform(progress, [start, start + 0.55], [index % 2 ? 4 : -3.5, 0]);
 
   return (
-    <motion.li className="land-slip" style={laid ? { y, rotate } : undefined}>
+    <motion.li className="land-slip" style={laid ? { y, rotate, willChange: "transform" } : undefined}>
       <h3 className="land-slip-title">{prayer.name}</h3>
       {prayer.text.map((line) => (
         <p key={line}>{line}</p>
@@ -36,7 +36,7 @@ export function PrayerSlips() {
   const rowY = useTransform(scrollYProgress, [0, 1], [90, 0]);
 
   return (
-    <motion.ul ref={list} className="land-slips" aria-label="Prayers in Ora" style={full && !isDesktop ? { y: rowY } : undefined}>
+    <motion.ul ref={list} className="land-slips" aria-label="Prayers in Ora" style={full && !isDesktop ? { y: rowY, willChange: "transform" } : undefined}>
       {SLIPS.map((id, index) => (
         <Slip key={id} id={id} index={index} progress={scrollYProgress} laid={full && isDesktop} />
       ))}

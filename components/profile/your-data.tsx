@@ -27,7 +27,7 @@ export function YourData({ deleteAction }: { deleteAction: () => Promise<ActionR
       }
       // Only forget device data once the account is really gone, so a failed delete keeps
       // any Rosary sessions still waiting to sync.
-      clearDeviceData();
+      await clearDeviceData();
       setOpen(false);
       toast.success("Your account and data were deleted.");
       router.replace("/login");

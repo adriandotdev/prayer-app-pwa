@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import { useActionState, useEffect, useId, useState, type FormEvent, type KeyboardEvent } from "react";
+import { useActionState, useEffect, useId, useState, type SubmitEvent, type KeyboardEvent } from "react";
 import { ChevronLeft } from "lucide-react";
 
 import { AppButton } from "@/components/app-button";
@@ -97,7 +97,7 @@ export function IntentionForm({ title, action, submitLabel, intention }: Props) 
     }
   }
 
-  function submit(e: FormEvent<HTMLFormElement>) {
+  function submit(e: SubmitEvent<HTMLFormElement>) {
     if (text.trim()) return;
     e.preventDefault();
     setEmptyError(true);

@@ -6,19 +6,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-"Ora" is a Catholic prayer PWA: an offline-capable interactive Rosary (public, no account) plus a signed-in prayer library. Built in six phases with a stop for user review after each: 1 setup, 2 Rosary, 3 auth/profile, 4 prayer library (prayers, collections, favorites, search, intentions, Rosary history), 5 PWA, 6 polish. Phases 1–4 and a hand-written PWA are done; Phase 5 (PWA hardening) is built; Phase 6 (polish: accessibility, error/loading states, performance budget) is built and awaiting review. Out of scope: push/reminders, social, liturgical calendar (beyond the season-color function), readings, audio, i18n, other chaplets (architecture only).
+"Ora" is a Catholic prayer PWA: an offline-capable interactive Rosary (public, no account) plus a signed-in prayer library. Built in six phases with a stop for user review after each: 1 setup, 2 Rosary, 3 auth/profile, 4 prayer library (prayers, collections, favorites, search, intentions, Rosary history), 5 PWA, 6 polish. Phases 1–4 and a hand-written PWA are done; Phase 5 (PWA hardening) is built; Phase 6 (polish: accessibility, error/loading states, performance budget) is built and awaiting review. Out of scope: push/reminders, social, regional liturgical calendars and readings text (the home page has a universal-calendar "today" card in `lib/liturgy/` that links out to usccb.org for readings), audio, i18n, other chaplets (architecture only).
 
 ## Commands
 
 ```bash
-npm run dev          # dev server (the service worker is NOT registered in dev)
-npm run build        # production build; also regenerates .next/types route types
-npm run start        # test the PWA/service worker here (use -p 3100 if dev is on 3000)
-npm run lint         # eslint
-npx tsc --noEmit     # type-check; if `PageProps<"/x">` is unknown run `npx next typegen` first
+pnpm dev          # dev server (the service worker is NOT registered in dev)
+pnpm build        # production build; also regenerates .next/types route types
+pnpm start        # test the PWA/service worker here (use -p 3100 if dev is on 3000)
+pnpm lint         # eslint
+pnpm exec tsc --noEmit     # type-check; if `PageProps<"/x">` is unknown run `pnpm exec next typegen` first
 ```
 
-`npm test` runs vitest (pure logic plus theme contrast; no component or e2e tests yet), and CI runs typecheck, lint, test and build. Use Node 22 (CI's version; older Node 20 breaks vitest). Also verify with `curl` against `next start`. See `docs/performance-budget.md` and `docs/accessibility-checklist.md`.
+`pnpm test` runs vitest (pure logic, theme contrast, and jsdom component tests in `tests/components/` that opt in with `// @vitest-environment jsdom`). `pnpm test:e2e` runs Playwright (`e2e/`, chromium, desktop and phone viewports) against a production build on port 3100 with Supabase env deliberately unset, so it needs no secrets; first run `pnpm exec playwright install chromium`. CI runs typecheck, lint, test and build in `check`, and the e2e suite in a separate `e2e` job. Use Node 22 (CI's version; older Node 20 breaks vitest). Also verify with `curl` against `next start`. See `docs/performance-budget.md` and `docs/accessibility-checklist.md`.
 
 Supabase (CLI, project ref `ltgjhevwtfxlhhurxrdx`): `supabase db push --include-seed` applies `supabase/migrations/` and `seed.sql`; `supabase gen types typescript --linked > lib/database.types.ts` regenerates types after schema changes.
 

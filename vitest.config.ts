@@ -3,5 +3,9 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   resolve: { alias: { "@": path.resolve(__dirname) } },
-  test: { include: ["tests/**/*.test.ts"] },
+  test: {
+    // Logic tests run in node; component tests opt in with `// @vitest-environment jsdom`.
+    include: ["tests/**/*.test.{ts,tsx}"],
+    setupFiles: ["tests/setup.ts"],
+  },
 });

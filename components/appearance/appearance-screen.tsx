@@ -9,6 +9,7 @@ import { SeasonPreview, type PreviewMode } from "@/components/appearance/season-
 import { LEADING_RANGE, SCALE_RANGE, clampToRange } from "@/lib/reader/preferences";
 import { useReaderPrefs } from "@/lib/reader/use-reader-prefs";
 import { useWakeLockSupported } from "@/lib/reader/use-wake-lock";
+import { syncShareSeasons } from "@/lib/shares/actions";
 import { toast } from "@/lib/toast";
 import { SEASONS, SEASON_INFO, type SeasonChoice } from "@/lib/theme/season";
 import { useSeason } from "@/lib/theme/use-season";
@@ -215,6 +216,10 @@ export function AppearanceScreen() {
   function apply() {
     setChoice(selected);
     setPicked(null);
+    // Links already shared follow the new colours.
+    void syncShareSeasons(selected)
+      .then((r) => console.info("[share-sync]", r))
+      .catch((e) => console.error("[share-sync] failed", e));
     toast.success(selected === "default" ? "Ora colors applied" : `${previewLabel} season applied`);
   }
 

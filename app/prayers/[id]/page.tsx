@@ -8,9 +8,11 @@ import { DeleteButton } from "@/components/prayers/delete-button";
 import { FavoriteButton } from "@/components/prayers/favorite-button";
 import { PrayerBody } from "@/components/prayers/prayer-body";
 import { KeepAwake } from "@/components/reader/keep-awake";
+import { ShareButton } from "@/components/share/share-button";
 import { SubmitButton } from "@/components/submit-button";
 import { copyPrayer } from "@/lib/prayers/actions";
 import { getFavoriteIds, getPrayer } from "@/lib/prayers/queries";
+import { getShareToken } from "@/lib/shares/queries";
 
 export async function generateMetadata({ params }: PageProps<"/prayers/[id]">): Promise<Metadata> {
   const prayer = await getPrayer((await params).id);
@@ -22,6 +24,8 @@ export default async function PrayerPage({ params, searchParams }: PageProps<"/p
   const [prayer, favoriteIds] = await Promise.all([getPrayer(id), getFavoriteIds()]);
   if (!prayer) notFound();
   const isOwn = prayer.user_id !== null;
+  // Only your own prayers can be shared; starter prayers are already public.
+  const shareToken = isOwn ? await getShareToken("prayer", id) : null;
 
   return (
     <article className="mx-auto max-w-3xl">
@@ -43,7 +47,9 @@ export default async function PrayerPage({ params, searchParams }: PageProps<"/p
           <AppButton href={`/prayers/${prayer.id}/collections`} variant="outline" className="flex-1 sm:flex-none">
             <FolderPlus aria-hidden /> Add to collection
           </AppButton>
-          {isOwn ? null : (
+          {isOwn ? (
+            <ShareButton kind="prayer" id={prayer.id} title={prayer.title} token={shareToken} className="flex-1 sm:flex-none" />
+          ) : (
             <form action={copyPrayer} className="flex-1 sm:flex-none">
               <input type="hidden" name="id" value={prayer.id} />
               <SubmitButton variant="outline" pendingLabel="Copying…" className="w-full sm:w-auto">

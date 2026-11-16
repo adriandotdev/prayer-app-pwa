@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import { useActionState, useEffect, useId, useState, type FormEvent, type KeyboardEvent } from "react";
+import { useActionState, useEffect, useId, useState, type SubmitEvent, type KeyboardEvent } from "react";
 import { ChevronLeft } from "lucide-react";
 
 import { AppButton } from "@/components/app-button";
@@ -128,7 +128,7 @@ export function PrayerForm({ title: heading, backHref, backLabel, action, submit
     if (isNew) writeDraft(next);
   }
 
-  function submit(e: FormEvent<HTMLFormElement>) {
+  function submit(e: SubmitEvent<HTMLFormElement>) {
     const missing: { field: PrayerField; message: string } | null = !titleValue.trim()
       ? { field: "title", message: "Give your prayer a title." }
       : !body.trim()

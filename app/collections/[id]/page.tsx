@@ -8,8 +8,10 @@ import { RemoveFromCollectionButton } from "@/components/collections/remove-from
 import { EmptyState } from "@/components/layout/empty-state";
 import { PageHeader } from "@/components/layout/page-header";
 import { PrayerCard } from "@/components/prayers/prayer-card";
+import { ShareButton } from "@/components/share/share-button";
 import { getCollection, getCollectionPrayers } from "@/lib/collections/queries";
 import { getFavoriteIds } from "@/lib/prayers/queries";
+import { getShareToken } from "@/lib/shares/queries";
 
 export async function generateMetadata({ params }: PageProps<"/collections/[id]">): Promise<Metadata> {
   const collection = await getCollection((await params).id);
@@ -20,7 +22,7 @@ export default async function CollectionPage({ params }: PageProps<"/collections
   const { id } = await params;
   const collection = await getCollection(id);
   if (!collection) notFound();
-  const [prayers, favoriteIds] = await Promise.all([getCollectionPrayers(id), getFavoriteIds()]);
+  const [prayers, favoriteIds, shareToken] = await Promise.all([getCollectionPrayers(id), getFavoriteIds(), getShareToken("collection", id)]);
 
   return (
     <>
@@ -62,6 +64,7 @@ export default async function CollectionPage({ params }: PageProps<"/collections
         <AppButton href={`/collections/${id}/edit`} variant="outline" className="flex-1 sm:flex-none">
           Rename
         </AppButton>
+        <ShareButton kind="collection" id={id} title={collection.name} token={shareToken} className="flex-1 sm:flex-none" />
         <DeleteCollectionButton id={id} />
       </div>
     </>

@@ -44,3 +44,8 @@ next-env.d.ts
 # impeccable design critiques (generated reports)
 .impeccable/critique/
 .taste-skill/
+
+# playwright
+/playwright-report/
+/blob-report/
+/test-results/

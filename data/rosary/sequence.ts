@@ -3,40 +3,62 @@ import { ROSARY_PRAYERS } from "./prayers";
 import { MYSTERY_SETS, type MysterySetId } from "./mysteries";
 
 const ORDINALS = ["First", "Second", "Third", "Fourth", "Fifth"];
-const WIDTH = 320;
-const HEIGHT = 470;
-const CENTER = { x: 160, y: 150 };
-const RADIUS = 120;
+// Same shape as the landing page's Rosary walk: a teardrop loop hanging from the medal, with the
+// first mystery's Our Father bead on the tail directly below the medal. Coordinates are the
+// landing page's (300 × 480) scaled up so the tracker's bead radii read the same.
+const SCALE = 1.4;
+const WIDTH = 300 * SCALE;
+const HEIGHT = 480 * SCALE;
+const MEDAL = { x: 150, y: 288 };
+const s = (n: number) => Math.round(n * SCALE * 100) / 100;
 
 /**
- * Layout: crucifix at the bottom, the tail rising to the medal, then the
- * loop of five decades. 61 beads in all: crucifix, 4 on the tail, the medal and 5 × (1 + 10)
- * on the loop. The crucifix and medal are anchors for the Creed and the
- * Hail, Holy Queen.
+ * 61 beads: crucifix, the tail (Our Father, 3 Hail Marys), the medal and 5 × (1 + 10). Decade 1's
+ * large bead is the first one below the medal; the rest of the loop climbs and returns to the medal.
+ * The crucifix and medal are anchors for the Creed and the Hail, Holy Queen.
  */
 function buildBeads(): Bead[] {
-  const medal = { x: CENTER.x, y: CENTER.y + RADIUS };
-  const beads: Bead[] = [
-    { id: "crucifix", label: "Crucifix", x: CENTER.x, y: 430, kind: "anchor" },
-    { id: "tail-0", label: "Our Father bead", x: CENTER.x, y: 392, kind: "large" },
-    { id: "tail-1", label: "Hail Mary bead 1 of 3", x: CENTER.x, y: 360, kind: "small" },
-    { id: "tail-2", label: "Hail Mary bead 2 of 3", x: CENTER.x, y: 334, kind: "small" },
-    { id: "tail-3", label: "Hail Mary bead 3 of 3", x: CENTER.x, y: 308, kind: "small" },
-    { id: "medal", label: "Centre medal", ...medal, kind: "anchor" },
-  ];
-  const slots = 55 + 1; // loop beads + the medal's slot
+  const samples: { x: number; y: number }[] = [];
+  for (let i = 0; i <= 1200; i++) {
+    const t = (i / 1200) * 2 * Math.PI;
+    samples.push({
+      x: MEDAL.x + 146 * Math.sin(t) * Math.pow(Math.sin(t / 2), 0.8),
+      y: MEDAL.y - 129 * (1 - Math.cos(t)),
+    });
+  }
+  const lengths = [0];
+  samples.slice(1).forEach((p, i) => lengths.push(lengths[i] + Math.hypot(p.x - samples[i].x, p.y - samples[i].y)));
+
+  // Longer runs of chain either side of each Our Father; decade 1's first bead is on the tail.
+  const slots: { d: number; b: number; gap: number }[] = [];
   for (let d = 0; d < 5; d++) {
-    for (let b = 0; b < 11; b++) {
-      const slot = d * 11 + b + 1;
-      const angle = Math.PI / 2 - (slot * 2 * Math.PI) / slots;
-      beads.push({
-        id: `d${d}-${b}`,
-        label: b === 0 ? `Decade ${d + 1}, Our Father bead` : `Decade ${d + 1}, Hail Mary bead ${b} of 10`,
-        x: CENTER.x + RADIUS * Math.cos(angle),
-        y: CENTER.y + RADIUS * Math.sin(angle),
-        kind: b === 0 ? "large" : "small",
-      });
-    }
+    for (let b = d === 0 ? 1 : 0; b <= 10; b++) slots.push({ d, b, gap: b === 0 ? 2.1 : b === 1 ? 1.9 : 1 });
+  }
+  const total = slots.reduce((sum, slot) => sum + slot.gap, 0) + 2.1;
+
+  const beads: Bead[] = [
+    { id: "crucifix", label: "Crucifix", x: s(150), y: s(428), kind: "anchor" },
+    { id: "tail-0", label: "Our Father bead", x: s(150), y: s(380), kind: "large" },
+    { id: "tail-1", label: "Hail Mary bead 1 of 3", x: s(150), y: s(358), kind: "small" },
+    { id: "tail-2", label: "Hail Mary bead 2 of 3", x: s(150), y: s(347), kind: "small" },
+    { id: "tail-3", label: "Hail Mary bead 3 of 3", x: s(150), y: s(336), kind: "small" },
+    { id: "medal", label: "Centre medal", x: s(MEDAL.x), y: s(MEDAL.y), kind: "anchor" },
+    { id: "d0-0", label: "Decade 1, Our Father bead", x: s(150), y: s(314), kind: "large" },
+  ];
+  let walked = 0;
+  let cursor = 0;
+  for (const { d, b, gap } of slots) {
+    walked += gap;
+    const target = (walked / total) * lengths[lengths.length - 1];
+    while (lengths[cursor] < target) cursor++;
+    const p = samples[cursor];
+    beads.push({
+      id: `d${d}-${b}`,
+      label: b === 0 ? `Decade ${d + 1}, Our Father bead` : `Decade ${d + 1}, Hail Mary bead ${b} of 10`,
+      x: s(p.x),
+      y: s(p.y),
+      kind: b === 0 ? "large" : "small",
+    });
   }
   return beads;
 }

@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { isProtectedPath, safeNext } from "@/lib/auth/paths";
 import { collectionSchema } from "@/lib/collections/schema";
 import { parseFilter, parseQuery, prayerSchema } from "@/lib/prayers/schema";
-import { formId, isUuid } from "@/lib/validation";
+import { formId, isShareToken, isUuid } from "@/lib/validation";
 
 describe("isUuid", () => {
   it("accepts uuids and rejects everything else", () => {
@@ -87,5 +87,17 @@ describe("library query params", () => {
     expect(parseQuery("  our father ")).toBe("our father");
     expect(parseQuery("x".repeat(150))).toHaveLength(100);
     expect(parseQuery(undefined)).toBe("");
+  });
+});
+
+describe("isShareToken", () => {
+  it("accepts 32 lowercase hex characters only", () => {
+    expect(isShareToken("0123456789abcdef0123456789abcdef")).toBe(true);
+    expect(isShareToken("0123456789ABCDEF0123456789ABCDEF")).toBe(false);
+    expect(isShareToken("0123456789abcdef0123456789abcde")).toBe(false);
+    expect(isShareToken("0123456789abcdef0123456789abcdefa")).toBe(false);
+    expect(isShareToken("00000000-0000-4000-8000-000000000001")).toBe(false);
+    expect(isShareToken("")).toBe(false);
+    expect(isShareToken("x' or '1'='1")).toBe(false);
   });
 });
