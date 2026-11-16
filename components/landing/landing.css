@@ -1528,3 +1528,70 @@ body:has(.land) [data-shell-main] {
   max-width: none;
   padding: 0;
 }
+
+/* Common questions: plain answers a reader (or a search engine) can lift out as they stand. */
+.land-faq {
+  background: color-mix(in srgb, var(--paper) 55%, var(--wash));
+  padding: 72px 0;
+}
+.land-faq-head {
+  display: grid;
+  gap: 24px;
+}
+.land-faq-list {
+  margin: 56px 0 0;
+  display: grid;
+  gap: 48px;
+}
+.land-faq-item {
+  display: grid;
+  gap: 12px;
+}
+.land-faq .land-h3 {
+  font-size: clamp(26px, 2.4vw, 36px);
+}
+.land-faq .land-body {
+  font-size: 19px;
+  max-width: 38rem;
+}
+.land-faq a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+/* Each question settles once as it scrolls into view, the answer 90ms behind it (see Settle). Without script
+   or with reduced motion nothing is hidden. Transitions, so a fast scroll never restarts them. */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .land-settle > * {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 600ms var(--ease-ora),
+      transform 600ms var(--ease-ora);
+  }
+  .land-settle > dd {
+    transition-delay: 90ms;
+  }
+  .land-settle[data-in] > * {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (min-width: 48rem) {
+  .land-faq {
+    padding: 112px 0;
+  }
+  .land-faq-head {
+    grid-template-columns: 5fr 7fr;
+    gap: var(--edge);
+    align-items: end;
+  }
+  .land-faq-list {
+    margin-top: 96px;
+    gap: 64px;
+  }
+  .land-faq-item {
+    grid-template-columns: 5fr 7fr;
+    gap: var(--edge);
+    align-items: start;
+  }
+}
