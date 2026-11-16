@@ -130,6 +130,7 @@ export function HeroScene() {
             className="land-title-block land-camera-words"
             style={full ? { x: shift, scale: titleScale, opacity: titleOpacity } : undefined}
           >
+            <p className="land-eyebrow">Catholic Rosary app</p>
             <h1 id="land-title" className="land-h1">
               Draw near <br />
               to God
