@@ -6,6 +6,22 @@ const GUIDES = [
   { path: "/learn/rosary-prayers", h1: "Rosary prayers: full text" },
 ];
 
+const PRACTICE_GUIDES = [
+  { path: "/learn/how-to-pray-the-divine-mercy-chaplet", h1: "How to pray the Divine Mercy Chaplet", cta: "/divine-mercy" },
+  { path: "/learn/how-to-pray-the-angelus", h1: "How to pray the Angelus", cta: "/angelus" },
+  { path: "/learn/how-to-pray-the-stations-of-the-cross", h1: "How to pray the Stations of the Cross", cta: "/stations-of-the-cross" },
+];
+
+for (const { path, h1, cta } of PRACTICE_GUIDES) {
+  test(`${path} renders and links to its guided practice`, async ({ page }) => {
+    const res = await page.goto(path);
+    expect(res?.status()).toBe(200);
+    await expect(page.getByRole("heading", { name: h1, level: 1 })).toBeVisible();
+    await expect(page.locator(`main a[href="${cta}"]`).first()).toBeVisible();
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", new RegExp(`${path}$`));
+  });
+}
+
 for (const { path, h1 } of GUIDES) {
   test(`${path} renders for a signed-out visitor and links to the guided Rosary`, async ({ page }) => {
     const res = await page.goto(path);

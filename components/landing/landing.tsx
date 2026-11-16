@@ -14,6 +14,7 @@ import {
   MYSTERY_ART,
   VIRGIN,
 } from "./art";
+import { LANDING_FAQ } from "@/lib/seo-jsonld";
 import { CONTACT_EMAIL } from "@/lib/site";
 import { Decade } from "./decade";
 import { HeroScene } from "./hero-scene";
@@ -21,7 +22,7 @@ import { MysteriesRow } from "./mysteries-row";
 import { PrayerSlips } from "./prayer-slips";
 import { RosaryWalk } from "./rosary-walk";
 import { SaintWall } from "./saint-wall";
-import { Depth, Unveil } from "./scrub";
+import { Depth, Settle, Unveil } from "./scrub";
 
 const NOTEBOOK = [
   {
@@ -169,6 +170,27 @@ export function Landing() {
         </div>
       </section>
 
+      <section id="questions" className="land-faq" aria-labelledby="faq-title">
+        <div className="land-gutter">
+          <div className="land-faq-head">
+            <h2 id="faq-title" className="land-h2">
+              Common questions
+            </h2>
+            <p className="land-statement">
+              New to the Rosary? Read <Link href="/learn/how-to-pray-the-rosary">how to pray the Rosary, step by step</Link>.
+            </p>
+          </div>
+          <dl className="land-faq-list">
+            {LANDING_FAQ.map((f) => (
+              <Settle key={f.q} className="land-faq-item">
+                <dt className="land-h3">{f.q}</dt>
+                <dd className="land-body">{f.a}</dd>
+              </Settle>
+            ))}
+          </dl>
+        </div>
+      </section>
+
       <section id="saints" className="land-saints" aria-labelledby="saints-title">
         <Depth className="land-vault" y={[-48, 48]}>
           {VAULT_STARS.map((star) => (
@@ -236,6 +258,15 @@ export function Landing() {
             </li>
             <li>
               <Link href="/learn/how-to-pray-the-rosary">How to pray the Rosary</Link>
+            </li>
+            <li>
+              <Link href="/learn/how-to-pray-the-divine-mercy-chaplet">How to pray the Divine Mercy Chaplet</Link>
+            </li>
+            <li>
+              <Link href="/learn/how-to-pray-the-angelus">How to pray the Angelus</Link>
+            </li>
+            <li>
+              <Link href="/learn/how-to-pray-the-stations-of-the-cross">How to pray the Stations</Link>
             </li>
             <li>
               <Link href="/learn/rosary-mysteries-by-day">Mysteries by day</Link>

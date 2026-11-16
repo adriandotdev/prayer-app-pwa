@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "motion/react";
+import { motion, useInView, useScroll, useTransform } from "motion/react";
 import { useRef, useSyncExternalStore, type ReactNode, type RefObject } from "react";
 
 const QUERY = "(prefers-reduced-motion: no-preference)";
@@ -88,5 +88,16 @@ export function Depth({
     >
       {children}
     </Tag>
+  );
+}
+
+/** A group that settles into place the first time it is mostly on screen. CSS does the moving (`.land-settle`). */
+export function Settle({ className = "", children }: { className?: string; children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const seen = useInView(ref, { once: true, margin: "0px 0px -12% 0px" });
+  return (
+    <div ref={ref} className={`land-settle ${className}`} data-in={seen ? "" : undefined}>
+      {children}
+    </div>
   );
 }
