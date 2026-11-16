@@ -27,6 +27,10 @@ export const SITE_NAME = "Ora";
 export const SITE_DESCRIPTION =
   "Ora is a Catholic prayer app for a deeper faith: pray the Rosary, keep your own prayers, and come back to God each day.";
 
+/** Home page description: longer than SITE_DESCRIPTION, naming the free, no-account, offline and chaplet hooks. */
+export const HOME_DESCRIPTION =
+  "Pray the Rosary bead by bead with Ora, a free Catholic prayer app. No account needed, works offline. Also the Divine Mercy Chaplet, Angelus and Stations of the Cross.";
+
 /** Version of the privacy policy and terms. Bump it (and LEGAL_UPDATED) whenever either text changes. */
 export const POLICY_VERSION = "2026-11-07";
 export const LEGAL_UPDATED = "7 November 2026";
