@@ -36,6 +36,25 @@ const QuoteHighlight = Extension.create({
   },
 });
 
+/** Shows hint text in an empty document, so a borderless surface still says what to write. */
+function placeholderExtension(text: string) {
+  return Extension.create({
+    name: "placeholderHint",
+    addProseMirrorPlugins() {
+      return [
+        new Plugin({
+          props: {
+            decorations: ({ doc }) => {
+              if (doc.childCount !== 1 || doc.firstChild?.type.name !== "paragraph" || doc.firstChild.content.size > 0) return null;
+              return DecorationSet.create(doc, [Decoration.node(0, doc.firstChild.nodeSize, { class: "prayer-placeholder", "data-placeholder": text })]);
+            },
+          },
+        }),
+      ];
+    },
+  });
+}
+
 /** Wrap the selection in curly quotes (plain text, so it needs no markdown), or unwrap it. */
 function toggleQuotes(editor: Editor) {
   const { from, to, empty } = editor.state.selection;
@@ -78,6 +97,10 @@ type Props = {
   describedBy?: string;
   /** Marks the editable surface invalid for assistive tech. */
   invalid?: boolean;
+  /** Drops the field border and fill; focus is shown with a gold underline instead. */
+  bare?: boolean;
+  /** Hint shown while the editor is empty. */
+  placeholder?: string;
 };
 
 /**
@@ -95,7 +118,11 @@ export function MarkdownEditor({
   onMarkdownChange,
   describedBy,
   invalid,
+  bare = false,
+  placeholder,
 }: Props) {
+  const surface = bare ? "prayer-bare" : FIELD;
+  const [placeholderExt] = useState(() => (placeholder ? placeholderExtension(placeholder) : null));
   const [markdown, setMarkdown] = useState(defaultValue);
 
   const editor = useEditor({
@@ -106,6 +133,7 @@ export function MarkdownEditor({
       StarterKit.configure({ code: false, codeBlock: false, strike: false, link: false, underline: false, heading: { levels: [1, 2] } }),
       Markdown.configure({ markedOptions: { breaks: true } }),
       QuoteHighlight,
+      ...(placeholderExt ? [placeholderExt] : []),
     ],
     content: defaultValue,
     contentType: "markdown",
@@ -113,7 +141,7 @@ export function MarkdownEditor({
       attributes: {
         id,
         "aria-label": label,
-        class: `${FIELD} prayer-text prayer-editor ${className} py-3`,
+        class: `${surface} prayer-text prayer-editor ${className} py-3`,
       },
     },
     onUpdate: ({ editor }) => {
@@ -131,13 +159,13 @@ export function MarkdownEditor({
         attributes: {
           id,
           "aria-label": label,
-          class: `${FIELD} prayer-text prayer-editor ${className} py-3`,
+          class: `${surface} prayer-text prayer-editor ${className} py-3`,
           ...(describedBy ? { "aria-describedby": describedBy } : {}),
           ...(invalid ? { "aria-invalid": "true" } : {}),
         },
       },
     });
-  }, [editor, id, label, className, describedBy, invalid]);
+  }, [editor, id, label, className, describedBy, invalid, surface]);
 
   return (
     <div className="flex flex-col gap-2">
