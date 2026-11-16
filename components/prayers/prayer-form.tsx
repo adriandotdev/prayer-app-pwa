@@ -57,6 +57,19 @@ function writeDraft(draft: Draft) {
   }
 }
 
+const SMALL_WORDS = new Set(["a", "an", "and", "as", "at", "but", "by", "for", "in", "of", "on", "or", "the", "to", "with"]);
+
+/** Heading case while typing: capitalises each word's first letter, keeping small words lower. */
+function headingCase(value: string): string {
+  let first = true;
+  return value.replace(/(^|\s)([^\s]+)/g, (_, space: string, word: string) => {
+    const isFirst = first;
+    first = false;
+    if (!isFirst && SMALL_WORDS.has(word.toLowerCase())) return space + word.toLowerCase();
+    return space + word.charAt(0).toLocaleUpperCase() + word.slice(1);
+  });
+}
+
 export function PrayerForm({ title: heading, backHref, backLabel, action, submitLabel, prayer }: Props) {
   const router = useRouter();
   const [state, formAction, pending] = useActionState(action, initial);
@@ -177,7 +190,7 @@ export function PrayerForm({ title: heading, backHref, backLabel, action, submit
       >
         {prayer ? <input type="hidden" name="id" value={prayer.id} /> : null}
 
-        <label htmlFor="title" className="text-base font-medium">
+        <label htmlFor="title" className="text-sm font-medium text-muted-foreground">
           Title
         </label>
         <input
@@ -185,8 +198,9 @@ export function PrayerForm({ title: heading, backHref, backLabel, action, submit
           name="title"
           value={titleValue}
           onChange={(e) => {
-            setTitleValue(e.target.value);
-            edited({ title: e.target.value, body, source });
+            const next = headingCase(e.target.value);
+            setTitleValue(next);
+            edited({ title: next, body, source });
           }}
           maxLength={200}
           required
@@ -195,7 +209,8 @@ export function PrayerForm({ title: heading, backHref, backLabel, action, submit
           autoComplete="off"
           aria-invalid={errorFor("title") ? true : undefined}
           aria-describedby={errorFor("title") ? titleErrorId : undefined}
-          className={`${FIELD} min-h-14`}
+          placeholder="Title of your prayer"
+          className="prayer-bare min-h-14 text-balance font-heading text-3xl leading-tight font-medium tracking-[-0.01em] placeholder:font-normal md:text-4xl"
         />
         {errorFor("title") ? (
           <p id={titleErrorId} role="alert" className="text-base text-destructive">
@@ -204,7 +219,7 @@ export function PrayerForm({ title: heading, backHref, backLabel, action, submit
         ) : null}
 
         {/* A label only focuses form controls, and the editor is a contenteditable surface. */}
-        <label htmlFor="body" onClick={() => document.getElementById("body")?.focus()} className="mt-2 text-base font-medium">
+        <label htmlFor="body" onClick={() => document.getElementById("body")?.focus()} className="mt-2 text-sm font-medium text-muted-foreground">
           Prayer
         </label>
         {draftChecked ? (
@@ -216,6 +231,8 @@ export function PrayerForm({ title: heading, backHref, backLabel, action, submit
             }}
             describedBy={cn(hintId, errorFor("body") && bodyErrorId)}
             invalid={Boolean(errorFor("body"))}
+            bare
+            placeholder="Write or paste the prayer here…"
             className="min-h-56 md:min-h-80"
           />
         ) : (
